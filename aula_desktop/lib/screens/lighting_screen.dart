@@ -6,6 +6,7 @@ import '../l10n/app_localizations.dart';
 import '../l10n/message_localizer.dart';
 import '../protocol/constants.dart';
 import '../services/keyboard_service.dart';
+import '../utils/color_rgb.dart';
 
 class LightingScreen extends StatefulWidget {
   const LightingScreen({super.key, required this.keyboard});
@@ -45,9 +46,9 @@ class _LightingScreenState extends State<LightingScreen> {
     super.initState();
     _colorNotifier = ValueNotifier(_color);
     _pickerColorNotifier = ValueNotifier(_color);
-    _redController = TextEditingController(text: _color.red.toString());
-    _greenController = TextEditingController(text: _color.green.toString());
-    _blueController = TextEditingController(text: _color.blue.toString());
+    _redController = TextEditingController(text: '${rgbChannelsFromColor(_color).$1}');
+    _greenController = TextEditingController(text: '${rgbChannelsFromColor(_color).$2}');
+    _blueController = TextEditingController(text: '${rgbChannelsFromColor(_color).$3}');
   }
 
   @override
@@ -61,41 +62,63 @@ class _LightingScreenState extends State<LightingScreen> {
   }
 
   void _syncRgbFieldsFromColor() {
+    final (r, g, b) = rgbChannelsFromColor(_color);
     _updatingRgbFields = true;
-    _redController.text = _color.red.toString();
-    _greenController.text = _color.green.toString();
-    _blueController.text = _color.blue.toString();
+    _redController.text = r.toString();
+    _greenController.text = g.toString();
+    _blueController.text = b.toString();
     _updatingRgbFields = false;
   }
 
+  (int, int, int)? _rgbFromFieldText() {
+    final r = int.tryParse(_redController.text.trim());
+    final g = int.tryParse(_greenController.text.trim());
+    final b = int.tryParse(_blueController.text.trim());
+    if (r == null || g == null || b == null) return null;
+    return (r.clamp(0, 255), g.clamp(0, 255), b.clamp(0, 255));
+  }
+
   void _setColor(Color color) {
-    if (color == _color) return;
-    _color = color;
-    _colorNotifier.value = color;
-    _pickerColorNotifier.value = color;
+    final normalized = normalizeDeviceColor(color);
+    if (normalized == _color) return;
+    _color = normalized;
+    _colorNotifier.value = normalized;
+    _pickerColorNotifier.value = normalized;
     _syncRgbFieldsFromColor();
   }
 
-  void _applyRgbFieldInput({bool revertInvalid = false}) {
+  void _applyRgbFieldInput({bool revertInvalid = false, bool syncPicker = false}) {
     if (_updatingRgbFields || _busy) return;
-    final r = int.tryParse(_redController.text);
-    final g = int.tryParse(_greenController.text);
-    final b = int.tryParse(_blueController.text);
-    if (r == null || g == null || b == null) {
+    final parsed = _rgbFromFieldText();
+    if (parsed == null) {
       if (revertInvalid) _syncRgbFieldsFromColor();
       return;
     }
-    final newColor = Color.fromARGB(255, r.clamp(0, 255), g.clamp(0, 255), b.clamp(0, 255));
-    if (newColor == _color) return;
+    final (r, g, b) = parsed;
+    final newColor = normalizeDeviceColor(colorFromRgb(r, g, b));
+    if (newColor == _color) {
+      if (syncPicker) _pickerColorNotifier.value = _color;
+      return;
+    }
     _color = newColor;
     _colorNotifier.value = newColor;
-    // Do not push RGB text edits into ColorPicker; it auto-switches to the
-    // wheel tab when the color is not an exact Material swatch match.
-    if (newColor.red.toString() != _redController.text ||
-        newColor.green.toString() != _greenController.text ||
-        newColor.blue.toString() != _blueController.text) {
+    if (syncPicker) _pickerColorNotifier.value = newColor;
+    // Do not push RGB text edits into ColorPicker while typing; it auto-switches
+    // to the wheel tab when the color is not an exact Material swatch match.
+    final (cr, cg, cb) = rgbChannelsFromColor(newColor);
+    if (cr.toString() != _redController.text ||
+        cg.toString() != _greenController.text ||
+        cb.toString() != _blueController.text) {
       _syncRgbFieldsFromColor();
     }
+  }
+
+  (int, int, int) _resolveApplyRgb() {
+    final parsed = _rgbFromFieldText();
+    final source = parsed != null
+        ? colorFromRgb(parsed.$1, parsed.$2, parsed.$3)
+        : _color;
+    return deviceRgbChannelsFromColor(source);
   }
 
   Future<void> _apply() async {
@@ -105,11 +128,16 @@ class _LightingScreenState extends State<LightingScreen> {
       _error = null;
     });
     try {
+      final (r, g, b) = _resolveApplyRgb();
+      _color = colorFromRgb(r, g, b);
+      _colorNotifier.value = _color;
+      _pickerColorNotifier.value = _color;
+      _syncRgbFieldsFromColor();
       final result = await widget.keyboard.applyLighting(
         mode: _modeId,
-        r: _color.red,
-        g: _color.green,
-        b: _color.blue,
+        r: r,
+        g: g,
+        b: b,
         brightness: _brightness,
         speed: _speed,
         direction: _direction,
@@ -204,31 +232,39 @@ class _LightingScreenState extends State<LightingScreen> {
                 width: 36,
                 height: 36,
                 borderRadius: 8,
-                pickersEnabled: const {ColorPickerType.wheel: true, ColorPickerType.primary: true},
+                enableShadesSelection: false,
+                pickersEnabled: const {
+                  ColorPickerType.primary: true,
+                  ColorPickerType.accent: false,
+                  ColorPickerType.wheel: true,
+                },
               ),
             ),
             const SizedBox(height: 12),
             ValueListenableBuilder<Color>(
               valueListenable: _colorNotifier,
-              builder: (context, color, _) => Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      l10n.colorRgbValue(color.red, color.green, color.blue),
-                      style: Theme.of(context).textTheme.titleMedium,
+              builder: (context, color, _) {
+                final (r, g, b) = rgbChannelsFromColor(color);
+                return Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        l10n.colorRgbValue(r, g, b),
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
                     ),
-                  ),
-                  Container(
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: color,
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: Theme.of(context).dividerColor),
+                    Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: color,
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: Theme.of(context).dividerColor),
+                      ),
                     ),
-                  ),
-                ],
-              ),
+                  ],
+                );
+              },
             ),
             const SizedBox(height: 12),
             Row(
@@ -245,7 +281,7 @@ class _LightingScreenState extends State<LightingScreen> {
                       border: const OutlineInputBorder(),
                     ),
                     onChanged: (_) => _applyRgbFieldInput(),
-                    onEditingComplete: () => _applyRgbFieldInput(revertInvalid: true),
+                    onEditingComplete: () => _applyRgbFieldInput(revertInvalid: true, syncPicker: true),
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -261,7 +297,7 @@ class _LightingScreenState extends State<LightingScreen> {
                       border: const OutlineInputBorder(),
                     ),
                     onChanged: (_) => _applyRgbFieldInput(),
-                    onEditingComplete: () => _applyRgbFieldInput(revertInvalid: true),
+                    onEditingComplete: () => _applyRgbFieldInput(revertInvalid: true, syncPicker: true),
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -277,7 +313,7 @@ class _LightingScreenState extends State<LightingScreen> {
                       border: const OutlineInputBorder(),
                     ),
                     onChanged: (_) => _applyRgbFieldInput(),
-                    onEditingComplete: () => _applyRgbFieldInput(revertInvalid: true),
+                    onEditingComplete: () => _applyRgbFieldInput(revertInvalid: true, syncPicker: true),
                   ),
                 ),
               ],
