@@ -172,6 +172,48 @@ abstract class AppLocalizations {
   /// **'Device info'**
   String get deviceInfoTooltip;
 
+  /// No description provided for @aboutTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get aboutTooltip;
+
+  /// No description provided for @aboutTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get aboutTitle;
+
+  /// No description provided for @aboutVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'Version'**
+  String get aboutVersion;
+
+  /// No description provided for @aboutVersionValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{version} ({build})'**
+  String aboutVersionValue(String version, String build);
+
+  /// No description provided for @aboutAuthor.
+  ///
+  /// In en, this message translates to:
+  /// **'Author'**
+  String get aboutAuthor;
+
+  /// No description provided for @aboutIssues.
+  ///
+  /// In en, this message translates to:
+  /// **'Report issues'**
+  String get aboutIssues;
+
+  /// No description provided for @aboutOpenIssues.
+  ///
+  /// In en, this message translates to:
+  /// **'Open issues'**
+  String get aboutOpenIssues;
+
   /// No description provided for @close.
   ///
   /// In en, this message translates to:
@@ -868,6 +910,30 @@ abstract class AppLocalizations {
   /// **'Upload to keyboard'**
   String get macroUpload;
 
+  /// No description provided for @macroUploadPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload pending changes to the keyboard'**
+  String get macroUploadPending;
+
+  /// No description provided for @macroUploadPendingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Keyboard not updated yet'**
+  String get macroUploadPendingTitle;
+
+  /// No description provided for @macroUploadPendingBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your macro changes are saved in this app but have not been sent to the keyboard. Upload now to make them work.'**
+  String get macroUploadPendingBody;
+
+  /// No description provided for @macroNoChangesToUpload.
+  ///
+  /// In en, this message translates to:
+  /// **'No macro changes to upload.'**
+  String get macroNoChangesToUpload;
+
   /// No description provided for @macroUploaded.
   ///
   /// In en, this message translates to:
@@ -1132,6 +1198,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cancel'**
   String get cancel;
+
+  /// No description provided for @pendingUploadCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Changes discarded. The keyboard was not updated.'**
+  String get pendingUploadCancelled;
 
   /// No description provided for @upload.
   ///
@@ -1460,6 +1532,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Apply to keyboard'**
   String get remapApply;
+
+  /// No description provided for @remapUploadPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload pending changes to the keyboard'**
+  String get remapUploadPending;
+
+  /// No description provided for @remapUploadPendingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Keyboard not updated yet'**
+  String get remapUploadPendingTitle;
+
+  /// No description provided for @remapUploadPendingBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your remap changes are saved in this app but have not been sent to the keyboard. Apply now to make them work.'**
+  String get remapUploadPendingBody;
 
   /// No description provided for @remapChangesApplied.
   ///

@@ -10,6 +10,7 @@ import '../protocol/key_map.dart' as keymap;
 import '../services/keyboard_service.dart';
 import '../services/macro_storage.dart';
 import '../services/remap_storage.dart';
+import '../widgets/pending_upload_bar.dart';
 
 class RemapScreen extends StatefulWidget {
   const RemapScreen({super.key, required this.keyboard});
@@ -351,6 +352,21 @@ class _RemapScreenState extends State<RemapScreen> {
     }
   }
 
+  void _cancelChanges() {
+    if (_busy) return;
+    setState(() {
+      _bindings = _appliedBindings
+          .map((binding) => binding.copyWith(pendingDelete: false))
+          .toList();
+      _editingIndex = null;
+      _capturingSource = false;
+      _capturingTargetKey = false;
+      _message = AppLocalizations.of(context)!.pendingUploadCancelled;
+      _error = null;
+    });
+    _persistNow();
+  }
+
   Future<void> _clearLayer() async {
     final confirmed = await showDialog<bool>(
       context: context,
@@ -672,19 +688,48 @@ class _RemapScreenState extends State<RemapScreen> {
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
 
-    return KeyboardListener(
-      focusNode: _captureFocusNode,
-      autofocus: true,
-      onKeyEvent: _handleKeyEvent,
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(l10n.remapTitle, style: theme.textTheme.headlineMedium),
-            const SizedBox(height: 8),
-            Text(l10n.remapSubtitle),
-            const SizedBox(height: 24),
+    return Scaffold(
+      body: KeyboardListener(
+        focusNode: _captureFocusNode,
+        autofocus: true,
+        onKeyEvent: _handleKeyEvent,
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(l10n.remapTitle, style: theme.textTheme.headlineMedium),
+              const SizedBox(height: 8),
+              Text(l10n.remapSubtitle),
+              if (_hasUnappliedChanges) ...[
+                const SizedBox(height: 16),
+                Material(
+                  elevation: 0,
+                  color: theme.colorScheme.tertiaryContainer,
+                  borderRadius: BorderRadius.circular(12),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.info_outline,
+                          color: theme.colorScheme.onTertiaryContainer,
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Text(
+                            l10n.remapUploadPendingBody,
+                            style: TextStyle(
+                              color: theme.colorScheme.onTertiaryContainer,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+              const SizedBox(height: 24),
             if (_loading || _busy) const LinearProgressIndicator(),
             if (_message != null)
               Padding(
@@ -732,12 +777,6 @@ class _RemapScreenState extends State<RemapScreen> {
                   onPressed: _busy || _visibleBindings.isEmpty ? null : _clearLayer,
                   icon: const Icon(Icons.clear_all),
                   label: Text(l10n.remapClearLayer),
-                ),
-                const SizedBox(width: 12),
-                FilledButton.icon(
-                  onPressed: _busy || !_hasUnappliedChanges ? null : _applyToKeyboard,
-                  icon: const Icon(Icons.upload),
-                  label: Text(l10n.remapApply),
                 ),
               ],
             ),
@@ -801,6 +840,18 @@ class _RemapScreenState extends State<RemapScreen> {
           ],
         ),
       ),
+      ),
+      bottomNavigationBar: _hasUnappliedChanges
+          ? PendingUploadBar(
+              title: l10n.remapUploadPendingTitle,
+              message: l10n.remapUploadPending,
+              buttonLabel: l10n.remapApply,
+              cancelLabel: l10n.cancel,
+              onCancel: _busy ? null : _cancelChanges,
+              onPressed: _busy ? null : _applyToKeyboard,
+              busy: _busy,
+            )
+          : null,
     );
   }
 }

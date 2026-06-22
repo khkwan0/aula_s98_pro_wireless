@@ -45,6 +45,29 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deviceInfoTooltip => 'Device info';
 
   @override
+  String get aboutTooltip => 'About';
+
+  @override
+  String get aboutTitle => 'About';
+
+  @override
+  String get aboutVersion => 'Version';
+
+  @override
+  String aboutVersionValue(String version, String build) {
+    return '$version ($build)';
+  }
+
+  @override
+  String get aboutAuthor => 'Author';
+
+  @override
+  String get aboutIssues => 'Report issues';
+
+  @override
+  String get aboutOpenIssues => 'Open issues';
+
+  @override
   String get close => 'Close';
 
   @override
@@ -464,6 +487,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get macroUpload => 'Upload to keyboard';
 
   @override
+  String get macroUploadPending => 'Upload pending changes to the keyboard';
+
+  @override
+  String get macroUploadPendingTitle => 'Keyboard not updated yet';
+
+  @override
+  String get macroUploadPendingBody =>
+      'Your macro changes are saved in this app but have not been sent to the keyboard. Upload now to make them work.';
+
+  @override
+  String get macroNoChangesToUpload => 'No macro changes to upload.';
+
+  @override
   String macroUploaded(int macroCount, int eventCount) {
     String _temp0 = intl.Intl.pluralLogic(
       macroCount,
@@ -662,6 +698,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cancel => 'Cancel';
+
+  @override
+  String get pendingUploadCancelled =>
+      'Changes discarded. The keyboard was not updated.';
 
   @override
   String get upload => 'Upload';
@@ -875,6 +915,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get remapApply => 'Apply to keyboard';
+
+  @override
+  String get remapUploadPending => 'Upload pending changes to the keyboard';
+
+  @override
+  String get remapUploadPendingTitle => 'Keyboard not updated yet';
+
+  @override
+  String get remapUploadPendingBody =>
+      'Your remap changes are saved in this app but have not been sent to the keyboard. Apply now to make them work.';
 
   @override
   String get remapChangesApplied => 'Remap changes applied to the keyboard.';

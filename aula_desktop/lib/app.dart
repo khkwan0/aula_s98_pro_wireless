@@ -10,6 +10,7 @@ import 'screens/lighting_screen.dart';
 import 'screens/macro_screen.dart';
 import 'screens/remap_screen.dart';
 import 'services/keyboard_service.dart';
+import 'widgets/about_dialog.dart';
 
 class AulaApp extends StatefulWidget {
   AulaApp({super.key});
@@ -96,6 +97,10 @@ class _MainShellState extends State<MainShell> {
     );
   }
 
+  void _showAbout() {
+    showAppAboutDialog(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
@@ -166,27 +171,37 @@ class _MainShellState extends State<MainShell> {
             ],
             trailing: Padding(
               padding: const EdgeInsets.only(bottom: 16),
-              child: PopupMenuButton<Locale?>(
-                tooltip: l10n.language,
-                icon: const Icon(Icons.translate),
-                onSelected: widget.onLocaleChanged,
-                itemBuilder: (context) {
-                  final menuL10n = AppLocalizations.of(context)!;
-                  Locale? selected = widget.localeOverride;
-                  return [
-                    CheckedPopupMenuItem<Locale?>(
-                      value: null,
-                      checked: selected == null,
-                      child: Text(menuL10n.languageSystem),
-                    ),
-                    for (final locale in appLocaleOptions)
-                      CheckedPopupMenuItem<Locale?>(
-                        value: locale,
-                        checked: localesMatch(selected, locale),
-                        child: Text(localeLabel(menuL10n, locale)),
-                      ),
-                  ];
-                },
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  PopupMenuButton<Locale?>(
+                    tooltip: l10n.language,
+                    icon: const Icon(Icons.translate),
+                    onSelected: widget.onLocaleChanged,
+                    itemBuilder: (context) {
+                      final menuL10n = AppLocalizations.of(context)!;
+                      Locale? selected = widget.localeOverride;
+                      return [
+                        CheckedPopupMenuItem<Locale?>(
+                          value: null,
+                          checked: selected == null,
+                          child: Text(menuL10n.languageSystem),
+                        ),
+                        for (final locale in appLocaleOptions)
+                          CheckedPopupMenuItem<Locale?>(
+                            value: locale,
+                            checked: localesMatch(selected, locale),
+                            child: Text(localeLabel(menuL10n, locale)),
+                          ),
+                      ];
+                    },
+                  ),
+                  IconButton(
+                    tooltip: l10n.aboutTooltip,
+                    onPressed: _showAbout,
+                    icon: const Icon(Icons.info_outline),
+                  ),
+                ],
               ),
             ),
           ),

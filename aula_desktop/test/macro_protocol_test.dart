@@ -49,4 +49,19 @@ void main() {
     expect(info.buffer[macroHeaderBytes + 4], 250 & 0xFF);
     expect(info.buffer[macroHeaderBytes + 5], (250 >> 8) & 0xFF);
   });
+
+  test('macrosListChanged detects event deletion', () {
+    const applied = [
+      MacroDefinition(
+        name: 'Test',
+        events: [
+          MacroEvent(hidCode: 0x04, isKeyDown: true, label: 'A'),
+        ],
+      ),
+    ];
+    const draft = [
+      MacroDefinition(name: 'Test'),
+    ];
+    expect(macrosListChanged(applied, draft), isTrue);
+  });
 }

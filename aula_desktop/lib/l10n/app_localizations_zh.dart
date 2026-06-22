@@ -45,6 +45,29 @@ class AppLocalizationsZh extends AppLocalizations {
   String get deviceInfoTooltip => '设备信息';
 
   @override
+  String get aboutTooltip => 'About';
+
+  @override
+  String get aboutTitle => 'About';
+
+  @override
+  String get aboutVersion => 'Version';
+
+  @override
+  String aboutVersionValue(String version, String build) {
+    return '$version ($build)';
+  }
+
+  @override
+  String get aboutAuthor => 'Author';
+
+  @override
+  String get aboutIssues => 'Report issues';
+
+  @override
+  String get aboutOpenIssues => 'Open issues';
+
+  @override
   String get close => '关闭';
 
   @override
@@ -461,6 +484,19 @@ class AppLocalizationsZh extends AppLocalizations {
   String get macroUpload => 'Upload to keyboard';
 
   @override
+  String get macroUploadPending => 'Upload pending changes to the keyboard';
+
+  @override
+  String get macroUploadPendingTitle => 'Keyboard not updated yet';
+
+  @override
+  String get macroUploadPendingBody =>
+      'Your macro changes are saved in this app but have not been sent to the keyboard. Upload now to make them work.';
+
+  @override
+  String get macroNoChangesToUpload => 'No macro changes to upload.';
+
+  @override
   String macroUploaded(int macroCount, int eventCount) {
     String _temp0 = intl.Intl.pluralLogic(
       macroCount,
@@ -659,6 +695,10 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get cancel => '取消';
+
+  @override
+  String get pendingUploadCancelled =>
+      'Changes discarded. The keyboard was not updated.';
 
   @override
   String get upload => '上传';
@@ -873,6 +913,16 @@ class AppLocalizationsZh extends AppLocalizations {
   String get remapApply => 'Apply to keyboard';
 
   @override
+  String get remapUploadPending => 'Upload pending changes to the keyboard';
+
+  @override
+  String get remapUploadPendingTitle => 'Keyboard not updated yet';
+
+  @override
+  String get remapUploadPendingBody =>
+      'Your remap changes are saved in this app but have not been sent to the keyboard. Apply now to make them work.';
+
+  @override
   String get remapChangesApplied => 'Remap changes applied to the keyboard.';
 
   @override
@@ -994,6 +1044,29 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
 
   @override
   String get deviceInfoTooltip => '设备信息';
+
+  @override
+  String get aboutTooltip => '关于';
+
+  @override
+  String get aboutTitle => '关于';
+
+  @override
+  String get aboutVersion => '版本';
+
+  @override
+  String aboutVersionValue(String version, String build) {
+    return '$version（$build）';
+  }
+
+  @override
+  String get aboutAuthor => '作者';
+
+  @override
+  String get aboutIssues => '反馈问题';
+
+  @override
+  String get aboutOpenIssues => '打开 Issues';
 
   @override
   String get close => '关闭';
@@ -1392,6 +1465,18 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   String get macroUpload => '上传到键盘';
 
   @override
+  String get macroUploadPending => '上传待同步的宏更改到键盘';
+
+  @override
+  String get macroUploadPendingTitle => '键盘尚未更新';
+
+  @override
+  String get macroUploadPendingBody => '宏更改已保存在本应用中，但尚未发送到键盘。请立即上传以生效。';
+
+  @override
+  String get macroNoChangesToUpload => '没有可上传的宏更改。';
+
+  @override
   String macroUploaded(int macroCount, int eventCount) {
     return '已上传 $macroCount 个宏，共 $eventCount 个事件';
   }
@@ -1544,6 +1629,9 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
 
   @override
   String get cancel => '取消';
+
+  @override
+  String get pendingUploadCancelled => '已放弃更改，键盘未更新。';
 
   @override
   String get upload => '上传';
@@ -1753,6 +1841,15 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   String get remapApply => '上传到键盘';
 
   @override
+  String get remapUploadPending => '上传待同步的改键到键盘';
+
+  @override
+  String get remapUploadPendingTitle => '键盘尚未更新';
+
+  @override
+  String get remapUploadPendingBody => '改键已保存在本应用中，但尚未发送到键盘。请立即上传以生效。';
+
+  @override
   String get remapChangesApplied => '改键更改已上传到键盘。';
 
   @override
@@ -1864,6 +1961,29 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get deviceInfoTooltip => '裝置資訊';
+
+  @override
+  String get aboutTooltip => '關於';
+
+  @override
+  String get aboutTitle => '關於';
+
+  @override
+  String get aboutVersion => '版本';
+
+  @override
+  String aboutVersionValue(String version, String build) {
+    return '$version（$build）';
+  }
+
+  @override
+  String get aboutAuthor => '作者';
+
+  @override
+  String get aboutIssues => '回報問題';
+
+  @override
+  String get aboutOpenIssues => '開啟 Issues';
 
   @override
   String get close => '關閉';
@@ -2262,6 +2382,18 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get macroUpload => '上傳到鍵盤';
 
   @override
+  String get macroUploadPending => '上傳待同步的巨集變更到鍵盤';
+
+  @override
+  String get macroUploadPendingTitle => '鍵盤尚未更新';
+
+  @override
+  String get macroUploadPendingBody => '巨集變更已儲存在本應用程式中，但尚未傳送到鍵盤。請立即上傳以生效。';
+
+  @override
+  String get macroNoChangesToUpload => '沒有可上傳的巨集變更。';
+
+  @override
   String macroUploaded(int macroCount, int eventCount) {
     return '已上傳 $macroCount 個巨集，共 $eventCount 個事件';
   }
@@ -2414,6 +2546,9 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get cancel => '取消';
+
+  @override
+  String get pendingUploadCancelled => '已放棄變更，鍵盤未更新。';
 
   @override
   String get upload => '上傳';
@@ -2621,6 +2756,15 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get remapApply => '上傳到鍵盤';
+
+  @override
+  String get remapUploadPending => '上傳待同步的改鍵到鍵盤';
+
+  @override
+  String get remapUploadPendingTitle => '鍵盤尚未更新';
+
+  @override
+  String get remapUploadPendingBody => '改鍵已儲存在本應用程式中，但尚未傳送到鍵盤。請立即上傳以生效。';
 
   @override
   String get remapChangesApplied => '改鍵變更已上傳到鍵盤。';

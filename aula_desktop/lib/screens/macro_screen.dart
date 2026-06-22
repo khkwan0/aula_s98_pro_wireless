@@ -11,6 +11,7 @@ import '../protocol/hid_scancodes.dart';
 import '../protocol/macro_trigger_codec.dart';
 import '../services/keyboard_service.dart';
 import '../services/macro_storage.dart';
+import '../widgets/pending_upload_bar.dart';
 
 class MacroScreen extends StatefulWidget {
   const MacroScreen({super.key, required this.keyboard});
@@ -35,6 +36,8 @@ class _MacroScreenState extends State<MacroScreen> {
   ];
 
   List<MacroDefinition> _macros = List<MacroDefinition>.from(defaultMacros());
+  List<MacroDefinition> _appliedMacros =
+      List<MacroDefinition>.from(defaultMacros());
   int _selectedIndex = 0;
   bool _recording = false;
   bool _assigningTrigger = false;
@@ -45,8 +48,42 @@ class _MacroScreenState extends State<MacroScreen> {
   final Set<LogicalKeyboardKey> _pressedKeys = {};
   Timer? _persistTimer;
   bool _loadingMacros = true;
+  bool _macrosDirty = false;
 
   MacroDefinition get _selected => _macros[_selectedIndex];
+
+  bool get _hasUnappliedChanges =>
+      macrosListChanged(_appliedMacros, _draftMacrosForUpload());
+
+  List<MacroDefinition> _draftMacrosForUpload() {
+    final macros = cloneMacroList(_macros);
+    if (_loadingMacros || macros.isEmpty) return macros;
+
+    final name = _nameController.text.trim();
+    macros[_selectedIndex] = macros[_selectedIndex].copyWith(
+      name: name.isEmpty ? macros[_selectedIndex].name : name,
+      maxRepeats: _selected.playbackMode == MacroPlaybackMode.once
+          ? _maxRepeatsFromInput()
+          : 1,
+      playbackMode: _selected.playbackMode,
+    );
+
+    final customDelay = int.tryParse(_customDelayController.text.trim());
+    if (customDelay != null) {
+      macros[_selectedIndex] = macros[_selectedIndex].copyWith(
+        customDelayMs: customDelay.clamp(10, 65535),
+      );
+    }
+
+    return macros;
+  }
+
+  void _commitAppliedState(List<MacroDefinition> macros) {
+    _appliedMacros = cloneMacroList(macros);
+    _macros = cloneMacroList(macros);
+    _macrosDirty = false;
+    _syncEditorsFromSelected();
+  }
 
   @override
   void initState() {
@@ -57,15 +94,25 @@ class _MacroScreenState extends State<MacroScreen> {
   Future<void> _loadMacros() async {
     final macros = await MacroStorage.load();
     if (!mounted) return;
+    if (_macrosDirty) {
+      setState(() => _loadingMacros = false);
+      return;
+    }
     setState(() {
       _macros = List<MacroDefinition>.from(macros);
+      _appliedMacros = cloneMacroList(macros);
       _selectedIndex = _selectedIndex.clamp(0, _macros.length - 1);
       _loadingMacros = false;
       _syncEditorsFromSelected();
     });
   }
 
+  void _markDirty() {
+    _macrosDirty = true;
+  }
+
   void _schedulePersist() {
+    _markDirty();
     _persistTimer?.cancel();
     _persistTimer = Timer(const Duration(milliseconds: 250), () {
       MacroStorage.save(_macros);
@@ -167,11 +214,10 @@ class _MacroScreenState extends State<MacroScreen> {
     final next = List<MacroDefinition>.from(_macros);
     next[_selectedIndex] = _selected.copyWith(clearEvents: true);
     setState(() => _macros = next);
-    _persistNow();
-    _syncMacrosToKeyboard(successOnClear: true);
+    _schedulePersist();
   }
 
-  Future<void> _syncMacrosToKeyboard({bool successOnClear = false}) async {
+  Future<void> _syncMacrosToKeyboard() async {
     setState(() {
       _busy = true;
       _message = null;
@@ -179,23 +225,14 @@ class _MacroScreenState extends State<MacroScreen> {
     });
 
     try {
-      final macros = List<MacroDefinition>.from(_macros);
-      final name = _nameController.text.trim();
-      if (name.isNotEmpty) {
-        macros[_selectedIndex] = macros[_selectedIndex].copyWith(name: name);
-      }
-      _applyMaxRepeatsInput();
-      macros[_selectedIndex] = macros[_selectedIndex].copyWith(
-        maxRepeats: _selected.playbackMode == MacroPlaybackMode.once
-            ? _maxRepeatsFromInput()
-            : 1,
-        playbackMode: _selected.playbackMode,
-      );
+      final macros = _draftMacrosForUpload();
       final result = await widget.keyboard.uploadMacrosWithBindings(macros);
       if (!mounted) return;
       final l10n = AppLocalizations.of(context)!;
+      _commitAppliedState(macros);
+      _persistNow();
       setState(() {
-        if (successOnClear || result.upload.macroCount == 0) {
+        if (result.upload.macroCount == 0) {
           _message = l10n.macroEventsCleared;
         } else if (result.bindings!.bindingCount > 0) {
           _message = l10n.macroUploadedWithBinding(
@@ -220,12 +257,26 @@ class _MacroScreenState extends State<MacroScreen> {
   }
 
   Future<void> _upload() async {
-    final name = _nameController.text.trim();
-    if (name.isNotEmpty && name != _selected.name) {
-      _updateSelected(_selected.copyWith(name: name));
+    if (!_hasUnappliedChanges) {
+      setState(() {
+        _message = AppLocalizations.of(context)!.macroNoChangesToUpload;
+      });
+      return;
     }
     _applyMaxRepeatsInput();
     await _syncMacrosToKeyboard();
+  }
+
+  void _cancelChanges() {
+    if (_busy || _recording || _assigningTrigger) return;
+    setState(() {
+      _macros = cloneMacroList(_appliedMacros);
+      _selectedIndex = _selectedIndex.clamp(0, _macros.length - 1);
+      _message = AppLocalizations.of(context)!.pendingUploadCancelled;
+      _error = null;
+    });
+    _syncEditorsFromSelected();
+    _persistNow();
   }
 
   void _removeEvent(int index) {
@@ -283,9 +334,7 @@ class _MacroScreenState extends State<MacroScreen> {
     if (_busy || _recording || _assigningTrigger) return;
     _updateSelected(
       _selected.copyWith(clearTrigger: true),
-      persistImmediately: true,
     );
-    _syncMacrosToKeyboard();
   }
 
   void _startRecording() {
@@ -384,19 +433,48 @@ class _MacroScreenState extends State<MacroScreen> {
       return const Center(child: CircularProgressIndicator());
     }
 
-    return KeyboardListener(
-      focusNode: _recordFocusNode,
-      autofocus: true,
-      onKeyEvent: _handleKeyEvent,
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(l10n.macroTitle, style: theme.textTheme.headlineMedium),
-            const SizedBox(height: 8),
-            Text(l10n.macroSubtitle),
-            const SizedBox(height: 24),
+    return Scaffold(
+      body: KeyboardListener(
+        focusNode: _recordFocusNode,
+        autofocus: true,
+        onKeyEvent: _handleKeyEvent,
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(l10n.macroTitle, style: theme.textTheme.headlineMedium),
+              const SizedBox(height: 8),
+              Text(l10n.macroSubtitle),
+              if (_hasUnappliedChanges) ...[
+                const SizedBox(height: 16),
+                Material(
+                  elevation: 0,
+                  color: theme.colorScheme.tertiaryContainer,
+                  borderRadius: BorderRadius.circular(12),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.info_outline,
+                          color: theme.colorScheme.onTertiaryContainer,
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Text(
+                            l10n.macroUploadPendingBody,
+                            style: TextStyle(
+                              color: theme.colorScheme.onTertiaryContainer,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+              const SizedBox(height: 24),
             SizedBox(
               height: 720,
               child: Row(
@@ -787,21 +865,16 @@ class _MacroScreenState extends State<MacroScreen> {
                                   icon: const Icon(Icons.delete_forever_outlined),
                                   label: Text(l10n.macroDelete),
                                 ),
-                                FilledButton.icon(
-                                  onPressed: (_busy || _recording || _assigningTrigger)
-                                      ? null
-                                      : _upload,
-                                  icon: _busy
-                                      ? const SizedBox(
-                                          width: 18,
-                                          height: 18,
-                                          child: CircularProgressIndicator(
-                                            strokeWidth: 2,
-                                          ),
-                                        )
-                                      : const Icon(Icons.upload),
-                                  label: Text(l10n.macroUpload),
-                                ),
+                                if (!_hasUnappliedChanges)
+                                  OutlinedButton.icon(
+                                    onPressed: (_busy ||
+                                            _recording ||
+                                            _assigningTrigger)
+                                        ? null
+                                        : _upload,
+                                    icon: const Icon(Icons.upload),
+                                    label: Text(l10n.macroUpload),
+                                  ),
                               ],
                             ),
                           ],
@@ -829,6 +902,20 @@ class _MacroScreenState extends State<MacroScreen> {
           ],
         ),
       ),
+      ),
+      bottomNavigationBar: _hasUnappliedChanges
+          ? PendingUploadBar(
+              title: l10n.macroUploadPendingTitle,
+              message: l10n.macroUploadPending,
+              buttonLabel: l10n.macroUpload,
+              cancelLabel: l10n.cancel,
+              onCancel: (_busy || _recording || _assigningTrigger)
+                  ? null
+                  : _cancelChanges,
+              onPressed: (_busy || _recording || _assigningTrigger) ? null : _upload,
+              busy: _busy,
+            )
+          : null,
     );
   }
 }

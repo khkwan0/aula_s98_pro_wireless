@@ -14,6 +14,19 @@
   "navMacro": "Macros",
   "navLcd": "LCD",
   "deviceInfoTooltip": "Device info",
+  "aboutTooltip": "About",
+  "aboutTitle": "About",
+  "aboutVersion": "Version",
+  "aboutVersionValue": "{version} ({build})",
+  "@aboutVersionValue": {
+    "placeholders": {
+      "version": { "type": "String" },
+      "build": { "type": "String" }
+    }
+  },
+  "aboutAuthor": "Author",
+  "aboutIssues": "Report issues",
+  "aboutOpenIssues": "Open issues",
   "close": "Close",
 
   "connected": "Connected",
@@ -262,6 +275,10 @@
   "macroEventsCleared": "Cleared macro events on the keyboard.",
   "macroDelete": "Delete macro",
   "macroUpload": "Upload to keyboard",
+  "macroUploadPending": "Upload pending changes to the keyboard",
+  "macroUploadPendingTitle": "Keyboard not updated yet",
+  "macroUploadPendingBody": "Your macro changes are saved in this app but have not been sent to the keyboard. Upload now to make them work.",
+  "macroNoChangesToUpload": "No macro changes to upload.",
   "macroUploaded": "Uploaded {macroCount, plural, =1{1 macro} other{{macroCount} macros}} with {eventCount, plural, =1{1 event} other{{eventCount} events}}",
   "@macroUploaded": {
     "placeholders": {
@@ -363,6 +380,8 @@
     }
   },
   "cancel": "Cancel",
+
+  "pendingUploadCancelled": "Changes discarded. The keyboard was not updated.",
   "upload": "Upload",
   "saveLcdBinary": "Save LCD binary",
   "uploadingPercent": "Uploading {percent}%",
@@ -540,6 +559,9 @@
     }
   },
   "remapApply": "Apply to keyboard",
+  "remapUploadPending": "Upload pending changes to the keyboard",
+  "remapUploadPendingTitle": "Keyboard not updated yet",
+  "remapUploadPendingBody": "Your remap changes are saved in this app but have not been sent to the keyboard. Apply now to make them work.",
   "remapChangesApplied": "Remap changes applied to the keyboard.",
   "remapNoChangesToApply": "No remap changes to apply.",
   "remapPendingDelete": "Pending delete — apply to remove from keyboard",

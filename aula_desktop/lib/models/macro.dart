@@ -111,6 +111,61 @@ class MacroDefinition {
           clearTrigger ? '' : (triggerKeyLabel ?? this.triggerKeyLabel),
     );
   }
+
+  MacroDefinition clone() {
+    return MacroDefinition(
+      name: name,
+      playbackMode: playbackMode,
+      maxRepeats: maxRepeats,
+      delayMode: delayMode,
+      customDelayMs: customDelayMs,
+      events: List<MacroEvent>.from(events),
+      triggerKeyIndices: List<int>.from(triggerKeyIndices),
+      triggerKeyLabel: triggerKeyLabel,
+    );
+  }
+
+  bool matches(MacroDefinition other) {
+    if (name != other.name ||
+        playbackMode != other.playbackMode ||
+        maxRepeats != other.maxRepeats ||
+        delayMode != other.delayMode ||
+        customDelayMs != other.customDelayMs ||
+        triggerKeyLabel != other.triggerKeyLabel ||
+        events.length != other.events.length ||
+        triggerKeyIndices.length != other.triggerKeyIndices.length) {
+      return false;
+    }
+    for (var i = 0; i < events.length; i++) {
+      final event = events[i];
+      final otherEvent = other.events[i];
+      if (event.hidCode != otherEvent.hidCode ||
+          event.isKeyDown != otherEvent.isKeyDown ||
+          event.delayMs != otherEvent.delayMs ||
+          event.label != otherEvent.label) {
+        return false;
+      }
+    }
+    for (var i = 0; i < triggerKeyIndices.length; i++) {
+      if (triggerKeyIndices[i] != other.triggerKeyIndices[i]) return false;
+    }
+    return true;
+  }
+}
+
+List<MacroDefinition> cloneMacroList(List<MacroDefinition> macros) {
+  return macros.map((macro) => macro.clone()).toList();
+}
+
+bool macrosListChanged(
+  List<MacroDefinition> applied,
+  List<MacroDefinition> draft,
+) {
+  if (applied.length != draft.length) return true;
+  for (var i = 0; i < applied.length; i++) {
+    if (!applied[i].matches(draft[i])) return true;
+  }
+  return false;
 }
 
 class MacroUploadResult {
