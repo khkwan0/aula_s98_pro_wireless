@@ -148,6 +148,12 @@ abstract class AppLocalizations {
   /// **'RGB'**
   String get navRgb;
 
+  /// No description provided for @navMacro.
+  ///
+  /// In en, this message translates to:
+  /// **'Macros'**
+  String get navMacro;
+
   /// No description provided for @navLcd.
   ///
   /// In en, this message translates to:
@@ -502,6 +508,36 @@ abstract class AppLocalizations {
   /// **'Rainbow / colorful'**
   String get rainbowColorful;
 
+  /// No description provided for @colorRgbValue.
+  ///
+  /// In en, this message translates to:
+  /// **'RGB ({r}, {g}, {b})'**
+  String colorRgbValue(int r, int g, int b);
+
+  /// No description provided for @colorRed.
+  ///
+  /// In en, this message translates to:
+  /// **'Red'**
+  String get colorRed;
+
+  /// No description provided for @colorGreen.
+  ///
+  /// In en, this message translates to:
+  /// **'Green'**
+  String get colorGreen;
+
+  /// No description provided for @colorBlue.
+  ///
+  /// In en, this message translates to:
+  /// **'Blue'**
+  String get colorBlue;
+
+  /// No description provided for @colorHsvValue.
+  ///
+  /// In en, this message translates to:
+  /// **'HSV ({h}, {s}, {v})'**
+  String colorHsvValue(int h, int s, int v);
+
   /// No description provided for @brightness.
   ///
   /// In en, this message translates to:
@@ -543,6 +579,168 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Backlight turned off'**
   String get backlightTurnedOff;
+
+  /// No description provided for @macroTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Macros'**
+  String get macroTitle;
+
+  /// No description provided for @macroSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Record keyboard sequences and upload them to the keyboard over USB. Assign a key to a macro using the official AULA utility or a future key-remap feature.'**
+  String get macroSubtitle;
+
+  /// No description provided for @macroListTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Macro slots'**
+  String get macroListTitle;
+
+  /// No description provided for @macroAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add macro'**
+  String get macroAdd;
+
+  /// No description provided for @macroName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get macroName;
+
+  /// No description provided for @macroDelayMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Delay between events'**
+  String get macroDelayMode;
+
+  /// No description provided for @macroDelayRecorded.
+  ///
+  /// In en, this message translates to:
+  /// **'Use recorded delays'**
+  String get macroDelayRecorded;
+
+  /// No description provided for @macroDelayNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No delay'**
+  String get macroDelayNone;
+
+  /// No description provided for @macroDelayCustom.
+  ///
+  /// In en, this message translates to:
+  /// **'Fixed delay'**
+  String get macroDelayCustom;
+
+  /// No description provided for @macroDelayMs.
+  ///
+  /// In en, this message translates to:
+  /// **'Delay (ms)'**
+  String get macroDelayMs;
+
+  /// No description provided for @macroRecordingHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Recording… press keys on your keyboard. Press Esc to stop.'**
+  String get macroRecordingHint;
+
+  /// No description provided for @macroNoEvents.
+  ///
+  /// In en, this message translates to:
+  /// **'No events yet. Click Record and press keys.'**
+  String get macroNoEvents;
+
+  /// No description provided for @macroEventCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No events} =1{1 event} other{{count} events}}'**
+  String macroEventCount(int count);
+
+  /// No description provided for @macroActionDown.
+  ///
+  /// In en, this message translates to:
+  /// **'Down'**
+  String get macroActionDown;
+
+  /// No description provided for @macroActionUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Up'**
+  String get macroActionUp;
+
+  /// No description provided for @macroActionDelay.
+  ///
+  /// In en, this message translates to:
+  /// **'Delay'**
+  String get macroActionDelay;
+
+  /// No description provided for @macroGapDelay.
+  ///
+  /// In en, this message translates to:
+  /// **'Gap before: {ms} ms'**
+  String macroGapDelay(int ms);
+
+  /// No description provided for @macroRecord.
+  ///
+  /// In en, this message translates to:
+  /// **'Record'**
+  String get macroRecord;
+
+  /// No description provided for @macroStop.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop'**
+  String get macroStop;
+
+  /// No description provided for @macroClear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear events'**
+  String get macroClear;
+
+  /// No description provided for @macroDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete macro'**
+  String get macroDelete;
+
+  /// No description provided for @macroUpload.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload to keyboard'**
+  String get macroUpload;
+
+  /// No description provided for @macroUploaded.
+  ///
+  /// In en, this message translates to:
+  /// **'Uploaded {macroCount, plural, =1{1 macro} other{{macroCount} macros}} with {eventCount, plural, =1{1 event} other{{eventCount} events}}'**
+  String macroUploaded(int macroCount, int eventCount);
+
+  /// No description provided for @errorMacroEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Add at least one macro with recorded events before uploading.'**
+  String get errorMacroEmpty;
+
+  /// No description provided for @errorMacroTooManyMacros.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many macros ({count}). The keyboard supports up to 100.'**
+  String errorMacroTooManyMacros(int count);
+
+  /// No description provided for @errorMacroTooLarge.
+  ///
+  /// In en, this message translates to:
+  /// **'Macro data is too large ({macros} macros, {events} events). Reduce the number of macros or events.'**
+  String errorMacroTooLarge(int macros, int events);
+
+  /// No description provided for @errorMacroUnsupportedKey.
+  ///
+  /// In en, this message translates to:
+  /// **'That key is not supported for macros.'**
+  String get errorMacroUnsupportedKey;
 
   /// No description provided for @lightingModeOff.
   ///

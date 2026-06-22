@@ -79,6 +79,14 @@ extension MessageLocalization on AppLocalizations {
         ),
       'warningGifCappedAt255' =>
         warningGifCappedAt255(args['frameCount']! as int),
+      'errorMacroEmpty' => errorMacroEmpty,
+      'errorMacroTooManyMacros' =>
+        errorMacroTooManyMacros(args['count']! as int),
+      'errorMacroTooLarge' => errorMacroTooLarge(
+          args['macros']! as int,
+          args['events']! as int,
+        ),
+      'errorMacroUnsupportedKey' => errorMacroUnsupportedKey,
       _ => message.key,
     };
   }

@@ -10,6 +10,7 @@
   "navHome": "首页",
   "navClock": "时钟",
   "navRgb": "RGB",
+  "navMacro": "宏",
   "navLcd": "LCD",
   "deviceInfoTooltip": "设备信息",
   "close": "关闭",
@@ -75,6 +76,25 @@
   "mode": "模式",
   "lightingModeEntry": "{index} — {name}",
   "rainbowColorful": "彩虹 / 多彩",
+  "colorRgbValue": "RGB（{r}，{g}，{b}）",
+  "@colorRgbValue": {
+    "placeholders": {
+      "r": { "type": "int" },
+      "g": { "type": "int" },
+      "b": { "type": "int" }
+    }
+  },
+  "colorRed": "红",
+  "colorGreen": "绿",
+  "colorBlue": "蓝",
+  "colorHsvValue": "HSV（{h}，{s}，{v}）",
+  "@colorHsvValue": {
+    "placeholders": {
+      "h": { "type": "int" },
+      "s": { "type": "int" },
+      "v": { "type": "int" }
+    }
+  },
   "brightness": "亮度：{value}",
   "speed": "速度：{value}",
   "direction": "方向：{value}",
@@ -82,6 +102,34 @@
   "turnOff": "关闭",
   "appliedMode": "已应用 {mode}",
   "backlightTurnedOff": "背光已关闭",
+
+  "macroTitle": "宏",
+  "macroSubtitle": "录制键盘序列并通过 USB 上传到键盘。请使用 AULA 官方工具或未来的按键重映射功能将按键绑定到宏。",
+  "macroListTitle": "宏槽位",
+  "macroAdd": "添加宏",
+  "macroName": "名称",
+  "macroDelayMode": "事件间隔",
+  "macroDelayRecorded": "使用录制延迟",
+  "macroDelayNone": "无延迟",
+  "macroDelayCustom": "固定延迟",
+  "macroDelayMs": "延迟（毫秒）",
+  "macroRecordingHint": "正在录制…请按下键盘按键。按 Esc 停止。",
+  "macroNoEvents": "尚无事件。点击“录制”并按键。",
+  "macroEventCount": "{count} 个事件",
+  "macroActionDown": "按下",
+  "macroActionUp": "释放",
+  "macroActionDelay": "延迟",
+  "macroGapDelay": "间隔：{ms} 毫秒",
+  "macroRecord": "录制",
+  "macroStop": "停止",
+  "macroClear": "清除事件",
+  "macroDelete": "删除宏",
+  "macroUpload": "上传到键盘",
+  "macroUploaded": "已上传 {macroCount} 个宏，共 {eventCount} 个事件",
+  "errorMacroEmpty": "上传前请至少添加一个包含录制事件的宏。",
+  "errorMacroTooManyMacros": "宏数量过多（{count}）。键盘最多支持 100 个。",
+  "errorMacroTooLarge": "宏数据过大（{macros} 个宏，{events} 个事件）。请减少宏或事件数量。",
+  "errorMacroUnsupportedKey": "该按键不支持用于宏。",
 
   "lightingModeOff": "关闭",
   "lightingModeStatic": "常亮",

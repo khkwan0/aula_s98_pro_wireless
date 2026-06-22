@@ -7,6 +7,7 @@ import 'screens/clock_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/lcd_screen.dart';
 import 'screens/lighting_screen.dart';
+import 'screens/macro_screen.dart';
 import 'services/keyboard_service.dart';
 
 class AulaApp extends StatefulWidget {
@@ -99,6 +100,7 @@ class _MainShellState extends State<MainShell> {
       HomeScreen(keyboard: widget.keyboard),
       ClockScreen(keyboard: widget.keyboard),
       LightingScreen(keyboard: widget.keyboard),
+      MacroScreen(keyboard: widget.keyboard),
       LcdScreen(keyboard: widget.keyboard),
     ];
 
@@ -141,6 +143,11 @@ class _MainShellState extends State<MainShell> {
                 icon: const Icon(Icons.light_mode_outlined),
                 selectedIcon: const Icon(Icons.light_mode),
                 label: Text(l10n.navRgb),
+              ),
+              NavigationRailDestination(
+                icon: const Icon(Icons.keyboard_command_key_outlined),
+                selectedIcon: const Icon(Icons.keyboard_command_key),
+                label: Text(l10n.navMacro),
               ),
               NavigationRailDestination(
                 icon: const Icon(Icons.gif_box_outlined),

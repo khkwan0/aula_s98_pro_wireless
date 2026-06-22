@@ -10,6 +10,7 @@
   "navHome": "Home",
   "navClock": "Clock",
   "navRgb": "RGB",
+  "navMacro": "Macros",
   "navLcd": "LCD",
   "deviceInfoTooltip": "Device info",
   "close": "Close",
@@ -128,6 +129,25 @@
     }
   },
   "rainbowColorful": "Rainbow / colorful",
+  "colorRgbValue": "RGB ({r}, {g}, {b})",
+  "@colorRgbValue": {
+    "placeholders": {
+      "r": { "type": "int" },
+      "g": { "type": "int" },
+      "b": { "type": "int" }
+    }
+  },
+  "colorRed": "Red",
+  "colorGreen": "Green",
+  "colorBlue": "Blue",
+  "colorHsvValue": "HSV ({h}, {s}, {v})",
+  "@colorHsvValue": {
+    "placeholders": {
+      "h": { "type": "int" },
+      "s": { "type": "int" },
+      "v": { "type": "int" }
+    }
+  },
   "brightness": "Brightness: {value}",
   "@brightness": {
     "placeholders": {
@@ -155,6 +175,61 @@
     }
   },
   "backlightTurnedOff": "Backlight turned off",
+
+  "macroTitle": "Macros",
+  "macroSubtitle": "Record keyboard sequences and upload them to the keyboard over USB. Assign a key to a macro using the official AULA utility or a future key-remap feature.",
+  "macroListTitle": "Macro slots",
+  "macroAdd": "Add macro",
+  "macroName": "Name",
+  "macroDelayMode": "Delay between events",
+  "macroDelayRecorded": "Use recorded delays",
+  "macroDelayNone": "No delay",
+  "macroDelayCustom": "Fixed delay",
+  "macroDelayMs": "Delay (ms)",
+  "macroRecordingHint": "Recording… press keys on your keyboard. Press Esc to stop.",
+  "macroNoEvents": "No events yet. Click Record and press keys.",
+  "macroEventCount": "{count, plural, =0{No events} =1{1 event} other{{count} events}}",
+  "@macroEventCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "macroActionDown": "Down",
+  "macroActionUp": "Up",
+  "macroActionDelay": "Delay",
+  "macroGapDelay": "Gap before: {ms} ms",
+  "@macroGapDelay": {
+    "placeholders": {
+      "ms": { "type": "int" }
+    }
+  },
+  "macroRecord": "Record",
+  "macroStop": "Stop",
+  "macroClear": "Clear events",
+  "macroDelete": "Delete macro",
+  "macroUpload": "Upload to keyboard",
+  "macroUploaded": "Uploaded {macroCount, plural, =1{1 macro} other{{macroCount} macros}} with {eventCount, plural, =1{1 event} other{{eventCount} events}}",
+  "@macroUploaded": {
+    "placeholders": {
+      "macroCount": { "type": "int" },
+      "eventCount": { "type": "int" }
+    }
+  },
+  "errorMacroEmpty": "Add at least one macro with recorded events before uploading.",
+  "errorMacroTooManyMacros": "Too many macros ({count}). The keyboard supports up to 100.",
+  "@errorMacroTooManyMacros": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "errorMacroTooLarge": "Macro data is too large ({macros} macros, {events} events). Reduce the number of macros or events.",
+  "@errorMacroTooLarge": {
+    "placeholders": {
+      "macros": { "type": "int" },
+      "events": { "type": "int" }
+    }
+  },
+  "errorMacroUnsupportedKey": "That key is not supported for macros.",
 
   "lightingModeOff": "Off",
   "lightingModeStatic": "Static",

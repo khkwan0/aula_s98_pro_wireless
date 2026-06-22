@@ -10,6 +10,7 @@
   "navHome": "首頁",
   "navClock": "時鐘",
   "navRgb": "RGB",
+  "navMacro": "巨集",
   "navLcd": "LCD",
   "deviceInfoTooltip": "裝置資訊",
   "close": "關閉",
@@ -75,6 +76,25 @@
   "mode": "模式",
   "lightingModeEntry": "{index} — {name}",
   "rainbowColorful": "彩虹 / 多彩",
+  "colorRgbValue": "RGB（{r}，{g}，{b}）",
+  "@colorRgbValue": {
+    "placeholders": {
+      "r": { "type": "int" },
+      "g": { "type": "int" },
+      "b": { "type": "int" }
+    }
+  },
+  "colorRed": "紅",
+  "colorGreen": "綠",
+  "colorBlue": "藍",
+  "colorHsvValue": "HSV（{h}，{s}，{v}）",
+  "@colorHsvValue": {
+    "placeholders": {
+      "h": { "type": "int" },
+      "s": { "type": "int" },
+      "v": { "type": "int" }
+    }
+  },
   "brightness": "亮度：{value}",
   "speed": "速度：{value}",
   "direction": "方向：{value}",
@@ -82,6 +102,34 @@
   "turnOff": "關閉",
   "appliedMode": "已套用 {mode}",
   "backlightTurnedOff": "背光已關閉",
+
+  "macroTitle": "巨集",
+  "macroSubtitle": "錄製鍵盤序列並透過 USB 上傳到鍵盤。請使用 AULA 官方工具或未來的按鍵重新對應功能將按鍵綁定到巨集。",
+  "macroListTitle": "巨集槽位",
+  "macroAdd": "新增巨集",
+  "macroName": "名稱",
+  "macroDelayMode": "事件間隔",
+  "macroDelayRecorded": "使用錄製延遲",
+  "macroDelayNone": "無延遲",
+  "macroDelayCustom": "固定延遲",
+  "macroDelayMs": "延遲（毫秒）",
+  "macroRecordingHint": "正在錄製…請按下鍵盤按鍵。按 Esc 停止。",
+  "macroNoEvents": "尚無事件。點擊「錄製」並按鍵。",
+  "macroEventCount": "{count} 個事件",
+  "macroActionDown": "按下",
+  "macroActionUp": "放開",
+  "macroActionDelay": "延遲",
+  "macroGapDelay": "間隔：{ms} 毫秒",
+  "macroRecord": "錄製",
+  "macroStop": "停止",
+  "macroClear": "清除事件",
+  "macroDelete": "刪除巨集",
+  "macroUpload": "上傳到鍵盤",
+  "macroUploaded": "已上傳 {macroCount} 個巨集，共 {eventCount} 個事件",
+  "errorMacroEmpty": "上傳前請至少新增一個包含錄製事件的巨集。",
+  "errorMacroTooManyMacros": "巨集數量過多（{count}）。鍵盤最多支援 100 個。",
+  "errorMacroTooLarge": "巨集資料過大（{macros} 個巨集，{events} 個事件）。請減少巨集或事件數量。",
+  "errorMacroUnsupportedKey": "該按鍵不支援用於巨集。",
 
   "lightingModeOff": "關閉",
   "lightingModeStatic": "常亮",

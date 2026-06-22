@@ -33,6 +33,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navRgb => 'RGB';
 
   @override
+  String get navMacro => 'Macros';
+
+  @override
   String get navLcd => 'LCD';
 
   @override
@@ -232,6 +235,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get rainbowColorful => 'Rainbow / colorful';
 
   @override
+  String colorRgbValue(int r, int g, int b) {
+    return 'RGB ($r, $g, $b)';
+  }
+
+  @override
+  String get colorRed => 'Red';
+
+  @override
+  String get colorGreen => 'Green';
+
+  @override
+  String get colorBlue => 'Blue';
+
+  @override
+  String colorHsvValue(int h, int s, int v) {
+    return 'HSV ($h, $s, $v)';
+  }
+
+  @override
   String brightness(int value) {
     return 'Brightness: $value';
   }
@@ -259,6 +281,120 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get backlightTurnedOff => 'Backlight turned off';
+
+  @override
+  String get macroTitle => 'Macros';
+
+  @override
+  String get macroSubtitle =>
+      'Record keyboard sequences and upload them to the keyboard over USB. Assign a key to a macro using the official AULA utility or a future key-remap feature.';
+
+  @override
+  String get macroListTitle => 'Macro slots';
+
+  @override
+  String get macroAdd => 'Add macro';
+
+  @override
+  String get macroName => 'Name';
+
+  @override
+  String get macroDelayMode => 'Delay between events';
+
+  @override
+  String get macroDelayRecorded => 'Use recorded delays';
+
+  @override
+  String get macroDelayNone => 'No delay';
+
+  @override
+  String get macroDelayCustom => 'Fixed delay';
+
+  @override
+  String get macroDelayMs => 'Delay (ms)';
+
+  @override
+  String get macroRecordingHint =>
+      'Recording… press keys on your keyboard. Press Esc to stop.';
+
+  @override
+  String get macroNoEvents => 'No events yet. Click Record and press keys.';
+
+  @override
+  String macroEventCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count events',
+      one: '1 event',
+      zero: 'No events',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get macroActionDown => 'Down';
+
+  @override
+  String get macroActionUp => 'Up';
+
+  @override
+  String get macroActionDelay => 'Delay';
+
+  @override
+  String macroGapDelay(int ms) {
+    return 'Gap before: $ms ms';
+  }
+
+  @override
+  String get macroRecord => 'Record';
+
+  @override
+  String get macroStop => 'Stop';
+
+  @override
+  String get macroClear => 'Clear events';
+
+  @override
+  String get macroDelete => 'Delete macro';
+
+  @override
+  String get macroUpload => 'Upload to keyboard';
+
+  @override
+  String macroUploaded(int macroCount, int eventCount) {
+    String _temp0 = intl.Intl.pluralLogic(
+      macroCount,
+      locale: localeName,
+      other: '$macroCount macros',
+      one: '1 macro',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      eventCount,
+      locale: localeName,
+      other: '$eventCount events',
+      one: '1 event',
+    );
+    return 'Uploaded $_temp0 with $_temp1';
+  }
+
+  @override
+  String get errorMacroEmpty =>
+      'Add at least one macro with recorded events before uploading.';
+
+  @override
+  String errorMacroTooManyMacros(int count) {
+    return 'Too many macros ($count). The keyboard supports up to 100.';
+  }
+
+  @override
+  String errorMacroTooLarge(int macros, int events) {
+    return 'Macro data is too large ($macros macros, $events events). Reduce the number of macros or events.';
+  }
+
+  @override
+  String get errorMacroUnsupportedKey =>
+      'That key is not supported for macros.';
 
   @override
   String get lightingModeOff => 'Off';

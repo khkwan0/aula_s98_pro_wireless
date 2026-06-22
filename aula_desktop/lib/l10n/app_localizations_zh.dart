@@ -33,6 +33,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get navRgb => 'RGB';
 
   @override
+  String get navMacro => 'Macros';
+
+  @override
   String get navLcd => 'LCD';
 
   @override
@@ -230,6 +233,25 @@ class AppLocalizationsZh extends AppLocalizations {
   String get rainbowColorful => '彩虹 / 多彩';
 
   @override
+  String colorRgbValue(int r, int g, int b) {
+    return 'RGB（$r，$g，$b）';
+  }
+
+  @override
+  String get colorRed => '红';
+
+  @override
+  String get colorGreen => '绿';
+
+  @override
+  String get colorBlue => '蓝';
+
+  @override
+  String colorHsvValue(int h, int s, int v) {
+    return 'HSV ($h, $s, $v)';
+  }
+
+  @override
   String brightness(int value) {
     return '亮度：$value';
   }
@@ -257,6 +279,120 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get backlightTurnedOff => '背光已关闭';
+
+  @override
+  String get macroTitle => 'Macros';
+
+  @override
+  String get macroSubtitle =>
+      'Record keyboard sequences and upload them to the keyboard over USB. Assign a key to a macro using the official AULA utility or a future key-remap feature.';
+
+  @override
+  String get macroListTitle => 'Macro slots';
+
+  @override
+  String get macroAdd => 'Add macro';
+
+  @override
+  String get macroName => 'Name';
+
+  @override
+  String get macroDelayMode => 'Delay between events';
+
+  @override
+  String get macroDelayRecorded => 'Use recorded delays';
+
+  @override
+  String get macroDelayNone => 'No delay';
+
+  @override
+  String get macroDelayCustom => 'Fixed delay';
+
+  @override
+  String get macroDelayMs => 'Delay (ms)';
+
+  @override
+  String get macroRecordingHint =>
+      'Recording… press keys on your keyboard. Press Esc to stop.';
+
+  @override
+  String get macroNoEvents => 'No events yet. Click Record and press keys.';
+
+  @override
+  String macroEventCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count events',
+      one: '1 event',
+      zero: 'No events',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get macroActionDown => 'Down';
+
+  @override
+  String get macroActionUp => 'Up';
+
+  @override
+  String get macroActionDelay => 'Delay';
+
+  @override
+  String macroGapDelay(int ms) {
+    return 'Gap before: $ms ms';
+  }
+
+  @override
+  String get macroRecord => 'Record';
+
+  @override
+  String get macroStop => 'Stop';
+
+  @override
+  String get macroClear => 'Clear events';
+
+  @override
+  String get macroDelete => 'Delete macro';
+
+  @override
+  String get macroUpload => 'Upload to keyboard';
+
+  @override
+  String macroUploaded(int macroCount, int eventCount) {
+    String _temp0 = intl.Intl.pluralLogic(
+      macroCount,
+      locale: localeName,
+      other: '$macroCount macros',
+      one: '1 macro',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      eventCount,
+      locale: localeName,
+      other: '$eventCount events',
+      one: '1 event',
+    );
+    return 'Uploaded $_temp0 with $_temp1';
+  }
+
+  @override
+  String get errorMacroEmpty =>
+      'Add at least one macro with recorded events before uploading.';
+
+  @override
+  String errorMacroTooManyMacros(int count) {
+    return 'Too many macros ($count). The keyboard supports up to 100.';
+  }
+
+  @override
+  String errorMacroTooLarge(int macros, int events) {
+    return 'Macro data is too large ($macros macros, $events events). Reduce the number of macros or events.';
+  }
+
+  @override
+  String get errorMacroUnsupportedKey =>
+      'That key is not supported for macros.';
 
   @override
   String get lightingModeOff => '关闭';
@@ -513,6 +649,9 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   String get navRgb => 'RGB';
 
   @override
+  String get navMacro => '宏';
+
+  @override
   String get navLcd => 'LCD';
 
   @override
@@ -710,6 +849,25 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   String get rainbowColorful => '彩虹 / 多彩';
 
   @override
+  String colorRgbValue(int r, int g, int b) {
+    return 'RGB（$r，$g，$b）';
+  }
+
+  @override
+  String get colorRed => '红';
+
+  @override
+  String get colorGreen => '绿';
+
+  @override
+  String get colorBlue => '蓝';
+
+  @override
+  String colorHsvValue(int h, int s, int v) {
+    return 'HSV（$h，$s，$v）';
+  }
+
+  @override
   String brightness(int value) {
     return '亮度：$value';
   }
@@ -737,6 +895,98 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
 
   @override
   String get backlightTurnedOff => '背光已关闭';
+
+  @override
+  String get macroTitle => '宏';
+
+  @override
+  String get macroSubtitle =>
+      '录制键盘序列并通过 USB 上传到键盘。请使用 AULA 官方工具或未来的按键重映射功能将按键绑定到宏。';
+
+  @override
+  String get macroListTitle => '宏槽位';
+
+  @override
+  String get macroAdd => '添加宏';
+
+  @override
+  String get macroName => '名称';
+
+  @override
+  String get macroDelayMode => '事件间隔';
+
+  @override
+  String get macroDelayRecorded => '使用录制延迟';
+
+  @override
+  String get macroDelayNone => '无延迟';
+
+  @override
+  String get macroDelayCustom => '固定延迟';
+
+  @override
+  String get macroDelayMs => '延迟（毫秒）';
+
+  @override
+  String get macroRecordingHint => '正在录制…请按下键盘按键。按 Esc 停止。';
+
+  @override
+  String get macroNoEvents => '尚无事件。点击“录制”并按键。';
+
+  @override
+  String macroEventCount(int count) {
+    return '$count 个事件';
+  }
+
+  @override
+  String get macroActionDown => '按下';
+
+  @override
+  String get macroActionUp => '释放';
+
+  @override
+  String get macroActionDelay => '延迟';
+
+  @override
+  String macroGapDelay(int ms) {
+    return '间隔：$ms 毫秒';
+  }
+
+  @override
+  String get macroRecord => '录制';
+
+  @override
+  String get macroStop => '停止';
+
+  @override
+  String get macroClear => '清除事件';
+
+  @override
+  String get macroDelete => '删除宏';
+
+  @override
+  String get macroUpload => '上传到键盘';
+
+  @override
+  String macroUploaded(int macroCount, int eventCount) {
+    return '已上传 $macroCount 个宏，共 $eventCount 个事件';
+  }
+
+  @override
+  String get errorMacroEmpty => '上传前请至少添加一个包含录制事件的宏。';
+
+  @override
+  String errorMacroTooManyMacros(int count) {
+    return '宏数量过多（$count）。键盘最多支持 100 个。';
+  }
+
+  @override
+  String errorMacroTooLarge(int macros, int events) {
+    return '宏数据过大（$macros 个宏，$events 个事件）。请减少宏或事件数量。';
+  }
+
+  @override
+  String get errorMacroUnsupportedKey => '该按键不支持用于宏。';
 
   @override
   String get lightingModeOff => '关闭';
@@ -993,6 +1243,9 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get navRgb => 'RGB';
 
   @override
+  String get navMacro => '巨集';
+
+  @override
   String get navLcd => 'LCD';
 
   @override
@@ -1190,6 +1443,25 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get rainbowColorful => '彩虹 / 多彩';
 
   @override
+  String colorRgbValue(int r, int g, int b) {
+    return 'RGB（$r，$g，$b）';
+  }
+
+  @override
+  String get colorRed => '紅';
+
+  @override
+  String get colorGreen => '綠';
+
+  @override
+  String get colorBlue => '藍';
+
+  @override
+  String colorHsvValue(int h, int s, int v) {
+    return 'HSV（$h，$s，$v）';
+  }
+
+  @override
   String brightness(int value) {
     return '亮度：$value';
   }
@@ -1217,6 +1489,98 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get backlightTurnedOff => '背光已關閉';
+
+  @override
+  String get macroTitle => '巨集';
+
+  @override
+  String get macroSubtitle =>
+      '錄製鍵盤序列並透過 USB 上傳到鍵盤。請使用 AULA 官方工具或未來的按鍵重新對應功能將按鍵綁定到巨集。';
+
+  @override
+  String get macroListTitle => '巨集槽位';
+
+  @override
+  String get macroAdd => '新增巨集';
+
+  @override
+  String get macroName => '名稱';
+
+  @override
+  String get macroDelayMode => '事件間隔';
+
+  @override
+  String get macroDelayRecorded => '使用錄製延遲';
+
+  @override
+  String get macroDelayNone => '無延遲';
+
+  @override
+  String get macroDelayCustom => '固定延遲';
+
+  @override
+  String get macroDelayMs => '延遲（毫秒）';
+
+  @override
+  String get macroRecordingHint => '正在錄製…請按下鍵盤按鍵。按 Esc 停止。';
+
+  @override
+  String get macroNoEvents => '尚無事件。點擊「錄製」並按鍵。';
+
+  @override
+  String macroEventCount(int count) {
+    return '$count 個事件';
+  }
+
+  @override
+  String get macroActionDown => '按下';
+
+  @override
+  String get macroActionUp => '放開';
+
+  @override
+  String get macroActionDelay => '延遲';
+
+  @override
+  String macroGapDelay(int ms) {
+    return '間隔：$ms 毫秒';
+  }
+
+  @override
+  String get macroRecord => '錄製';
+
+  @override
+  String get macroStop => '停止';
+
+  @override
+  String get macroClear => '清除事件';
+
+  @override
+  String get macroDelete => '刪除巨集';
+
+  @override
+  String get macroUpload => '上傳到鍵盤';
+
+  @override
+  String macroUploaded(int macroCount, int eventCount) {
+    return '已上傳 $macroCount 個巨集，共 $eventCount 個事件';
+  }
+
+  @override
+  String get errorMacroEmpty => '上傳前請至少新增一個包含錄製事件的巨集。';
+
+  @override
+  String errorMacroTooManyMacros(int count) {
+    return '巨集數量過多（$count）。鍵盤最多支援 100 個。';
+  }
+
+  @override
+  String errorMacroTooLarge(int macros, int events) {
+    return '巨集資料過大（$macros 個巨集，$events 個事件）。請減少巨集或事件數量。';
+  }
+
+  @override
+  String get errorMacroUnsupportedKey => '該按鍵不支援用於巨集。';
 
   @override
   String get lightingModeOff => '關閉';

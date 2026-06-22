@@ -1,5 +1,6 @@
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../l10n/app_localizations.dart';
 import '../l10n/message_localizer.dart';
@@ -25,8 +26,58 @@ class _LightingScreenState extends State<LightingScreen> {
   bool _busy = false;
   String? _message;
   String? _error;
+  late final TextEditingController _redController;
+  late final TextEditingController _greenController;
+  late final TextEditingController _blueController;
+  bool _updatingRgbFields = false;
 
   static const _directionModes = {10, 11, 12, 16, 18};
+  static final _rgbInputFormatters = [
+    FilteringTextInputFormatter.digitsOnly,
+    LengthLimitingTextInputFormatter(3),
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _redController = TextEditingController(text: _color.red.toString());
+    _greenController = TextEditingController(text: _color.green.toString());
+    _blueController = TextEditingController(text: _color.blue.toString());
+  }
+
+  @override
+  void dispose() {
+    _redController.dispose();
+    _greenController.dispose();
+    _blueController.dispose();
+    super.dispose();
+  }
+
+  void _syncRgbFieldsFromColor() {
+    _updatingRgbFields = true;
+    _redController.text = _color.red.toString();
+    _greenController.text = _color.green.toString();
+    _blueController.text = _color.blue.toString();
+    _updatingRgbFields = false;
+  }
+
+  void _setColor(Color color) {
+    if (color == _color) return;
+    setState(() => _color = color);
+    _syncRgbFieldsFromColor();
+  }
+
+  void _applyRgbFieldInput() {
+    if (_updatingRgbFields || _busy) return;
+    final r = int.tryParse(_redController.text);
+    final g = int.tryParse(_greenController.text);
+    final b = int.tryParse(_blueController.text);
+    if (r == null || g == null || b == null) {
+      _syncRgbFieldsFromColor();
+      return;
+    }
+    _setColor(Color.fromARGB(255, r.clamp(0, 255), g.clamp(0, 255), b.clamp(0, 255)));
+  }
 
   Future<void> _apply() async {
     setState(() {
@@ -128,11 +179,80 @@ class _LightingScreenState extends State<LightingScreen> {
             const SizedBox(height: 8),
             ColorPicker(
               color: _color,
-              onColorChanged: (color) => setState(() => _color = color),
+              onColorChanged: _setColor,
               width: 36,
               height: 36,
               borderRadius: 8,
               pickersEnabled: const {ColorPickerType.wheel: true, ColorPickerType.primary: true},
+            ),
+            const SizedBox(height: 12),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    l10n.colorRgbValue(_color.red, _color.green, _color.blue),
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ),
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: _color,
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: Theme.of(context).dividerColor),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _redController,
+                    enabled: !_busy,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: _rgbInputFormatters,
+                    decoration: InputDecoration(
+                      labelText: l10n.colorRed,
+                      border: const OutlineInputBorder(),
+                    ),
+                    onChanged: (_) => _applyRgbFieldInput(),
+                    onEditingComplete: _applyRgbFieldInput,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: TextField(
+                    controller: _greenController,
+                    enabled: !_busy,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: _rgbInputFormatters,
+                    decoration: InputDecoration(
+                      labelText: l10n.colorGreen,
+                      border: const OutlineInputBorder(),
+                    ),
+                    onChanged: (_) => _applyRgbFieldInput(),
+                    onEditingComplete: _applyRgbFieldInput,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: TextField(
+                    controller: _blueController,
+                    enabled: !_busy,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: _rgbInputFormatters,
+                    decoration: InputDecoration(
+                      labelText: l10n.colorBlue,
+                      border: const OutlineInputBorder(),
+                    ),
+                    onChanged: (_) => _applyRgbFieldInput(),
+                    onEditingComplete: _applyRgbFieldInput,
+                  ),
+                ),
+              ],
             ),
           ],
           const SizedBox(height: 16),

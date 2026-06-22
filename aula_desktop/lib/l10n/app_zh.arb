@@ -75,6 +75,17 @@
   "mode": "模式",
   "lightingModeEntry": "{index} — {name}",
   "rainbowColorful": "彩虹 / 多彩",
+  "colorRgbValue": "RGB（{r}，{g}，{b}）",
+  "@colorRgbValue": {
+    "placeholders": {
+      "r": { "type": "int" },
+      "g": { "type": "int" },
+      "b": { "type": "int" }
+    }
+  },
+  "colorRed": "红",
+  "colorGreen": "绿",
+  "colorBlue": "蓝",
   "brightness": "亮度：{value}",
   "speed": "速度：{value}",
   "direction": "方向：{value}",
