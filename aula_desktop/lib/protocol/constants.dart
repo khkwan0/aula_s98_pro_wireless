@@ -17,7 +17,7 @@ class KeyboardConstants {
   static const int frameSize = screenWidth * screenHeight * bytesPerPixel;
   static const int headerSize = 256;
   static const int pageSize = 4096;
-  static const int maxFrames = 60;
+  static const int maxFrames = 120;
   static const int lcdAckTimeoutMs = 300;
 }
 

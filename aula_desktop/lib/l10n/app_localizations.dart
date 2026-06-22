@@ -148,6 +148,12 @@ abstract class AppLocalizations {
   /// **'RGB'**
   String get navRgb;
 
+  /// No description provided for @navRemap.
+  ///
+  /// In en, this message translates to:
+  /// **'Remap'**
+  String get navRemap;
+
   /// No description provided for @navMacro.
   ///
   /// In en, this message translates to:
@@ -1286,6 +1292,306 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'GIF has {frameCount} frames; capped at 255 (header limit).'**
   String warningGifCappedAt255(int frameCount);
+
+  /// No description provided for @remapTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Key Remap'**
+  String get remapTitle;
+
+  /// No description provided for @remapSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Remap keys to media controls or other keys. Changes upload over USB and are saved on this computer.'**
+  String get remapSubtitle;
+
+  /// No description provided for @remapNormalLayer.
+  ///
+  /// In en, this message translates to:
+  /// **'Normal'**
+  String get remapNormalLayer;
+
+  /// No description provided for @remapFnLayer.
+  ///
+  /// In en, this message translates to:
+  /// **'FN layer'**
+  String get remapFnLayer;
+
+  /// No description provided for @remapBindingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Bindings'**
+  String get remapBindingsTitle;
+
+  /// No description provided for @remapAddBinding.
+  ///
+  /// In en, this message translates to:
+  /// **'Add binding'**
+  String get remapAddBinding;
+
+  /// No description provided for @remapEditBinding.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit binding'**
+  String get remapEditBinding;
+
+  /// No description provided for @remapRemoveBinding.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get remapRemoveBinding;
+
+  /// No description provided for @remapNewBinding.
+  ///
+  /// In en, this message translates to:
+  /// **'New binding'**
+  String get remapNewBinding;
+
+  /// No description provided for @remapNoBindings.
+  ///
+  /// In en, this message translates to:
+  /// **'No remaps on this layer yet.'**
+  String get remapNoBindings;
+
+  /// No description provided for @remapEditorEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Select or add a binding'**
+  String get remapEditorEmptyTitle;
+
+  /// No description provided for @remapEditorEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a binding from the list or add one, then pick a media control or target key.'**
+  String get remapEditorEmptyBody;
+
+  /// No description provided for @remapSourceKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Source key'**
+  String get remapSourceKey;
+
+  /// No description provided for @remapChooseSourceKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose source key'**
+  String get remapChooseSourceKey;
+
+  /// No description provided for @remapChooseSourceKeyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'F1–F12, letters, etc.'**
+  String get remapChooseSourceKeyHint;
+
+  /// No description provided for @remapChooseTargetKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose target key'**
+  String get remapChooseTargetKey;
+
+  /// No description provided for @remapChooseTargetKeyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Key to send when pressed'**
+  String get remapChooseTargetKeyHint;
+
+  /// No description provided for @remapFunctionKeyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'F1–F12 remaps use the Normal layer. Use FN layer only when the key must be held with Fn.'**
+  String get remapFunctionKeyHint;
+
+  /// No description provided for @remapPressSourceKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Or press a key…'**
+  String get remapPressSourceKey;
+
+  /// No description provided for @remapCapturingSourceHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Press a key on the keyboard to use as the source. Esc to cancel.'**
+  String get remapCapturingSourceHint;
+
+  /// No description provided for @remapTargetType.
+  ///
+  /// In en, this message translates to:
+  /// **'Remap to'**
+  String get remapTargetType;
+
+  /// No description provided for @remapTargetMedia.
+  ///
+  /// In en, this message translates to:
+  /// **'Media'**
+  String get remapTargetMedia;
+
+  /// No description provided for @remapTargetKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Another key'**
+  String get remapTargetKey;
+
+  /// No description provided for @remapMediaControls.
+  ///
+  /// In en, this message translates to:
+  /// **'Media controls'**
+  String get remapMediaControls;
+
+  /// No description provided for @remapPressTargetKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Press target key…'**
+  String get remapPressTargetKey;
+
+  /// No description provided for @remapCapturingTargetHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Press the key this source should act as. Esc to cancel.'**
+  String get remapCapturingTargetHint;
+
+  /// No description provided for @remapPreview.
+  ///
+  /// In en, this message translates to:
+  /// **'{source} → {target}'**
+  String remapPreview(String source, String target);
+
+  /// No description provided for @remapApply.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply to keyboard'**
+  String get remapApply;
+
+  /// No description provided for @remapChangesApplied.
+  ///
+  /// In en, this message translates to:
+  /// **'Remap changes applied to the keyboard.'**
+  String get remapChangesApplied;
+
+  /// No description provided for @remapNoChangesToApply.
+  ///
+  /// In en, this message translates to:
+  /// **'No remap changes to apply.'**
+  String get remapNoChangesToApply;
+
+  /// No description provided for @remapPendingDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending delete — apply to remove from keyboard'**
+  String get remapPendingDelete;
+
+  /// No description provided for @remapUndoDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo delete'**
+  String get remapUndoDelete;
+
+  /// No description provided for @remapApplied.
+  ///
+  /// In en, this message translates to:
+  /// **'Applied {count, plural, =1{1 key remap} other{{count} key remaps}} to the keyboard.'**
+  String remapApplied(int count);
+
+  /// No description provided for @remapClearLayer.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear layer'**
+  String get remapClearLayer;
+
+  /// No description provided for @remapClearLayerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear remaps on this layer?'**
+  String get remapClearLayerTitle;
+
+  /// No description provided for @remapClearNormalLayerBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Marks all normal-layer remaps for deletion. Click Apply to upload the change to the keyboard.'**
+  String get remapClearNormalLayerBody;
+
+  /// No description provided for @remapClearFnLayerBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Marks all FN-layer remaps for deletion. Click Apply to clear them on the keyboard.'**
+  String get remapClearFnLayerBody;
+
+  /// No description provided for @remapClearLayerConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get remapClearLayerConfirm;
+
+  /// No description provided for @remapLayerCleared.
+  ///
+  /// In en, this message translates to:
+  /// **'FN-layer remaps cleared on the keyboard.'**
+  String get remapLayerCleared;
+
+  /// No description provided for @remapMediaPlayPause.
+  ///
+  /// In en, this message translates to:
+  /// **'Play / Pause'**
+  String get remapMediaPlayPause;
+
+  /// No description provided for @remapMediaStop.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop'**
+  String get remapMediaStop;
+
+  /// No description provided for @remapMediaPrevious.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous track'**
+  String get remapMediaPrevious;
+
+  /// No description provided for @remapMediaNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next track'**
+  String get remapMediaNext;
+
+  /// No description provided for @remapMediaVolumeUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Volume up'**
+  String get remapMediaVolumeUp;
+
+  /// No description provided for @remapMediaVolumeDown.
+  ///
+  /// In en, this message translates to:
+  /// **'Volume down'**
+  String get remapMediaVolumeDown;
+
+  /// No description provided for @remapMediaMute.
+  ///
+  /// In en, this message translates to:
+  /// **'Mute'**
+  String get remapMediaMute;
+
+  /// No description provided for @errorRemapUnsupportedKey.
+  ///
+  /// In en, this message translates to:
+  /// **'That key is not supported for remapping.'**
+  String get errorRemapUnsupportedKey;
+
+  /// No description provided for @errorRemapNoBindings.
+  ///
+  /// In en, this message translates to:
+  /// **'Add at least one remap before applying.'**
+  String get errorRemapNoBindings;
+
+  /// No description provided for @errorRemapConflictMacro.
+  ///
+  /// In en, this message translates to:
+  /// **'Key {key} is already used as a macro trigger. Clear the macro trigger or pick a different source key.'**
+  String errorRemapConflictMacro(String key);
+
+  /// No description provided for @errorRemapDuplicateSource.
+  ///
+  /// In en, this message translates to:
+  /// **'Multiple remaps use source key {key}.'**
+  String errorRemapDuplicateSource(String key);
 }
 
 class _AppLocalizationsDelegate

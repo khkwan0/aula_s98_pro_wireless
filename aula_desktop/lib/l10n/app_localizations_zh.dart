@@ -33,6 +33,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get navRgb => 'RGB';
 
   @override
+  String get navRemap => '改键';
+
+  @override
   String get navMacro => 'Macros';
 
   @override
@@ -777,6 +780,179 @@ class AppLocalizationsZh extends AppLocalizations {
   String warningGifCappedAt255(int frameCount) {
     return 'GIF 有 $frameCount 帧；已限制为 255 帧（文件头上限）。';
   }
+
+  @override
+  String get remapTitle => 'Key Remap';
+
+  @override
+  String get remapSubtitle =>
+      'Remap keys to media controls or other keys. Changes upload over USB and are saved on this computer.';
+
+  @override
+  String get remapNormalLayer => 'Normal';
+
+  @override
+  String get remapFnLayer => 'FN layer';
+
+  @override
+  String get remapBindingsTitle => 'Bindings';
+
+  @override
+  String get remapAddBinding => 'Add binding';
+
+  @override
+  String get remapEditBinding => 'Edit binding';
+
+  @override
+  String get remapRemoveBinding => 'Remove';
+
+  @override
+  String get remapNewBinding => 'New binding';
+
+  @override
+  String get remapNoBindings => 'No remaps on this layer yet.';
+
+  @override
+  String get remapEditorEmptyTitle => 'Select or add a binding';
+
+  @override
+  String get remapEditorEmptyBody =>
+      'Choose a binding from the list or add one, then pick a media control or target key.';
+
+  @override
+  String get remapSourceKey => 'Source key';
+
+  @override
+  String get remapChooseSourceKey => 'Choose source key';
+
+  @override
+  String get remapChooseSourceKeyHint => 'F1–F12, letters, etc.';
+
+  @override
+  String get remapChooseTargetKey => 'Choose target key';
+
+  @override
+  String get remapChooseTargetKeyHint => 'Key to send when pressed';
+
+  @override
+  String get remapFunctionKeyHint =>
+      'F1–F12 remaps use the Normal layer. Use FN layer only when the key must be held with Fn.';
+
+  @override
+  String get remapPressSourceKey => 'Or press a key…';
+
+  @override
+  String get remapCapturingSourceHint =>
+      'Press a key on the keyboard to use as the source. Esc to cancel.';
+
+  @override
+  String get remapTargetType => 'Remap to';
+
+  @override
+  String get remapTargetMedia => 'Media';
+
+  @override
+  String get remapTargetKey => 'Another key';
+
+  @override
+  String get remapMediaControls => 'Media controls';
+
+  @override
+  String get remapPressTargetKey => 'Press target key…';
+
+  @override
+  String get remapCapturingTargetHint =>
+      'Press the key this source should act as. Esc to cancel.';
+
+  @override
+  String remapPreview(String source, String target) {
+    return '$source → $target';
+  }
+
+  @override
+  String get remapApply => 'Apply to keyboard';
+
+  @override
+  String get remapChangesApplied => 'Remap changes applied to the keyboard.';
+
+  @override
+  String get remapNoChangesToApply => 'No remap changes to apply.';
+
+  @override
+  String get remapPendingDelete =>
+      'Pending delete — apply to remove from keyboard';
+
+  @override
+  String get remapUndoDelete => 'Undo delete';
+
+  @override
+  String remapApplied(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count key remaps',
+      one: '1 key remap',
+    );
+    return 'Applied $_temp0 to the keyboard.';
+  }
+
+  @override
+  String get remapClearLayer => 'Clear layer';
+
+  @override
+  String get remapClearLayerTitle => 'Clear remaps on this layer?';
+
+  @override
+  String get remapClearNormalLayerBody =>
+      'Marks all normal-layer remaps for deletion. Click Apply to upload the change to the keyboard.';
+
+  @override
+  String get remapClearFnLayerBody =>
+      'Marks all FN-layer remaps for deletion. Click Apply to clear them on the keyboard.';
+
+  @override
+  String get remapClearLayerConfirm => 'Clear';
+
+  @override
+  String get remapLayerCleared => 'FN-layer remaps cleared on the keyboard.';
+
+  @override
+  String get remapMediaPlayPause => 'Play / Pause';
+
+  @override
+  String get remapMediaStop => 'Stop';
+
+  @override
+  String get remapMediaPrevious => 'Previous track';
+
+  @override
+  String get remapMediaNext => 'Next track';
+
+  @override
+  String get remapMediaVolumeUp => 'Volume up';
+
+  @override
+  String get remapMediaVolumeDown => 'Volume down';
+
+  @override
+  String get remapMediaMute => 'Mute';
+
+  @override
+  String get errorRemapUnsupportedKey =>
+      'That key is not supported for remapping.';
+
+  @override
+  String get errorRemapNoBindings => 'Add at least one remap before applying.';
+
+  @override
+  String errorRemapConflictMacro(String key) {
+    return 'Key $key is already used as a macro trigger. Clear the macro trigger or pick a different source key.';
+  }
+
+  @override
+  String errorRemapDuplicateSource(String key) {
+    return 'Multiple remaps use source key $key.';
+  }
 }
 
 /// The translations for Chinese, as used in China (`zh_CN`).
@@ -806,6 +982,9 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
 
   @override
   String get navRgb => 'RGB';
+
+  @override
+  String get navRemap => '改键';
 
   @override
   String get navMacro => '宏';
@@ -1486,6 +1665,164 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   String warningGifCappedAt255(int frameCount) {
     return 'GIF 有 $frameCount 帧；已限制为 255 帧（文件头上限）。';
   }
+
+  @override
+  String get remapTitle => '按键改键';
+
+  @override
+  String get remapSubtitle => '将按键映射为媒体控制或其他按键。通过 USB 上传，并保存在本机。';
+
+  @override
+  String get remapNormalLayer => '普通层';
+
+  @override
+  String get remapFnLayer => 'FN 层';
+
+  @override
+  String get remapBindingsTitle => '映射列表';
+
+  @override
+  String get remapAddBinding => '添加映射';
+
+  @override
+  String get remapEditBinding => '编辑映射';
+
+  @override
+  String get remapRemoveBinding => '删除';
+
+  @override
+  String get remapNewBinding => '新映射';
+
+  @override
+  String get remapNoBindings => '此层尚无改键。';
+
+  @override
+  String get remapEditorEmptyTitle => '选择或添加映射';
+
+  @override
+  String get remapEditorEmptyBody => '从列表选择或添加映射，然后选择媒体控制或目标按键。';
+
+  @override
+  String get remapSourceKey => '源按键';
+
+  @override
+  String get remapChooseSourceKey => '选择源按键';
+
+  @override
+  String get remapChooseSourceKeyHint => 'F1–F12、字母键等';
+
+  @override
+  String get remapChooseTargetKey => '选择目标按键';
+
+  @override
+  String get remapChooseTargetKeyHint => '按下源键时发送的按键';
+
+  @override
+  String get remapFunctionKeyHint => 'F1–F12 改键请使用普通层。仅在需要按住 Fn 时才使用 FN 层。';
+
+  @override
+  String get remapPressSourceKey => '或按下按键…';
+
+  @override
+  String get remapCapturingSourceHint => '在键盘上按下要改键的按键。按 Esc 取消。';
+
+  @override
+  String get remapTargetType => '映射为';
+
+  @override
+  String get remapTargetMedia => '媒体';
+
+  @override
+  String get remapTargetKey => '其他按键';
+
+  @override
+  String get remapMediaControls => '媒体控制';
+
+  @override
+  String get remapPressTargetKey => '按下目标按键…';
+
+  @override
+  String get remapCapturingTargetHint => '按下此源键应触发的目标按键。按 Esc 取消。';
+
+  @override
+  String remapPreview(String source, String target) {
+    return '$source → $target';
+  }
+
+  @override
+  String get remapApply => '上传到键盘';
+
+  @override
+  String get remapChangesApplied => '改键更改已上传到键盘。';
+
+  @override
+  String get remapNoChangesToApply => '没有可上传的改键更改。';
+
+  @override
+  String get remapPendingDelete => '待删除 — 上传后从键盘移除';
+
+  @override
+  String get remapUndoDelete => '撤销删除';
+
+  @override
+  String remapApplied(int count) {
+    return '已向键盘应用 $count 个改键。';
+  }
+
+  @override
+  String get remapClearLayer => '清空此层';
+
+  @override
+  String get remapClearLayerTitle => '清空此层的改键？';
+
+  @override
+  String get remapClearNormalLayerBody => '将标记普通层上的所有改键为待删除。点击「上传到键盘」以同步到键盘。';
+
+  @override
+  String get remapClearFnLayerBody => '将标记 FN 层上的所有改键为待删除。点击「上传到键盘」以从键盘清除。';
+
+  @override
+  String get remapClearLayerConfirm => '清空';
+
+  @override
+  String get remapLayerCleared => '已清空键盘上的 FN 层改键。';
+
+  @override
+  String get remapMediaPlayPause => '播放 / 暂停';
+
+  @override
+  String get remapMediaStop => '停止';
+
+  @override
+  String get remapMediaPrevious => '上一曲';
+
+  @override
+  String get remapMediaNext => '下一曲';
+
+  @override
+  String get remapMediaVolumeUp => '音量加';
+
+  @override
+  String get remapMediaVolumeDown => '音量减';
+
+  @override
+  String get remapMediaMute => '静音';
+
+  @override
+  String get errorRemapUnsupportedKey => '该按键不支持改键。';
+
+  @override
+  String get errorRemapNoBindings => '请先添加至少一个改键再上传。';
+
+  @override
+  String errorRemapConflictMacro(String key) {
+    return '按键 $key 已用作宏触发键。请清除宏触发键或选择其他源按键。';
+  }
+
+  @override
+  String errorRemapDuplicateSource(String key) {
+    return '多个改键使用了源按键 $key。';
+  }
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -1515,6 +1852,9 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get navRgb => 'RGB';
+
+  @override
+  String get navRemap => '改鍵';
 
   @override
   String get navMacro => '巨集';
@@ -2194,5 +2534,163 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   @override
   String warningGifCappedAt255(int frameCount) {
     return 'GIF 有 $frameCount 幀；已限制為 255 幀（檔案標頭上限）。';
+  }
+
+  @override
+  String get remapTitle => '按鍵改鍵';
+
+  @override
+  String get remapSubtitle => '將按鍵對應為媒體控制或其他按鍵。透過 USB 上傳，並儲存在本機。';
+
+  @override
+  String get remapNormalLayer => '一般層';
+
+  @override
+  String get remapFnLayer => 'FN 層';
+
+  @override
+  String get remapBindingsTitle => '對應列表';
+
+  @override
+  String get remapAddBinding => '新增對應';
+
+  @override
+  String get remapEditBinding => '編輯對應';
+
+  @override
+  String get remapRemoveBinding => '刪除';
+
+  @override
+  String get remapNewBinding => '新對應';
+
+  @override
+  String get remapNoBindings => '此層尚無改鍵。';
+
+  @override
+  String get remapEditorEmptyTitle => '選擇或新增對應';
+
+  @override
+  String get remapEditorEmptyBody => '從列表選擇或新增對應，然後選擇媒體控制或目標按鍵。';
+
+  @override
+  String get remapSourceKey => '來源按鍵';
+
+  @override
+  String get remapChooseSourceKey => '選擇來源按鍵';
+
+  @override
+  String get remapChooseSourceKeyHint => 'F1–F12、字母鍵等';
+
+  @override
+  String get remapChooseTargetKey => '選擇目標按鍵';
+
+  @override
+  String get remapChooseTargetKeyHint => '按下來源鍵時送出的按鍵';
+
+  @override
+  String get remapFunctionKeyHint => 'F1–F12 改鍵請使用一般層。僅在需要按住 Fn 時才使用 FN 層。';
+
+  @override
+  String get remapPressSourceKey => '或按下按鍵…';
+
+  @override
+  String get remapCapturingSourceHint => '在鍵盤上按下要改鍵的按鍵。按 Esc 取消。';
+
+  @override
+  String get remapTargetType => '對應為';
+
+  @override
+  String get remapTargetMedia => '媒體';
+
+  @override
+  String get remapTargetKey => '其他按鍵';
+
+  @override
+  String get remapMediaControls => '媒體控制';
+
+  @override
+  String get remapPressTargetKey => '按下目標按鍵…';
+
+  @override
+  String get remapCapturingTargetHint => '按下此來源鍵應觸發的目標按鍵。按 Esc 取消。';
+
+  @override
+  String remapPreview(String source, String target) {
+    return '$source → $target';
+  }
+
+  @override
+  String get remapApply => '上傳到鍵盤';
+
+  @override
+  String get remapChangesApplied => '改鍵變更已上傳到鍵盤。';
+
+  @override
+  String get remapNoChangesToApply => '沒有可上傳的改鍵變更。';
+
+  @override
+  String get remapPendingDelete => '待刪除 — 上傳後從鍵盤移除';
+
+  @override
+  String get remapUndoDelete => '復原刪除';
+
+  @override
+  String remapApplied(int count) {
+    return '已向鍵盤套用 $count 個改鍵。';
+  }
+
+  @override
+  String get remapClearLayer => '清空此層';
+
+  @override
+  String get remapClearLayerTitle => '清空此層的改鍵？';
+
+  @override
+  String get remapClearNormalLayerBody => '將標記一般層上的所有改鍵為待刪除。點擊「上傳到鍵盤」以同步到鍵盤。';
+
+  @override
+  String get remapClearFnLayerBody => '將標記 FN 層上的所有改鍵為待刪除。點擊「上傳到鍵盤」以從鍵盤清除。';
+
+  @override
+  String get remapClearLayerConfirm => '清空';
+
+  @override
+  String get remapLayerCleared => '已清空鍵盤上的 FN 層改鍵。';
+
+  @override
+  String get remapMediaPlayPause => '播放 / 暫停';
+
+  @override
+  String get remapMediaStop => '停止';
+
+  @override
+  String get remapMediaPrevious => '上一曲';
+
+  @override
+  String get remapMediaNext => '下一曲';
+
+  @override
+  String get remapMediaVolumeUp => '音量加';
+
+  @override
+  String get remapMediaVolumeDown => '音量減';
+
+  @override
+  String get remapMediaMute => '靜音';
+
+  @override
+  String get errorRemapUnsupportedKey => '該按鍵不支援改鍵。';
+
+  @override
+  String get errorRemapNoBindings => '請先新增至少一個改鍵再上傳。';
+
+  @override
+  String errorRemapConflictMacro(String key) {
+    return '按鍵 $key 已用作巨集觸發鍵。請清除巨集觸發鍵或選擇其他來源按鍵。';
+  }
+
+  @override
+  String errorRemapDuplicateSource(String key) {
+    return '多個改鍵使用了來源按鍵 $key。';
   }
 }

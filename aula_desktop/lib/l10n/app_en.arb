@@ -10,6 +10,7 @@
   "navHome": "Home",
   "navClock": "Clock",
   "navRgb": "RGB",
+  "navRemap": "Remap",
   "navMacro": "Macros",
   "navLcd": "LCD",
   "deviceInfoTooltip": "Device info",
@@ -502,6 +503,78 @@
   "@warningGifCappedAt255": {
     "placeholders": {
       "frameCount": { "type": "int" }
+    }
+  },
+
+  "remapTitle": "Key Remap",
+  "remapSubtitle": "Remap keys to media controls or other keys. Changes upload over USB and are saved on this computer.",
+  "remapNormalLayer": "Normal",
+  "remapFnLayer": "FN layer",
+  "remapBindingsTitle": "Bindings",
+  "remapAddBinding": "Add binding",
+  "remapEditBinding": "Edit binding",
+  "remapRemoveBinding": "Remove",
+  "remapNewBinding": "New binding",
+  "remapNoBindings": "No remaps on this layer yet.",
+  "remapEditorEmptyTitle": "Select or add a binding",
+  "remapEditorEmptyBody": "Choose a binding from the list or add one, then pick a media control or target key.",
+  "remapSourceKey": "Source key",
+  "remapChooseSourceKey": "Choose source key",
+  "remapChooseSourceKeyHint": "F1–F12, letters, etc.",
+  "remapChooseTargetKey": "Choose target key",
+  "remapChooseTargetKeyHint": "Key to send when pressed",
+  "remapFunctionKeyHint": "F1–F12 remaps use the Normal layer. Use FN layer only when the key must be held with Fn.",
+  "remapPressSourceKey": "Or press a key…",
+  "remapCapturingSourceHint": "Press a key on the keyboard to use as the source. Esc to cancel.",
+  "remapTargetType": "Remap to",
+  "remapTargetMedia": "Media",
+  "remapTargetKey": "Another key",
+  "remapMediaControls": "Media controls",
+  "remapPressTargetKey": "Press target key…",
+  "remapCapturingTargetHint": "Press the key this source should act as. Esc to cancel.",
+  "remapPreview": "{source} → {target}",
+  "@remapPreview": {
+    "placeholders": {
+      "source": { "type": "String" },
+      "target": { "type": "String" }
+    }
+  },
+  "remapApply": "Apply to keyboard",
+  "remapChangesApplied": "Remap changes applied to the keyboard.",
+  "remapNoChangesToApply": "No remap changes to apply.",
+  "remapPendingDelete": "Pending delete — apply to remove from keyboard",
+  "remapUndoDelete": "Undo delete",
+  "remapApplied": "Applied {count, plural, =1{1 key remap} other{{count} key remaps}} to the keyboard.",
+  "@remapApplied": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "remapClearLayer": "Clear layer",
+  "remapClearLayerTitle": "Clear remaps on this layer?",
+  "remapClearNormalLayerBody": "Marks all normal-layer remaps for deletion. Click Apply to upload the change to the keyboard.",
+  "remapClearFnLayerBody": "Marks all FN-layer remaps for deletion. Click Apply to clear them on the keyboard.",
+  "remapClearLayerConfirm": "Clear",
+  "remapLayerCleared": "FN-layer remaps cleared on the keyboard.",
+  "remapMediaPlayPause": "Play / Pause",
+  "remapMediaStop": "Stop",
+  "remapMediaPrevious": "Previous track",
+  "remapMediaNext": "Next track",
+  "remapMediaVolumeUp": "Volume up",
+  "remapMediaVolumeDown": "Volume down",
+  "remapMediaMute": "Mute",
+  "errorRemapUnsupportedKey": "That key is not supported for remapping.",
+  "errorRemapNoBindings": "Add at least one remap before applying.",
+  "errorRemapConflictMacro": "Key {key} is already used as a macro trigger. Clear the macro trigger or pick a different source key.",
+  "@errorRemapConflictMacro": {
+    "placeholders": {
+      "key": { "type": "String" }
+    }
+  },
+  "errorRemapDuplicateSource": "Multiple remaps use source key {key}.",
+  "@errorRemapDuplicateSource": {
+    "placeholders": {
+      "key": { "type": "String" }
     }
   }
 }

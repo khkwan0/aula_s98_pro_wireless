@@ -98,6 +98,12 @@ extension MessageLocalization on AppLocalizations {
       },
       'errorMacroDuplicateTrigger' =>
         errorMacroDuplicateTrigger(args['key']! as String),
+      'errorRemapConflictMacro' =>
+        errorRemapConflictMacro(args['key']! as String),
+      'errorRemapDuplicateSource' =>
+        errorRemapDuplicateSource(args['key']! as String),
+      'errorRemapUnsupportedKey' => errorRemapUnsupportedKey,
+      'errorRemapNoBindings' => errorRemapNoBindings,
       _ => message.key,
     };
   }

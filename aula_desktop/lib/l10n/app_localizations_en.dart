@@ -33,6 +33,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navRgb => 'RGB';
 
   @override
+  String get navRemap => 'Remap';
+
+  @override
   String get navMacro => 'Macros';
 
   @override
@@ -780,5 +783,178 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String warningGifCappedAt255(int frameCount) {
     return 'GIF has $frameCount frames; capped at 255 (header limit).';
+  }
+
+  @override
+  String get remapTitle => 'Key Remap';
+
+  @override
+  String get remapSubtitle =>
+      'Remap keys to media controls or other keys. Changes upload over USB and are saved on this computer.';
+
+  @override
+  String get remapNormalLayer => 'Normal';
+
+  @override
+  String get remapFnLayer => 'FN layer';
+
+  @override
+  String get remapBindingsTitle => 'Bindings';
+
+  @override
+  String get remapAddBinding => 'Add binding';
+
+  @override
+  String get remapEditBinding => 'Edit binding';
+
+  @override
+  String get remapRemoveBinding => 'Remove';
+
+  @override
+  String get remapNewBinding => 'New binding';
+
+  @override
+  String get remapNoBindings => 'No remaps on this layer yet.';
+
+  @override
+  String get remapEditorEmptyTitle => 'Select or add a binding';
+
+  @override
+  String get remapEditorEmptyBody =>
+      'Choose a binding from the list or add one, then pick a media control or target key.';
+
+  @override
+  String get remapSourceKey => 'Source key';
+
+  @override
+  String get remapChooseSourceKey => 'Choose source key';
+
+  @override
+  String get remapChooseSourceKeyHint => 'F1–F12, letters, etc.';
+
+  @override
+  String get remapChooseTargetKey => 'Choose target key';
+
+  @override
+  String get remapChooseTargetKeyHint => 'Key to send when pressed';
+
+  @override
+  String get remapFunctionKeyHint =>
+      'F1–F12 remaps use the Normal layer. Use FN layer only when the key must be held with Fn.';
+
+  @override
+  String get remapPressSourceKey => 'Or press a key…';
+
+  @override
+  String get remapCapturingSourceHint =>
+      'Press a key on the keyboard to use as the source. Esc to cancel.';
+
+  @override
+  String get remapTargetType => 'Remap to';
+
+  @override
+  String get remapTargetMedia => 'Media';
+
+  @override
+  String get remapTargetKey => 'Another key';
+
+  @override
+  String get remapMediaControls => 'Media controls';
+
+  @override
+  String get remapPressTargetKey => 'Press target key…';
+
+  @override
+  String get remapCapturingTargetHint =>
+      'Press the key this source should act as. Esc to cancel.';
+
+  @override
+  String remapPreview(String source, String target) {
+    return '$source → $target';
+  }
+
+  @override
+  String get remapApply => 'Apply to keyboard';
+
+  @override
+  String get remapChangesApplied => 'Remap changes applied to the keyboard.';
+
+  @override
+  String get remapNoChangesToApply => 'No remap changes to apply.';
+
+  @override
+  String get remapPendingDelete =>
+      'Pending delete — apply to remove from keyboard';
+
+  @override
+  String get remapUndoDelete => 'Undo delete';
+
+  @override
+  String remapApplied(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count key remaps',
+      one: '1 key remap',
+    );
+    return 'Applied $_temp0 to the keyboard.';
+  }
+
+  @override
+  String get remapClearLayer => 'Clear layer';
+
+  @override
+  String get remapClearLayerTitle => 'Clear remaps on this layer?';
+
+  @override
+  String get remapClearNormalLayerBody =>
+      'Marks all normal-layer remaps for deletion. Click Apply to upload the change to the keyboard.';
+
+  @override
+  String get remapClearFnLayerBody =>
+      'Marks all FN-layer remaps for deletion. Click Apply to clear them on the keyboard.';
+
+  @override
+  String get remapClearLayerConfirm => 'Clear';
+
+  @override
+  String get remapLayerCleared => 'FN-layer remaps cleared on the keyboard.';
+
+  @override
+  String get remapMediaPlayPause => 'Play / Pause';
+
+  @override
+  String get remapMediaStop => 'Stop';
+
+  @override
+  String get remapMediaPrevious => 'Previous track';
+
+  @override
+  String get remapMediaNext => 'Next track';
+
+  @override
+  String get remapMediaVolumeUp => 'Volume up';
+
+  @override
+  String get remapMediaVolumeDown => 'Volume down';
+
+  @override
+  String get remapMediaMute => 'Mute';
+
+  @override
+  String get errorRemapUnsupportedKey =>
+      'That key is not supported for remapping.';
+
+  @override
+  String get errorRemapNoBindings => 'Add at least one remap before applying.';
+
+  @override
+  String errorRemapConflictMacro(String key) {
+    return 'Key $key is already used as a macro trigger. Clear the macro trigger or pick a different source key.';
+  }
+
+  @override
+  String errorRemapDuplicateSource(String key) {
+    return 'Multiple remaps use source key $key.';
   }
 }

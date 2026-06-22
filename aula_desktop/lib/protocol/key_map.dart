@@ -148,4 +148,16 @@ class KeyboardKeyMap {
     if (index == null) return '';
     return _byIndex[index]?.label ?? '#$index';
   }
+
+  /// Keys sorted for pickers: function row first, then the rest alphabetically.
+  static List<KeyboardKey> get pickableKeys {
+    final keys = List<KeyboardKey>.from(KeyboardKeyMap.keys);
+    keys.sort((a, b) {
+      final aFn = a.label.startsWith('F') && a.label.length <= 3;
+      final bFn = b.label.startsWith('F') && b.label.length <= 3;
+      if (aFn != bFn) return aFn ? -1 : 1;
+      return a.label.compareTo(b.label);
+    });
+    return keys;
+  }
 }

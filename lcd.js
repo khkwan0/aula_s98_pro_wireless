@@ -17,7 +17,7 @@ const BYTES_PER_PIXEL = 2;
 const FRAME_SIZE = SCREEN_WIDTH * SCREEN_HEIGHT * BYTES_PER_PIXEL;
 const HEADER_SIZE = 256;
 const PAGE_SIZE = 4096;
-const MAX_FRAMES = 60;
+const MAX_FRAMES = 120;
 const LCD_ACK_TIMEOUT_MS = 300;
 
 function rgb888ToRgb565(r, g, b) {

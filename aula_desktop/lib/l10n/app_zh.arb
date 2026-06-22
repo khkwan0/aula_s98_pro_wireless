@@ -10,6 +10,7 @@
   "navHome": "首页",
   "navClock": "时钟",
   "navRgb": "RGB",
+  "navRemap": "改键",
   "navLcd": "LCD",
   "deviceInfoTooltip": "设备信息",
   "close": "关闭",

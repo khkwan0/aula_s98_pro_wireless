@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 
 import '../hid/hid_device.dart';
 import '../models/macro.dart';
+import '../models/remap.dart';
 import '../protocol/clock_protocol.dart' as clock;
 import '../protocol/constants.dart';
 import '../protocol/factory_reset_protocol.dart' as factory_reset;
@@ -13,6 +14,7 @@ import '../protocol/lcd_protocol.dart';
 import '../protocol/lighting_protocol.dart' as lighting;
 import '../protocol/macro_protocol.dart' as macro;
 import '../protocol/remap_protocol.dart' as remap;
+import '../services/remap_storage.dart';
 
 class DeviceStatus {
   const DeviceStatus({
@@ -190,6 +192,24 @@ class KeyboardService {
   Future<remap.RemapResult> applyMacroTriggers(List<MacroDefinition> macros) =>
       remap.applyMacroTriggers(macros);
 
-  Future<factory_reset.FactoryResetResult> factoryReset() =>
-      factory_reset.factoryReset();
+  Future<remap.RemapResult> applyRemapBindings(
+    List<RemapBinding> bindings, {
+    List<MacroDefinition> macros = const [],
+    bool uploadNormalLayer = true,
+    bool uploadFnLayer = true,
+  }) =>
+      remap.applyRemapBindings(
+        bindings,
+        macros: macros,
+        uploadNormalLayer: uploadNormalLayer,
+        uploadFnLayer: uploadFnLayer,
+      );
+
+  Future<void> clearFnRemaps() => remap.uploadRemapTable(const [], fnLayer: true);
+
+  Future<factory_reset.FactoryResetResult> factoryReset() async {
+    final result = await factory_reset.factoryReset();
+    await RemapStorage.clear();
+    return result;
+  }
 }
