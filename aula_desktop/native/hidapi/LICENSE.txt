@@ -1,0 +1,11 @@
+HIDAPI - Multi-Platform library for communication with HID devices.
+
+Copyright (c) 2009, Alan Ott <alan@signal11.us>
+Copyright (c) 2019, libusb/hidapi contributors
+
+This software may be used by anyone for any reason so long as the copyright
+notice in the source files is included in any binary distribution.
+
+See https://github.com/libusb/hidapi for the full license and source.
+
+Vendored binaries in this directory are built from hidapi release 0.15.0.

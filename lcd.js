@@ -17,7 +17,7 @@ const BYTES_PER_PIXEL = 2;
 const FRAME_SIZE = SCREEN_WIDTH * SCREEN_HEIGHT * BYTES_PER_PIXEL;
 const HEADER_SIZE = 256;
 const PAGE_SIZE = 4096;
-const MAX_FRAMES = 141;
+const MAX_FRAMES = 60;
 const LCD_ACK_TIMEOUT_MS = 300;
 
 function rgb888ToRgb565(r, g, b) {
@@ -116,14 +116,24 @@ function gifToLcdBuffer(gifPath, { maxFrames = MAX_FRAMES, force = false } = {})
     }
 
     let frameCount = frames.length;
+    const originalFrameCount = frameCount;
+    const warnings = [];
+
     if (frameCount > maxFrames && !force) {
-        throw new Error(
-            `GIF has ${frameCount} frames, which exceeds the safe limit of ${maxFrames}. ` +
-            'Use --force to override (may corrupt keyboard menu graphics).'
+        warnings.push(
+            `GIF has ${originalFrameCount} frames; only the first ${maxFrames} will be used.`
         );
+        frameCount = maxFrames;
     }
     if (frameCount > 255) {
+        if (originalFrameCount > 255) {
+            warnings.push(`GIF has ${originalFrameCount} frames; capped at 255 (header limit).`);
+        }
         frameCount = 255;
+    }
+
+    for (const warning of warnings) {
+        console.warn(`⚠️  ${warning}`);
     }
 
     const canvasWidth = gif.lsd.width;
@@ -168,6 +178,8 @@ function gifToLcdBuffer(gifPath, { maxFrames = MAX_FRAMES, force = false } = {})
     return {
         buffer,
         frameCount,
+        originalFrameCount,
+        warnings,
         source: gifPath,
         width: canvasWidth,
         height: canvasHeight,
@@ -360,9 +372,9 @@ async function uploadLcdImage(inputPath, options = {}) {
 }
 
 function convertGifToBin(gifPath, outputPath, options = {}) {
-    const { buffer, frameCount, width, height } = gifToLcdBuffer(gifPath, options);
+    const { buffer, frameCount, width, height, warnings } = gifToLcdBuffer(gifPath, options);
     fs.writeFileSync(outputPath, buffer);
-    return { outputPath, frameCount, width, height, bytes: buffer.length, pageCount: buffer.length / PAGE_SIZE };
+    return { outputPath, frameCount, width, height, bytes: buffer.length, pageCount: buffer.length / PAGE_SIZE, warnings };
 }
 
 module.exports = {

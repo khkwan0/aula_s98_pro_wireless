@@ -46,10 +46,20 @@ function findLcdDevice() {
     );
 }
 
+function getDeviceName() {
+    const device =
+        findControlDevice() ||
+        findLcdDevice() ||
+        HID.devices().find(
+            d => d.vendorId === VENDOR_ID && d.productId === PRODUCT_ID
+        );
+    return device?.product || 'AULA keyboard';
+}
+
 function openControlDevice() {
     const targetDevice = findControlDevice();
     if (!targetDevice) {
-        throw new Error('AULA S98 Pro keyboard not found. Ensure it is connected via USB-C cable.');
+        throw new Error(`${getDeviceName()} not found. Ensure it is connected via USB-C cable.`);
     }
     console.log(`🔗 Found device: ${targetDevice.product} on path: ${targetDevice.path}`);
     return new HID.HID(targetDevice.path);
@@ -58,7 +68,7 @@ function openControlDevice() {
 function openLcdDevice() {
     const targetDevice = findLcdDevice();
     if (!targetDevice) {
-        throw new Error('AULA S98 Pro LCD interface not found. Ensure the keyboard is connected via USB-C cable.');
+        throw new Error(`${getDeviceName()} LCD interface not found. Ensure the keyboard is connected via USB-C cable.`);
     }
     return new HID.HID(targetDevice.path);
 }
@@ -84,6 +94,7 @@ module.exports = {
     sendCommand,
     findControlDevice,
     findLcdDevice,
+    getDeviceName,
     openControlDevice,
     openLcdDevice,
     beginTransaction,
