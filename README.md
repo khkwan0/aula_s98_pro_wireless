@@ -1,3 +1,15 @@
+# AULA S98 Pro Wireless Companion
+
+Take total control of your typing experience on macOS. The AULA S98 Pro Wireless Companion is a lightweight, open-source utility built to configure and manage your AULA S98 Pro mechanical keyboard natively on your Mac.
+
+### Key Features:
+* **Smart Screen Management:** Synchronize your Mac's system clock, date, and battery monitoring with the keyboard's built-in TFT LCD screen seamlessly over wireless connections.
+* **On-Board Media Control:** Ensure the multi-function control knob interacts flawlessly with macOS volume and system settings.
+* **Custom GIF & Image Uploads:** Import, process, and upload custom animations directly to your keyboard's display screen right from your Mac.
+* **Local Profiles:** Remap keys and handle macro layouts locally without changing core hardware firmware properties.
+* **Privacy-First Design:** Operates 100% locally on your machine. Does not require an internet connection, account registration, or data tracking.
+
+
 # Privacy Policy
 
 **Effective Date:** June 22, 2026
