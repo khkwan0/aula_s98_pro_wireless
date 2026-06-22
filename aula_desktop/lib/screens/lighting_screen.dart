@@ -23,6 +23,8 @@ class _LightingScreenState extends State<LightingScreen> {
   int _direction = 0;
   bool _colorful = false;
   Color _color = Colors.blue;
+  late final ValueNotifier<Color> _colorNotifier;
+  late final ValueNotifier<Color> _pickerColorNotifier;
   bool _busy = false;
   String? _message;
   String? _error;
@@ -35,11 +37,14 @@ class _LightingScreenState extends State<LightingScreen> {
   static final _rgbInputFormatters = [
     FilteringTextInputFormatter.digitsOnly,
     LengthLimitingTextInputFormatter(3),
+    _RgbRangeInputFormatter(),
   ];
 
   @override
   void initState() {
     super.initState();
+    _colorNotifier = ValueNotifier(_color);
+    _pickerColorNotifier = ValueNotifier(_color);
     _redController = TextEditingController(text: _color.red.toString());
     _greenController = TextEditingController(text: _color.green.toString());
     _blueController = TextEditingController(text: _color.blue.toString());
@@ -47,6 +52,8 @@ class _LightingScreenState extends State<LightingScreen> {
 
   @override
   void dispose() {
+    _colorNotifier.dispose();
+    _pickerColorNotifier.dispose();
     _redController.dispose();
     _greenController.dispose();
     _blueController.dispose();
@@ -63,20 +70,32 @@ class _LightingScreenState extends State<LightingScreen> {
 
   void _setColor(Color color) {
     if (color == _color) return;
-    setState(() => _color = color);
+    _color = color;
+    _colorNotifier.value = color;
+    _pickerColorNotifier.value = color;
     _syncRgbFieldsFromColor();
   }
 
-  void _applyRgbFieldInput() {
+  void _applyRgbFieldInput({bool revertInvalid = false}) {
     if (_updatingRgbFields || _busy) return;
     final r = int.tryParse(_redController.text);
     final g = int.tryParse(_greenController.text);
     final b = int.tryParse(_blueController.text);
     if (r == null || g == null || b == null) {
-      _syncRgbFieldsFromColor();
+      if (revertInvalid) _syncRgbFieldsFromColor();
       return;
     }
-    _setColor(Color.fromARGB(255, r.clamp(0, 255), g.clamp(0, 255), b.clamp(0, 255)));
+    final newColor = Color.fromARGB(255, r.clamp(0, 255), g.clamp(0, 255), b.clamp(0, 255));
+    if (newColor == _color) return;
+    _color = newColor;
+    _colorNotifier.value = newColor;
+    // Do not push RGB text edits into ColorPicker; it auto-switches to the
+    // wheel tab when the color is not an exact Material swatch match.
+    if (newColor.red.toString() != _redController.text ||
+        newColor.green.toString() != _greenController.text ||
+        newColor.blue.toString() != _blueController.text) {
+      _syncRgbFieldsFromColor();
+    }
   }
 
   Future<void> _apply() async {
@@ -177,39 +196,46 @@ class _LightingScreenState extends State<LightingScreen> {
             ),
           if (showColor && !_colorful) ...[
             const SizedBox(height: 8),
-            ColorPicker(
-              color: _color,
-              onColorChanged: _setColor,
-              width: 36,
-              height: 36,
-              borderRadius: 8,
-              pickersEnabled: const {ColorPickerType.wheel: true, ColorPickerType.primary: true},
+            ValueListenableBuilder<Color>(
+              valueListenable: _pickerColorNotifier,
+              builder: (context, color, _) => ColorPicker(
+                color: color,
+                onColorChanged: _setColor,
+                width: 36,
+                height: 36,
+                borderRadius: 8,
+                pickersEnabled: const {ColorPickerType.wheel: true, ColorPickerType.primary: true},
+              ),
             ),
             const SizedBox(height: 12),
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    l10n.colorRgbValue(_color.red, _color.green, _color.blue),
-                    style: Theme.of(context).textTheme.titleMedium,
+            ValueListenableBuilder<Color>(
+              valueListenable: _colorNotifier,
+              builder: (context, color, _) => Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      l10n.colorRgbValue(color.red, color.green, color.blue),
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
                   ),
-                ),
-                Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: _color,
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: Theme.of(context).dividerColor),
+                  Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: color,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: Theme.of(context).dividerColor),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             const SizedBox(height: 12),
             Row(
               children: [
                 Expanded(
                   child: TextField(
+                    key: const ValueKey('rgb-red'),
                     controller: _redController,
                     enabled: !_busy,
                     keyboardType: TextInputType.number,
@@ -219,12 +245,13 @@ class _LightingScreenState extends State<LightingScreen> {
                       border: const OutlineInputBorder(),
                     ),
                     onChanged: (_) => _applyRgbFieldInput(),
-                    onEditingComplete: _applyRgbFieldInput,
+                    onEditingComplete: () => _applyRgbFieldInput(revertInvalid: true),
                   ),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: TextField(
+                    key: const ValueKey('rgb-green'),
                     controller: _greenController,
                     enabled: !_busy,
                     keyboardType: TextInputType.number,
@@ -234,12 +261,13 @@ class _LightingScreenState extends State<LightingScreen> {
                       border: const OutlineInputBorder(),
                     ),
                     onChanged: (_) => _applyRgbFieldInput(),
-                    onEditingComplete: _applyRgbFieldInput,
+                    onEditingComplete: () => _applyRgbFieldInput(revertInvalid: true),
                   ),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: TextField(
+                    key: const ValueKey('rgb-blue'),
                     controller: _blueController,
                     enabled: !_busy,
                     keyboardType: TextInputType.number,
@@ -249,7 +277,7 @@ class _LightingScreenState extends State<LightingScreen> {
                       border: const OutlineInputBorder(),
                     ),
                     onChanged: (_) => _applyRgbFieldInput(),
-                    onEditingComplete: _applyRgbFieldInput,
+                    onEditingComplete: () => _applyRgbFieldInput(revertInvalid: true),
                   ),
                 ),
               ],
@@ -314,5 +342,17 @@ class _LightingScreenState extends State<LightingScreen> {
         ],
       ),
     );
+  }
+}
+
+/// Keeps RGB text fields in the 0–255 range while still allowing empty input while editing.
+class _RgbRangeInputFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+    final text = newValue.text;
+    if (text.isEmpty) return newValue;
+    final value = int.tryParse(text);
+    if (value == null || value > 255) return oldValue;
+    return newValue;
   }
 }
