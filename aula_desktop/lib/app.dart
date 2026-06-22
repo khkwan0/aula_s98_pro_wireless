@@ -24,7 +24,9 @@ class _AulaAppState extends State<AulaApp> {
   @override
   void initState() {
     super.initState();
-    keyboard.getStatus();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future(() => keyboard.getStatus());
+    });
   }
 
   void _setLocale(Locale? locale) {
@@ -182,7 +184,12 @@ class _MainShellState extends State<MainShell> {
             ),
           ),
           const VerticalDivider(width: 1),
-          Expanded(child: pages[_index]),
+          Expanded(
+            child: IndexedStack(
+              index: _index,
+              children: pages,
+            ),
+          ),
         ],
       ),
     );

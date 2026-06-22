@@ -1,3 +1,19 @@
+/// How a macro runs when its trigger key is pressed.
+enum MacroPlaybackMode {
+  /// Run up to [MacroDefinition.maxRepeats] times per trigger press.
+  once,
+
+  /// Loop until the trigger key is pressed again.
+  toggle;
+
+  static MacroPlaybackMode fromName(String? name) {
+    return MacroPlaybackMode.values.firstWhere(
+      (mode) => mode.name == name,
+      orElse: () => MacroPlaybackMode.once,
+    );
+  }
+}
+
 /// How delays between macro events are handled when uploaded to the keyboard.
 enum MacroDelayMode {
   /// Use recorded delays between events.
@@ -46,33 +62,53 @@ class MacroEvent {
 class MacroDefinition {
   const MacroDefinition({
     required this.name,
-    this.playTimes = 1,
+    this.playbackMode = MacroPlaybackMode.once,
+    this.maxRepeats = 1,
     this.delayMode = MacroDelayMode.recorded,
     this.customDelayMs = 10,
     this.events = const [],
+    this.triggerKeyIndices = const [],
+    this.triggerKeyLabel = '',
   });
 
+  static const int maxRepeatsLimit = 99;
+
   final String name;
-  final int playTimes;
+  final MacroPlaybackMode playbackMode;
+  final int maxRepeats;
   final MacroDelayMode delayMode;
   final int customDelayMs;
   final List<MacroEvent> events;
+  final List<int> triggerKeyIndices;
+  final String triggerKeyLabel;
 
   bool get isEmpty => events.isEmpty;
+  bool get hasTrigger => triggerKeyIndices.isNotEmpty;
 
   MacroDefinition copyWith({
     String? name,
-    int? playTimes,
+    MacroPlaybackMode? playbackMode,
+    int? maxRepeats,
     MacroDelayMode? delayMode,
     int? customDelayMs,
     List<MacroEvent>? events,
+    List<int>? triggerKeyIndices,
+    String? triggerKeyLabel,
+    bool clearTrigger = false,
+    bool clearEvents = false,
   }) {
     return MacroDefinition(
       name: name ?? this.name,
-      playTimes: playTimes ?? this.playTimes,
+      playbackMode: playbackMode ?? this.playbackMode,
+      maxRepeats: maxRepeats ?? this.maxRepeats,
       delayMode: delayMode ?? this.delayMode,
       customDelayMs: customDelayMs ?? this.customDelayMs,
-      events: events ?? this.events,
+      events: clearEvents ? const [] : (events ?? this.events),
+      triggerKeyIndices: clearTrigger
+          ? const []
+          : (triggerKeyIndices ?? this.triggerKeyIndices),
+      triggerKeyLabel:
+          clearTrigger ? '' : (triggerKeyLabel ?? this.triggerKeyLabel),
     );
   }
 }

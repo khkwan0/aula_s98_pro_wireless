@@ -87,6 +87,26 @@ Uint8List _encodeEvent(MacroEvent event) {
   ]);
 }
 
+MacroBufferInfo _buildEmptyMacroBuffer() {
+  final paddedLength = ((macroHeaderBytes + 2 + 63) ~/ 64) * 64;
+  final buffer = Uint8List(paddedLength);
+  for (var i = 0; i < macroMaxSlots; i++) {
+    final offset = i * 4;
+    buffer[offset] = 0xFF;
+    buffer[offset + 1] = 0xFF;
+    buffer[offset + 2] = 0xFF;
+    buffer[offset + 3] = 0xFF;
+  }
+  buffer[paddedLength - 2] = 0x55;
+  buffer[paddedLength - 1] = 0xAA;
+  return MacroBufferInfo(
+    buffer: buffer,
+    macroCount: 0,
+    eventCount: 0,
+    packetCount: paddedLength ~/ KeyboardConstants.reportSize,
+  );
+}
+
 MacroBufferInfo buildMacroBuffer(List<MacroDefinition> macros) {
   final active = <MacroDefinition>[];
   for (final macro in macros) {
@@ -96,7 +116,7 @@ MacroBufferInfo buildMacroBuffer(List<MacroDefinition> macros) {
   }
 
   if (active.isEmpty) {
-    throw const UserMessage('errorMacroEmpty');
+    return _buildEmptyMacroBuffer();
   }
 
   if (active.length > macroMaxSlots) {
@@ -125,10 +145,18 @@ MacroBufferInfo buildMacroBuffer(List<MacroDefinition> macros) {
   var dataOffset = macroHeaderBytes;
 
   for (var i = 0; i < active.length; i++) {
+    final macro = active[i];
     final events = uploadedEvents[i];
     final block = Uint8List(8 + events.length * 4);
     block[0] = events.length & 0xFF;
     block[1] = (events.length >> 8) & 0xFF;
+    block[2] = 1;
+    block[3] = macro.delayMode.protocolValue;
+    if (macro.delayMode == MacroDelayMode.custom) {
+      final delay = macro.customDelayMs.clamp(10, 65535);
+      block[4] = delay & 0xFF;
+      block[5] = (delay >> 8) & 0xFF;
+    }
 
     var writeOffset = 8;
     for (final event in events) {

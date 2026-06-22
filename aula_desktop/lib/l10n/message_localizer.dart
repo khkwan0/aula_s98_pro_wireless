@@ -87,6 +87,17 @@ extension MessageLocalization on AppLocalizations {
           args['events']! as int,
         ),
       'errorMacroUnsupportedKey' => errorMacroUnsupportedKey,
+      'errorMacroUnsupportedTriggerKey' => errorMacroUnsupportedTriggerKey,
+      'errorMacroTriggerModifierNotAllowed' =>
+        errorMacroTriggerModifierNotAllowed,
+      'errorMacroTriggerSingleKeyOnly' => errorMacroTriggerSingleKeyOnly,
+      'errorMacroTriggerInvalid' => switch (args['reason'] as String?) {
+        'modifierNotAllowed' => errorMacroTriggerModifierNotAllowed,
+        'singleKeyOnly' => errorMacroTriggerSingleKeyOnly,
+        _ => errorMacroTriggerInvalid,
+      },
+      'errorMacroDuplicateTrigger' =>
+        errorMacroDuplicateTrigger(args['key']! as String),
       _ => message.key,
     };
   }

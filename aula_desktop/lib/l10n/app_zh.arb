@@ -60,6 +60,13 @@
   "requirementCloseUtility": "• 使用本应用前请关闭 AULA 官方工具软件。",
   "requirementGifTrim": "• 超过 {maxFrames} 帧的 GIF 会自动裁剪。",
 
+  "factoryResetTitle": "恢复出厂设置",
+  "factoryResetSubtitle": "将灯光、按键映射和宏恢复为默认设置。",
+  "factoryResetButton": "恢复出厂设置",
+  "factoryResetDialogTitle": "恢复键盘出厂设置？",
+  "factoryResetDialogBody": "这将清除所有自定义按键映射、宏绑定和已录制的宏，并恢复默认灯光配置。\n\n不会影响 LCD 动画和屏幕菜单图形。若要重置这些，请重新上传原始 GIF，或在键盘上按住 Fn + Esc 5 秒。",
+  "factoryResetSuccess": "恢复出厂设置完成。已清除按键映射和宏。灯光已恢复为 {mode}。",
+
   "clockTitle": "LCD 时钟",
   "clockSubtitle": "通过 USB 同步键盘屏幕时钟。",
   "useCustomDateTime": "使用自定义日期/时间",

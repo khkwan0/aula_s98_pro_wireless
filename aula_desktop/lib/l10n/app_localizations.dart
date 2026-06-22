@@ -424,6 +424,42 @@ abstract class AppLocalizations {
   /// **'• GIFs over {maxFrames} frames are trimmed automatically.'**
   String requirementGifTrim(int maxFrames);
 
+  /// No description provided for @factoryResetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Factory reset'**
+  String get factoryResetTitle;
+
+  /// No description provided for @factoryResetSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore lighting, key remaps, and macros to defaults.'**
+  String get factoryResetSubtitle;
+
+  /// No description provided for @factoryResetButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Factory reset'**
+  String get factoryResetButton;
+
+  /// No description provided for @factoryResetDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Factory reset keyboard?'**
+  String get factoryResetDialogTitle;
+
+  /// No description provided for @factoryResetDialogBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This will clear all custom key remaps, macro bindings, and recorded macros, then restore the default lighting profile.\n\nLCD animations and on-screen menu graphics are not affected. To reset those, re-upload the original GIF or hold Fn + Esc for 5 seconds on the keyboard.'**
+  String get factoryResetDialogBody;
+
+  /// No description provided for @factoryResetSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Factory reset complete. Key remaps and macros cleared. Lighting restored to {mode}.'**
+  String factoryResetSuccess(String mode);
+
   /// No description provided for @clockTitle.
   ///
   /// In en, this message translates to:
@@ -589,7 +625,7 @@ abstract class AppLocalizations {
   /// No description provided for @macroSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Record keyboard sequences and upload them to the keyboard over USB. Assign a key to a macro using the official AULA utility or a future key-remap feature.'**
+  /// **'Record keyboard sequences, assign one trigger key per macro, and upload over USB. Like the official AULA software, each macro is triggered by a single key.'**
   String get macroSubtitle;
 
   /// No description provided for @macroListTitle.
@@ -615,6 +651,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Delay between events'**
   String get macroDelayMode;
+
+  /// No description provided for @macroPlaybackMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Playback mode'**
+  String get macroPlaybackMode;
+
+  /// No description provided for @macroPlaybackModeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'How the macro runs when you press its trigger key.'**
+  String get macroPlaybackModeHint;
+
+  /// No description provided for @macroPlaybackOnce.
+  ///
+  /// In en, this message translates to:
+  /// **'Play once or repeat N times'**
+  String get macroPlaybackOnce;
+
+  /// No description provided for @macroPlaybackToggle.
+  ///
+  /// In en, this message translates to:
+  /// **'Toggle on/off'**
+  String get macroPlaybackToggle;
+
+  /// No description provided for @macroMaxRepeats.
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum repeats'**
+  String get macroMaxRepeats;
+
+  /// No description provided for @macroMaxRepeatsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'How many times the macro runs each time you press its trigger key (1–99). Only used in play-once mode.'**
+  String get macroMaxRepeatsHint;
 
   /// No description provided for @macroDelayRecorded.
   ///
@@ -658,6 +730,72 @@ abstract class AppLocalizations {
   /// **'{count, plural, =0{No events} =1{1 event} other{{count} events}}'**
   String macroEventCount(int count);
 
+  /// No description provided for @macroListEntryWithTrigger.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No events} =1{1 event} other{{count} events}} • Trigger: {key}'**
+  String macroListEntryWithTrigger(int count, String key);
+
+  /// No description provided for @macroTriggerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Trigger key'**
+  String get macroTriggerTitle;
+
+  /// No description provided for @macroTriggerNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No trigger key assigned.'**
+  String get macroTriggerNone;
+
+  /// No description provided for @macroTriggerAssigned.
+  ///
+  /// In en, this message translates to:
+  /// **'Press {key} on the keyboard to run this macro.'**
+  String macroTriggerAssigned(String key);
+
+  /// No description provided for @macroTriggerSingleKeyNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Each macro can use one trigger key only. Modifier shortcuts (e.g. Ctrl+C) belong inside the recorded sequence, not in the trigger.'**
+  String get macroTriggerSingleKeyNote;
+
+  /// No description provided for @warningMacroTriggerOverlap.
+  ///
+  /// In en, this message translates to:
+  /// **'Warning: {keys} is also typed by this macro. Use a trigger key that is not part of the sequence (e.g. a function key).'**
+  String warningMacroTriggerOverlap(String keys);
+
+  /// No description provided for @macroTriggerPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Selected: {keys} ({count}/3). Press Enter or Confirm.'**
+  String macroTriggerPending(String keys, int count);
+
+  /// No description provided for @macroConfirmTrigger.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get macroConfirmTrigger;
+
+  /// No description provided for @macroAssignTrigger.
+  ///
+  /// In en, this message translates to:
+  /// **'Assign trigger key'**
+  String get macroAssignTrigger;
+
+  /// No description provided for @macroClearTrigger.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear trigger'**
+  String get macroClearTrigger;
+
+  /// No description provided for @macroAssigningTriggerHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Press one key to assign as the macro trigger. Esc to cancel.'**
+  String get macroAssigningTriggerHint;
+
   /// No description provided for @macroActionDown.
   ///
   /// In en, this message translates to:
@@ -700,6 +838,18 @@ abstract class AppLocalizations {
   /// **'Clear events'**
   String get macroClear;
 
+  /// No description provided for @macroClearHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Clears recorded events in the app and on the keyboard.'**
+  String get macroClearHint;
+
+  /// No description provided for @macroEventsCleared.
+  ///
+  /// In en, this message translates to:
+  /// **'Cleared macro events on the keyboard.'**
+  String get macroEventsCleared;
+
   /// No description provided for @macroDelete.
   ///
   /// In en, this message translates to:
@@ -717,6 +867,19 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Uploaded {macroCount, plural, =1{1 macro} other{{macroCount} macros}} with {eventCount, plural, =1{1 event} other{{eventCount} events}}'**
   String macroUploaded(int macroCount, int eventCount);
+
+  /// No description provided for @macroUploadedWithBinding.
+  ///
+  /// In en, this message translates to:
+  /// **'Uploaded {macroCount, plural, =1{1 macro} other{{macroCount} macros}} with {eventCount, plural, =1{1 event} other{{eventCount} events}} and bound {bindingCount, plural, =1{1 trigger key} other{{bindingCount} trigger keys}}.'**
+  String macroUploadedWithBinding(
+      int macroCount, int eventCount, int bindingCount);
+
+  /// No description provided for @macroUploadedAssignTrigger.
+  ///
+  /// In en, this message translates to:
+  /// **'Uploaded {macroCount, plural, =1{1 macro} other{{macroCount} macros}} with {eventCount, plural, =1{1 event} other{{eventCount} events}}. Assign a trigger key to run it.'**
+  String macroUploadedAssignTrigger(int macroCount, int eventCount);
 
   /// No description provided for @errorMacroEmpty.
   ///
@@ -741,6 +904,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'That key is not supported for macros.'**
   String get errorMacroUnsupportedKey;
+
+  /// No description provided for @errorMacroUnsupportedTriggerKey.
+  ///
+  /// In en, this message translates to:
+  /// **'That key cannot be used as a macro trigger.'**
+  String get errorMacroUnsupportedTriggerKey;
+
+  /// No description provided for @errorMacroTriggerModifierNotAllowed.
+  ///
+  /// In en, this message translates to:
+  /// **'Modifier keys cannot be macro triggers. Pick a regular key such as F8.'**
+  String get errorMacroTriggerModifierNotAllowed;
+
+  /// No description provided for @errorMacroTriggerSingleKeyOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Each macro can only have one trigger key.'**
+  String get errorMacroTriggerSingleKeyOnly;
+
+  /// No description provided for @errorMacroTriggerInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid trigger key.'**
+  String get errorMacroTriggerInvalid;
+
+  /// No description provided for @errorMacroDuplicateTrigger.
+  ///
+  /// In en, this message translates to:
+  /// **'Multiple macros use the trigger {key}. Each key can only run one macro.'**
+  String errorMacroDuplicateTrigger(String key);
 
   /// No description provided for @lightingModeOff.
   ///

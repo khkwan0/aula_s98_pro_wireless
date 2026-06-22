@@ -189,6 +189,28 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get factoryResetTitle => 'Factory reset';
+
+  @override
+  String get factoryResetSubtitle =>
+      'Restore lighting, key remaps, and macros to defaults.';
+
+  @override
+  String get factoryResetButton => 'Factory reset';
+
+  @override
+  String get factoryResetDialogTitle => 'Factory reset keyboard?';
+
+  @override
+  String get factoryResetDialogBody =>
+      'This will clear all custom key remaps, macro bindings, and recorded macros, then restore the default lighting profile.\n\nLCD animations and on-screen menu graphics are not affected. To reset those, re-upload the original GIF or hold Fn + Esc for 5 seconds on the keyboard.';
+
+  @override
+  String factoryResetSuccess(String mode) {
+    return 'Factory reset complete. Key remaps and macros cleared. Lighting restored to $mode.';
+  }
+
+  @override
   String get clockTitle => 'LCD Clock';
 
   @override
@@ -287,7 +309,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get macroSubtitle =>
-      'Record keyboard sequences and upload them to the keyboard over USB. Assign a key to a macro using the official AULA utility or a future key-remap feature.';
+      'Record keyboard sequences, assign one trigger key per macro, and upload over USB. Like the official AULA software, each macro is triggered by a single key.';
 
   @override
   String get macroListTitle => 'Macro slots';
@@ -300,6 +322,26 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get macroDelayMode => 'Delay between events';
+
+  @override
+  String get macroPlaybackMode => 'Playback mode';
+
+  @override
+  String get macroPlaybackModeHint =>
+      'How the macro runs when you press its trigger key.';
+
+  @override
+  String get macroPlaybackOnce => 'Play once or repeat N times';
+
+  @override
+  String get macroPlaybackToggle => 'Toggle on/off';
+
+  @override
+  String get macroMaxRepeats => 'Maximum repeats';
+
+  @override
+  String get macroMaxRepeatsHint =>
+      'How many times the macro runs each time you press its trigger key (1–99). Only used in play-once mode.';
 
   @override
   String get macroDelayRecorded => 'Use recorded delays';
@@ -333,6 +375,56 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String macroListEntryWithTrigger(int count, String key) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count events',
+      one: '1 event',
+      zero: 'No events',
+    );
+    return '$_temp0 • Trigger: $key';
+  }
+
+  @override
+  String get macroTriggerTitle => 'Trigger key';
+
+  @override
+  String get macroTriggerNone => 'No trigger key assigned.';
+
+  @override
+  String macroTriggerAssigned(String key) {
+    return 'Press $key on the keyboard to run this macro.';
+  }
+
+  @override
+  String get macroTriggerSingleKeyNote =>
+      'Each macro can use one trigger key only. Modifier shortcuts (e.g. Ctrl+C) belong inside the recorded sequence, not in the trigger.';
+
+  @override
+  String warningMacroTriggerOverlap(String keys) {
+    return 'Warning: $keys is also typed by this macro. Use a trigger key that is not part of the sequence (e.g. a function key).';
+  }
+
+  @override
+  String macroTriggerPending(String keys, int count) {
+    return 'Selected: $keys ($count/3). Press Enter or Confirm.';
+  }
+
+  @override
+  String get macroConfirmTrigger => 'Confirm';
+
+  @override
+  String get macroAssignTrigger => 'Assign trigger key';
+
+  @override
+  String get macroClearTrigger => 'Clear trigger';
+
+  @override
+  String get macroAssigningTriggerHint =>
+      'Press one key to assign as the macro trigger. Esc to cancel.';
+
+  @override
   String get macroActionDown => 'Down';
 
   @override
@@ -354,6 +446,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get macroClear => 'Clear events';
+
+  @override
+  String get macroClearHint =>
+      'Clears recorded events in the app and on the keyboard.';
+
+  @override
+  String get macroEventsCleared => 'Cleared macro events on the keyboard.';
 
   @override
   String get macroDelete => 'Delete macro';
@@ -379,6 +478,47 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String macroUploadedWithBinding(
+      int macroCount, int eventCount, int bindingCount) {
+    String _temp0 = intl.Intl.pluralLogic(
+      macroCount,
+      locale: localeName,
+      other: '$macroCount macros',
+      one: '1 macro',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      eventCount,
+      locale: localeName,
+      other: '$eventCount events',
+      one: '1 event',
+    );
+    String _temp2 = intl.Intl.pluralLogic(
+      bindingCount,
+      locale: localeName,
+      other: '$bindingCount trigger keys',
+      one: '1 trigger key',
+    );
+    return 'Uploaded $_temp0 with $_temp1 and bound $_temp2.';
+  }
+
+  @override
+  String macroUploadedAssignTrigger(int macroCount, int eventCount) {
+    String _temp0 = intl.Intl.pluralLogic(
+      macroCount,
+      locale: localeName,
+      other: '$macroCount macros',
+      one: '1 macro',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      eventCount,
+      locale: localeName,
+      other: '$eventCount events',
+      one: '1 event',
+    );
+    return 'Uploaded $_temp0 with $_temp1. Assign a trigger key to run it.';
+  }
+
+  @override
   String get errorMacroEmpty =>
       'Add at least one macro with recorded events before uploading.';
 
@@ -395,6 +535,26 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get errorMacroUnsupportedKey =>
       'That key is not supported for macros.';
+
+  @override
+  String get errorMacroUnsupportedTriggerKey =>
+      'That key cannot be used as a macro trigger.';
+
+  @override
+  String get errorMacroTriggerModifierNotAllowed =>
+      'Modifier keys cannot be macro triggers. Pick a regular key such as F8.';
+
+  @override
+  String get errorMacroTriggerSingleKeyOnly =>
+      'Each macro can only have one trigger key.';
+
+  @override
+  String get errorMacroTriggerInvalid => 'Invalid trigger key.';
+
+  @override
+  String errorMacroDuplicateTrigger(String key) {
+    return 'Multiple macros use the trigger $key. Each key can only run one macro.';
+  }
 
   @override
   String get lightingModeOff => 'Off';

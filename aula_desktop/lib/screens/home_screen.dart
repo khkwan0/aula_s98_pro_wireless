@@ -17,12 +17,14 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   DeviceStatus? _status;
   String? _error;
+  String? _message;
   bool _loading = true;
+  bool _resetting = false;
 
   @override
   void initState() {
     super.initState();
-    _refresh();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _refresh());
   }
 
   Future<void> _refresh() async {
@@ -31,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
       _error = null;
     });
     try {
-      final status = widget.keyboard.getStatus();
+      final status = await Future(() => widget.keyboard.getStatus());
       if (!mounted) return;
       setState(() {
         _status = status;
@@ -44,6 +46,55 @@ class _HomeScreenState extends State<HomeScreen> {
         _error = l10n.localizeError(error);
         _loading = false;
       });
+    }
+  }
+
+  Future<void> _factoryReset() async {
+    final l10n = AppLocalizations.of(context)!;
+    final connected = _status?.connected == true;
+    if (!connected) return;
+
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) {
+        final dialogL10n = AppLocalizations.of(context)!;
+        return AlertDialog(
+          title: Text(dialogL10n.factoryResetDialogTitle),
+          content: Text(dialogL10n.factoryResetDialogBody),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context, false),
+              child: Text(dialogL10n.cancel),
+            ),
+            FilledButton(
+              style: FilledButton.styleFrom(
+                backgroundColor: Theme.of(context).colorScheme.error,
+                foregroundColor: Theme.of(context).colorScheme.onError,
+              ),
+              onPressed: () => Navigator.pop(context, true),
+              child: Text(dialogL10n.factoryResetButton),
+            ),
+          ],
+        );
+      },
+    );
+    if (confirmed != true || !mounted) return;
+
+    setState(() {
+      _resetting = true;
+      _error = null;
+      _message = null;
+    });
+
+    try {
+      final result = await widget.keyboard.factoryReset();
+      if (!mounted) return;
+      setState(() => _message = l10n.factoryResetSuccess(result.lightingMode));
+    } catch (error) {
+      if (!mounted) return;
+      setState(() => _error = l10n.localizeError(error));
+    } finally {
+      if (mounted) setState(() => _resetting = false);
     }
   }
 
@@ -69,7 +120,15 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
           const SizedBox(height: 24),
-          if (_loading) const LinearProgressIndicator(),
+          if (_loading || _resetting) const LinearProgressIndicator(),
+          if (_message != null)
+            Card(
+              color: theme.colorScheme.primaryContainer,
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Text(_message!),
+              ),
+            ),
           if (_error != null)
             Card(
               color: theme.colorScheme.errorContainer,
@@ -121,6 +180,31 @@ class _HomeScreenState extends State<HomeScreen> {
                     Text(l10n.requirementUsb),
                     Text(l10n.requirementCloseUtility),
                     Text(l10n.requirementGifTrim(KeyboardConstants.maxFrames)),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 24),
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      l10n.factoryResetTitle,
+                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(l10n.factoryResetSubtitle),
+                    const SizedBox(height: 16),
+                    FilledButton.tonalIcon(
+                      onPressed: status?.connected == true && !_resetting
+                          ? _factoryReset
+                          : null,
+                      icon: const Icon(Icons.restart_alt),
+                      label: Text(l10n.factoryResetButton),
+                    ),
                   ],
                 ),
               ),

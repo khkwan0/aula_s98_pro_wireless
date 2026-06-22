@@ -187,6 +187,27 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
+  String get factoryResetTitle => '恢复出厂设置';
+
+  @override
+  String get factoryResetSubtitle => '将灯光、按键映射和宏恢复为默认设置。';
+
+  @override
+  String get factoryResetButton => '恢复出厂设置';
+
+  @override
+  String get factoryResetDialogTitle => '恢复键盘出厂设置？';
+
+  @override
+  String get factoryResetDialogBody =>
+      '这将清除所有自定义按键映射、宏绑定和已录制的宏，并恢复默认灯光配置。\n\n不会影响 LCD 动画和屏幕菜单图形。若要重置这些，请重新上传原始 GIF，或在键盘上按住 Fn + Esc 5 秒。';
+
+  @override
+  String factoryResetSuccess(String mode) {
+    return '恢复出厂设置完成。已清除按键映射和宏。灯光已恢复为 $mode。';
+  }
+
+  @override
   String get clockTitle => 'LCD 时钟';
 
   @override
@@ -285,7 +306,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get macroSubtitle =>
-      'Record keyboard sequences and upload them to the keyboard over USB. Assign a key to a macro using the official AULA utility or a future key-remap feature.';
+      'Record keyboard sequences, assign one trigger key per macro, and upload over USB. Like the official AULA software, each macro is triggered by a single key.';
 
   @override
   String get macroListTitle => 'Macro slots';
@@ -298,6 +319,26 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get macroDelayMode => 'Delay between events';
+
+  @override
+  String get macroPlaybackMode => 'Playback mode';
+
+  @override
+  String get macroPlaybackModeHint =>
+      'How the macro runs when you press its trigger key.';
+
+  @override
+  String get macroPlaybackOnce => 'Play once or repeat N times';
+
+  @override
+  String get macroPlaybackToggle => 'Toggle on/off';
+
+  @override
+  String get macroMaxRepeats => 'Maximum repeats';
+
+  @override
+  String get macroMaxRepeatsHint =>
+      'How many times the macro runs each time you press its trigger key (1–99). Only used in play-once mode.';
 
   @override
   String get macroDelayRecorded => 'Use recorded delays';
@@ -331,6 +372,56 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
+  String macroListEntryWithTrigger(int count, String key) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count events',
+      one: '1 event',
+      zero: 'No events',
+    );
+    return '$_temp0 • Trigger: $key';
+  }
+
+  @override
+  String get macroTriggerTitle => 'Trigger key';
+
+  @override
+  String get macroTriggerNone => 'No trigger key assigned.';
+
+  @override
+  String macroTriggerAssigned(String key) {
+    return 'Press $key on the keyboard to run this macro.';
+  }
+
+  @override
+  String get macroTriggerSingleKeyNote =>
+      'Each macro can use one trigger key only. Modifier shortcuts (e.g. Ctrl+C) belong inside the recorded sequence, not in the trigger.';
+
+  @override
+  String warningMacroTriggerOverlap(String keys) {
+    return 'Warning: $keys is also typed by this macro. Use a trigger key that is not part of the sequence (e.g. a function key).';
+  }
+
+  @override
+  String macroTriggerPending(String keys, int count) {
+    return 'Selected: $keys ($count/3). Press Enter or Confirm.';
+  }
+
+  @override
+  String get macroConfirmTrigger => 'Confirm';
+
+  @override
+  String get macroAssignTrigger => 'Assign trigger key';
+
+  @override
+  String get macroClearTrigger => 'Clear trigger';
+
+  @override
+  String get macroAssigningTriggerHint =>
+      'Press one key to assign as the macro trigger. Esc to cancel.';
+
+  @override
   String get macroActionDown => 'Down';
 
   @override
@@ -352,6 +443,13 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get macroClear => 'Clear events';
+
+  @override
+  String get macroClearHint =>
+      'Clears recorded events in the app and on the keyboard.';
+
+  @override
+  String get macroEventsCleared => 'Cleared macro events on the keyboard.';
 
   @override
   String get macroDelete => 'Delete macro';
@@ -377,6 +475,47 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
+  String macroUploadedWithBinding(
+      int macroCount, int eventCount, int bindingCount) {
+    String _temp0 = intl.Intl.pluralLogic(
+      macroCount,
+      locale: localeName,
+      other: '$macroCount macros',
+      one: '1 macro',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      eventCount,
+      locale: localeName,
+      other: '$eventCount events',
+      one: '1 event',
+    );
+    String _temp2 = intl.Intl.pluralLogic(
+      bindingCount,
+      locale: localeName,
+      other: '$bindingCount trigger keys',
+      one: '1 trigger key',
+    );
+    return 'Uploaded $_temp0 with $_temp1 and bound $_temp2.';
+  }
+
+  @override
+  String macroUploadedAssignTrigger(int macroCount, int eventCount) {
+    String _temp0 = intl.Intl.pluralLogic(
+      macroCount,
+      locale: localeName,
+      other: '$macroCount macros',
+      one: '1 macro',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      eventCount,
+      locale: localeName,
+      other: '$eventCount events',
+      one: '1 event',
+    );
+    return 'Uploaded $_temp0 with $_temp1. Assign a trigger key to run it.';
+  }
+
+  @override
   String get errorMacroEmpty =>
       'Add at least one macro with recorded events before uploading.';
 
@@ -393,6 +532,26 @@ class AppLocalizationsZh extends AppLocalizations {
   @override
   String get errorMacroUnsupportedKey =>
       'That key is not supported for macros.';
+
+  @override
+  String get errorMacroUnsupportedTriggerKey =>
+      'That key cannot be used as a macro trigger.';
+
+  @override
+  String get errorMacroTriggerModifierNotAllowed =>
+      'Modifier keys cannot be macro triggers. Pick a regular key such as F8.';
+
+  @override
+  String get errorMacroTriggerSingleKeyOnly =>
+      'Each macro can only have one trigger key.';
+
+  @override
+  String get errorMacroTriggerInvalid => 'Invalid trigger key.';
+
+  @override
+  String errorMacroDuplicateTrigger(String key) {
+    return 'Multiple macros use the trigger $key. Each key can only run one macro.';
+  }
 
   @override
   String get lightingModeOff => '关闭';
@@ -803,6 +962,27 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   }
 
   @override
+  String get factoryResetTitle => '恢复出厂设置';
+
+  @override
+  String get factoryResetSubtitle => '将灯光、按键映射和宏恢复为默认设置。';
+
+  @override
+  String get factoryResetButton => '恢复出厂设置';
+
+  @override
+  String get factoryResetDialogTitle => '恢复键盘出厂设置？';
+
+  @override
+  String get factoryResetDialogBody =>
+      '这将清除所有自定义按键映射、宏绑定和已录制的宏，并恢复默认灯光配置。\n\n不会影响 LCD 动画和屏幕菜单图形。若要重置这些，请重新上传原始 GIF，或在键盘上按住 Fn + Esc 5 秒。';
+
+  @override
+  String factoryResetSuccess(String mode) {
+    return '恢复出厂设置完成。已清除按键映射和宏。灯光已恢复为 $mode。';
+  }
+
+  @override
   String get clockTitle => 'LCD 时钟';
 
   @override
@@ -900,8 +1080,7 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   String get macroTitle => '宏';
 
   @override
-  String get macroSubtitle =>
-      '录制键盘序列并通过 USB 上传到键盘。请使用 AULA 官方工具或未来的按键重映射功能将按键绑定到宏。';
+  String get macroSubtitle => '录制键盘序列，指定触发键，并通过 USB 上传。按下触发键即可运行宏。';
 
   @override
   String get macroListTitle => '宏槽位';
@@ -914,6 +1093,24 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
 
   @override
   String get macroDelayMode => '事件间隔';
+
+  @override
+  String get macroPlaybackMode => '播放模式';
+
+  @override
+  String get macroPlaybackModeHint => '按下触发键时宏如何运行。';
+
+  @override
+  String get macroPlaybackOnce => '播放一次或重复 N 次';
+
+  @override
+  String get macroPlaybackToggle => '开关切换';
+
+  @override
+  String get macroMaxRepeats => '最大重复次数';
+
+  @override
+  String get macroMaxRepeatsHint => '每次按下触发键时宏运行的次数（1–99）。仅在播放一次模式下使用。';
 
   @override
   String get macroDelayRecorded => '使用录制延迟';
@@ -939,6 +1136,48 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   }
 
   @override
+  String macroListEntryWithTrigger(int count, String key) {
+    return '$count 个事件 • 触发键：$key';
+  }
+
+  @override
+  String get macroTriggerTitle => '触发键';
+
+  @override
+  String get macroTriggerNone => '未指定触发键。';
+
+  @override
+  String macroTriggerAssigned(String key) {
+    return '在键盘上按下 $key 可运行此宏。';
+  }
+
+  @override
+  String get macroTriggerSingleKeyNote =>
+      '每个宏只能使用一个触发键。修饰键快捷键（如 Ctrl+C）应录在宏序列里，而不是作为触发键。';
+
+  @override
+  String warningMacroTriggerOverlap(String keys) {
+    return '警告：$keys 也包含在此宏序列中。请使用不在序列内的触发键（例如功能键）。';
+  }
+
+  @override
+  String macroTriggerPending(String keys, int count) {
+    return '已选：$keys（$count/3）。按 Enter 或点击确认。';
+  }
+
+  @override
+  String get macroConfirmTrigger => '确认';
+
+  @override
+  String get macroAssignTrigger => '指定触发键';
+
+  @override
+  String get macroClearTrigger => '清除触发键';
+
+  @override
+  String get macroAssigningTriggerHint => '按下一个键作为宏触发键。Esc 取消。';
+
+  @override
   String get macroActionDown => '按下';
 
   @override
@@ -962,6 +1201,12 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   String get macroClear => '清除事件';
 
   @override
+  String get macroClearHint => '清除应用和键盘上录制的按键事件。';
+
+  @override
+  String get macroEventsCleared => '已清除键盘上的宏事件。';
+
+  @override
   String get macroDelete => '删除宏';
 
   @override
@@ -970,6 +1215,17 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   @override
   String macroUploaded(int macroCount, int eventCount) {
     return '已上传 $macroCount 个宏，共 $eventCount 个事件';
+  }
+
+  @override
+  String macroUploadedWithBinding(
+      int macroCount, int eventCount, int bindingCount) {
+    return '已上传 $macroCount 个宏，共 $eventCount 个事件，并绑定了 $bindingCount 个触发键。';
+  }
+
+  @override
+  String macroUploadedAssignTrigger(int macroCount, int eventCount) {
+    return '已上传 $macroCount 个宏，共 $eventCount 个事件。请指定触发键以运行宏。';
   }
 
   @override
@@ -987,6 +1243,24 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
 
   @override
   String get errorMacroUnsupportedKey => '该按键不支持用于宏。';
+
+  @override
+  String get errorMacroUnsupportedTriggerKey => '该按键不能用作宏触发键。';
+
+  @override
+  String get errorMacroTriggerModifierNotAllowed =>
+      '修饰键不能作为宏触发键。请选择一个普通按键，例如 F8。';
+
+  @override
+  String get errorMacroTriggerSingleKeyOnly => '每个宏只能有一个触发键。';
+
+  @override
+  String get errorMacroTriggerInvalid => '无效的触发键。';
+
+  @override
+  String errorMacroDuplicateTrigger(String key) {
+    return '多个宏使用了触发键 $key。每个键只能运行一个宏。';
+  }
 
   @override
   String get lightingModeOff => '关闭';
@@ -1397,6 +1671,27 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   }
 
   @override
+  String get factoryResetTitle => '恢復出廠設定';
+
+  @override
+  String get factoryResetSubtitle => '將燈光、按鍵對應和巨集恢復為預設值。';
+
+  @override
+  String get factoryResetButton => '恢復出廠設定';
+
+  @override
+  String get factoryResetDialogTitle => '恢復鍵盤出廠設定？';
+
+  @override
+  String get factoryResetDialogBody =>
+      '這將清除所有自訂按鍵對應、巨集綁定和已錄製的巨集，並恢復預設燈光設定。\n\n不會影響 LCD 動畫和螢幕選單圖形。若要重置這些，請重新上傳原始 GIF，或在鍵盤上按住 Fn + Esc 5 秒。';
+
+  @override
+  String factoryResetSuccess(String mode) {
+    return '恢復出廠設定完成。已清除按鍵對應和巨集。燈光已恢復為 $mode。';
+  }
+
+  @override
   String get clockTitle => 'LCD 時鐘';
 
   @override
@@ -1494,8 +1789,7 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get macroTitle => '巨集';
 
   @override
-  String get macroSubtitle =>
-      '錄製鍵盤序列並透過 USB 上傳到鍵盤。請使用 AULA 官方工具或未來的按鍵重新對應功能將按鍵綁定到巨集。';
+  String get macroSubtitle => '錄製鍵盤序列，指定觸發鍵，並透過 USB 上傳。按下觸發鍵即可執行巨集。';
 
   @override
   String get macroListTitle => '巨集槽位';
@@ -1508,6 +1802,24 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get macroDelayMode => '事件間隔';
+
+  @override
+  String get macroPlaybackMode => '播放模式';
+
+  @override
+  String get macroPlaybackModeHint => '按下觸發鍵時巨集如何執行。';
+
+  @override
+  String get macroPlaybackOnce => '播放一次或重複 N 次';
+
+  @override
+  String get macroPlaybackToggle => '開關切換';
+
+  @override
+  String get macroMaxRepeats => '最大重複次數';
+
+  @override
+  String get macroMaxRepeatsHint => '每次按下觸發鍵時巨集執行的次數（1–99）。僅在播放一次模式下使用。';
 
   @override
   String get macroDelayRecorded => '使用錄製延遲';
@@ -1533,6 +1845,48 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   }
 
   @override
+  String macroListEntryWithTrigger(int count, String key) {
+    return '$count 個事件 • 觸發鍵：$key';
+  }
+
+  @override
+  String get macroTriggerTitle => '觸發鍵';
+
+  @override
+  String get macroTriggerNone => '未指定觸發鍵。';
+
+  @override
+  String macroTriggerAssigned(String key) {
+    return '在鍵盤上按下 $key 可執行此巨集。';
+  }
+
+  @override
+  String get macroTriggerSingleKeyNote =>
+      '每個巨集只能使用一個觸發鍵。修飾鍵快捷鍵（如 Ctrl+C）應錄在巨集序列裡，而不是作為觸發鍵。';
+
+  @override
+  String warningMacroTriggerOverlap(String keys) {
+    return '警告：$keys 也包含在此巨集序列中。請使用不在序列內的觸發鍵（例如功能鍵）。';
+  }
+
+  @override
+  String macroTriggerPending(String keys, int count) {
+    return '已選：$keys（$count/3）。按 Enter 或點擊確認。';
+  }
+
+  @override
+  String get macroConfirmTrigger => '確認';
+
+  @override
+  String get macroAssignTrigger => '指定觸發鍵';
+
+  @override
+  String get macroClearTrigger => '清除觸發鍵';
+
+  @override
+  String get macroAssigningTriggerHint => '按下一個鍵作為巨集觸發鍵。Esc 取消。';
+
+  @override
   String get macroActionDown => '按下';
 
   @override
@@ -1556,6 +1910,12 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get macroClear => '清除事件';
 
   @override
+  String get macroClearHint => '清除應用程式和鍵盤上錄製的按鍵事件。';
+
+  @override
+  String get macroEventsCleared => '已清除鍵盤上的巨集事件。';
+
+  @override
   String get macroDelete => '刪除巨集';
 
   @override
@@ -1564,6 +1924,17 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   @override
   String macroUploaded(int macroCount, int eventCount) {
     return '已上傳 $macroCount 個巨集，共 $eventCount 個事件';
+  }
+
+  @override
+  String macroUploadedWithBinding(
+      int macroCount, int eventCount, int bindingCount) {
+    return '已上傳 $macroCount 個巨集，共 $eventCount 個事件，並綁定了 $bindingCount 個觸發鍵。';
+  }
+
+  @override
+  String macroUploadedAssignTrigger(int macroCount, int eventCount) {
+    return '已上傳 $macroCount 個巨集，共 $eventCount 個事件。請指定觸發鍵以執行巨集。';
   }
 
   @override
@@ -1581,6 +1952,24 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get errorMacroUnsupportedKey => '該按鍵不支援用於巨集。';
+
+  @override
+  String get errorMacroUnsupportedTriggerKey => '該按鍵不能用作巨集觸發鍵。';
+
+  @override
+  String get errorMacroTriggerModifierNotAllowed =>
+      '修飾鍵不能作為巨集觸發鍵。請選擇一個普通按鍵，例如 F8。';
+
+  @override
+  String get errorMacroTriggerSingleKeyOnly => '每個巨集只能有一個觸發鍵。';
+
+  @override
+  String get errorMacroTriggerInvalid => '無效的觸發鍵。';
+
+  @override
+  String errorMacroDuplicateTrigger(String key) {
+    return '多個巨集使用了觸發鍵 $key。每個鍵只能執行一個巨集。';
+  }
 
   @override
   String get lightingModeOff => '關閉';

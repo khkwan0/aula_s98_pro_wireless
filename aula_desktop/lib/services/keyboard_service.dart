@@ -7,10 +7,12 @@ import '../hid/hid_device.dart';
 import '../models/macro.dart';
 import '../protocol/clock_protocol.dart' as clock;
 import '../protocol/constants.dart';
+import '../protocol/factory_reset_protocol.dart' as factory_reset;
 import '../protocol/lcd_converter.dart';
 import '../protocol/lcd_protocol.dart';
 import '../protocol/lighting_protocol.dart' as lighting;
 import '../protocol/macro_protocol.dart' as macro;
+import '../protocol/remap_protocol.dart' as remap;
 
 class DeviceStatus {
   const DeviceStatus({
@@ -179,4 +181,15 @@ class KeyboardService {
 
   Future<MacroUploadResult> uploadMacros(List<MacroDefinition> macros) =>
       macro.uploadMacros(macros);
+
+  Future<remap.MacroUploadWithBindingsResult> uploadMacrosWithBindings(
+    List<MacroDefinition> macros,
+  ) =>
+      remap.uploadMacrosWithBindings(macros);
+
+  Future<remap.RemapResult> applyMacroTriggers(List<MacroDefinition> macros) =>
+      remap.applyMacroTriggers(macros);
+
+  Future<factory_reset.FactoryResetResult> factoryReset() =>
+      factory_reset.factoryReset();
 }

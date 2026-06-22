@@ -103,6 +103,18 @@
     }
   },
 
+  "factoryResetTitle": "Factory reset",
+  "factoryResetSubtitle": "Restore lighting, key remaps, and macros to defaults.",
+  "factoryResetButton": "Factory reset",
+  "factoryResetDialogTitle": "Factory reset keyboard?",
+  "factoryResetDialogBody": "This will clear all custom key remaps, macro bindings, and recorded macros, then restore the default lighting profile.\n\nLCD animations and on-screen menu graphics are not affected. To reset those, re-upload the original GIF or hold Fn + Esc for 5 seconds on the keyboard.",
+  "factoryResetSuccess": "Factory reset complete. Key remaps and macros cleared. Lighting restored to {mode}.",
+  "@factoryResetSuccess": {
+    "placeholders": {
+      "mode": { "type": "String" }
+    }
+  },
+
   "clockTitle": "LCD Clock",
   "clockSubtitle": "Sync the keyboard screen clock over USB.",
   "useCustomDateTime": "Use custom date/time",
@@ -177,11 +189,17 @@
   "backlightTurnedOff": "Backlight turned off",
 
   "macroTitle": "Macros",
-  "macroSubtitle": "Record keyboard sequences and upload them to the keyboard over USB. Assign a key to a macro using the official AULA utility or a future key-remap feature.",
+  "macroSubtitle": "Record keyboard sequences, assign one trigger key per macro, and upload over USB. Like the official AULA software, each macro is triggered by a single key.",
   "macroListTitle": "Macro slots",
   "macroAdd": "Add macro",
   "macroName": "Name",
   "macroDelayMode": "Delay between events",
+  "macroPlaybackMode": "Playback mode",
+  "macroPlaybackModeHint": "How the macro runs when you press its trigger key.",
+  "macroPlaybackOnce": "Play once or repeat N times",
+  "macroPlaybackToggle": "Toggle on/off",
+  "macroMaxRepeats": "Maximum repeats",
+  "macroMaxRepeatsHint": "How many times the macro runs each time you press its trigger key (1–99). Only used in play-once mode.",
   "macroDelayRecorded": "Use recorded delays",
   "macroDelayNone": "No delay",
   "macroDelayCustom": "Fixed delay",
@@ -194,6 +212,39 @@
       "count": { "type": "int" }
     }
   },
+  "macroListEntryWithTrigger": "{count, plural, =0{No events} =1{1 event} other{{count} events}} • Trigger: {key}",
+  "@macroListEntryWithTrigger": {
+    "placeholders": {
+      "count": { "type": "int" },
+      "key": { "type": "String" }
+    }
+  },
+  "macroTriggerTitle": "Trigger key",
+  "macroTriggerNone": "No trigger key assigned.",
+  "macroTriggerAssigned": "Press {key} on the keyboard to run this macro.",
+  "@macroTriggerAssigned": {
+    "placeholders": {
+      "key": { "type": "String" }
+    }
+  },
+  "macroTriggerSingleKeyNote": "Each macro can use one trigger key only. Modifier shortcuts (e.g. Ctrl+C) belong inside the recorded sequence, not in the trigger.",
+  "warningMacroTriggerOverlap": "Warning: {keys} is also typed by this macro. Use a trigger key that is not part of the sequence (e.g. a function key).",
+  "@warningMacroTriggerOverlap": {
+    "placeholders": {
+      "keys": { "type": "String" }
+    }
+  },
+  "macroTriggerPending": "Selected: {keys} ({count}/3). Press Enter or Confirm.",
+  "@macroTriggerPending": {
+    "placeholders": {
+      "keys": { "type": "String" },
+      "count": { "type": "int" }
+    }
+  },
+  "macroConfirmTrigger": "Confirm",
+  "macroAssignTrigger": "Assign trigger key",
+  "macroClearTrigger": "Clear trigger",
+  "macroAssigningTriggerHint": "Press one key to assign as the macro trigger. Esc to cancel.",
   "macroActionDown": "Down",
   "macroActionUp": "Up",
   "macroActionDelay": "Delay",
@@ -206,10 +257,27 @@
   "macroRecord": "Record",
   "macroStop": "Stop",
   "macroClear": "Clear events",
+  "macroClearHint": "Clears recorded events in the app and on the keyboard.",
+  "macroEventsCleared": "Cleared macro events on the keyboard.",
   "macroDelete": "Delete macro",
   "macroUpload": "Upload to keyboard",
   "macroUploaded": "Uploaded {macroCount, plural, =1{1 macro} other{{macroCount} macros}} with {eventCount, plural, =1{1 event} other{{eventCount} events}}",
   "@macroUploaded": {
+    "placeholders": {
+      "macroCount": { "type": "int" },
+      "eventCount": { "type": "int" }
+    }
+  },
+  "macroUploadedWithBinding": "Uploaded {macroCount, plural, =1{1 macro} other{{macroCount} macros}} with {eventCount, plural, =1{1 event} other{{eventCount} events}} and bound {bindingCount, plural, =1{1 trigger key} other{{bindingCount} trigger keys}}.",
+  "@macroUploadedWithBinding": {
+    "placeholders": {
+      "macroCount": { "type": "int" },
+      "eventCount": { "type": "int" },
+      "bindingCount": { "type": "int" }
+    }
+  },
+  "macroUploadedAssignTrigger": "Uploaded {macroCount, plural, =1{1 macro} other{{macroCount} macros}} with {eventCount, plural, =1{1 event} other{{eventCount} events}}. Assign a trigger key to run it.",
+  "@macroUploadedAssignTrigger": {
     "placeholders": {
       "macroCount": { "type": "int" },
       "eventCount": { "type": "int" }
@@ -230,6 +298,16 @@
     }
   },
   "errorMacroUnsupportedKey": "That key is not supported for macros.",
+  "errorMacroUnsupportedTriggerKey": "That key cannot be used as a macro trigger.",
+  "errorMacroTriggerModifierNotAllowed": "Modifier keys cannot be macro triggers. Pick a regular key such as F8.",
+  "errorMacroTriggerSingleKeyOnly": "Each macro can only have one trigger key.",
+  "errorMacroTriggerInvalid": "Invalid trigger key.",
+  "errorMacroDuplicateTrigger": "Multiple macros use the trigger {key}. Each key can only run one macro.",
+  "@errorMacroDuplicateTrigger": {
+    "placeholders": {
+      "key": { "type": "String" }
+    }
+  },
 
   "lightingModeOff": "Off",
   "lightingModeStatic": "Static",
