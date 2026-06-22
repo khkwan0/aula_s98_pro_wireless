@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../l10n/app_localizations.dart';
+import '../l10n/message_localizer.dart';
 import '../services/keyboard_service.dart';
 
 class ClockScreen extends StatefulWidget {
@@ -29,12 +31,17 @@ class _ClockScreenState extends State<ClockScreen> {
       final when = _useCustom ? _selected : DateTime.now();
       final synced = await widget.keyboard.syncClock(when: when);
       if (!mounted) return;
+      final l10n = AppLocalizations.of(context)!;
+      final locale = Localizations.localeOf(context).toString();
       setState(() {
-        _message = 'Synced to ${DateFormat.yMMMd().add_jms().format(synced)}';
+        _message = l10n.syncedTo(
+          DateFormat.yMMMd(locale).add_jms().format(synced),
+        );
       });
     } catch (error) {
       if (!mounted) return;
-      setState(() => _error = error.toString());
+      final l10n = AppLocalizations.of(context)!;
+      setState(() => _error = l10n.localizeError(error));
     } finally {
       if (mounted) setState(() => _busy = false);
     }
@@ -75,31 +82,40 @@ class _ClockScreenState extends State<ClockScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final locale = Localizations.localeOf(context).toString();
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('LCD Clock', style: Theme.of(context).textTheme.headlineMedium),
+          Text(l10n.clockTitle, style: Theme.of(context).textTheme.headlineMedium),
           const SizedBox(height: 8),
-          const Text('Sync the keyboard screen clock over USB.'),
+          Text(l10n.clockSubtitle),
           const SizedBox(height: 24),
           SwitchListTile(
-            title: const Text('Use custom date/time'),
-            subtitle: const Text('Off = sync to system time now'),
+            title: Text(l10n.useCustomDateTime),
+            subtitle: Text(l10n.useCustomDateTimeSubtitle),
             value: _useCustom,
             onChanged: _busy ? null : (value) => setState(() => _useCustom = value),
           ),
           if (_useCustom) ...[
             ListTile(
               leading: const Icon(Icons.calendar_today),
-              title: Text(DateFormat.yMMMMd().format(_selected)),
-              trailing: OutlinedButton(onPressed: _busy ? null : _pickDate, child: const Text('Date')),
+              title: Text(DateFormat.yMMMMd(locale).format(_selected)),
+              trailing: OutlinedButton(
+                onPressed: _busy ? null : _pickDate,
+                child: Text(l10n.date),
+              ),
             ),
             ListTile(
               leading: const Icon(Icons.access_time),
-              title: Text(DateFormat.jm().format(_selected)),
-              trailing: OutlinedButton(onPressed: _busy ? null : _pickTime, child: const Text('Time')),
+              title: Text(DateFormat.jm(locale).format(_selected)),
+              trailing: OutlinedButton(
+                onPressed: _busy ? null : _pickTime,
+                child: Text(l10n.time),
+              ),
             ),
           ],
           const SizedBox(height: 16),
@@ -112,7 +128,7 @@ class _ClockScreenState extends State<ClockScreen> {
                     child: CircularProgressIndicator(strokeWidth: 2),
                   )
                 : const Icon(Icons.sync),
-            label: Text(_useCustom ? 'Sync custom time' : 'Sync system time'),
+            label: Text(_useCustom ? l10n.syncCustomTime : l10n.syncSystemTime),
           ),
           if (_message != null) ...[
             const SizedBox(height: 16),

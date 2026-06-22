@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:image/image.dart' as img;
 
+import '../l10n/user_message.dart';
 import 'constants.dart';
 
 int rgb888ToRgb565(int r, int g, int b) {
@@ -73,7 +74,7 @@ class LcdBufferInfo {
 
 LcdBufferInfo countFrames(Uint8List buffer) {
   if (buffer.length < KeyboardConstants.headerSize) {
-    throw StateError('LCD buffer is too small to contain a header.');
+    throw const UserMessage('errorLcdBufferTooSmall');
   }
   final headerFrameCount = buffer[0];
   final payloadBytes = buffer.length - KeyboardConstants.headerSize;
@@ -91,29 +92,30 @@ LcdBufferInfo validateLcdBuffer(
   int maxFrames = KeyboardConstants.maxFrames,
 }) {
   if (buffer.isEmpty) {
-    throw StateError('LCD buffer is empty.');
+    throw const UserMessage('errorLcdBufferEmpty');
   }
   if (buffer.length % KeyboardConstants.pageSize != 0) {
-    throw StateError(
-      'LCD buffer size ${buffer.length} is not a multiple of ${KeyboardConstants.pageSize}.',
-    );
+    throw UserMessage('errorLcdBufferSizeMultiple', {
+      'size': buffer.length,
+      'pageSize': KeyboardConstants.pageSize,
+    });
   }
 
   final info = countFrames(buffer);
   if (info.headerFrameCount == 0) {
-    throw StateError('LCD buffer header reports 0 frames.');
+    throw const UserMessage('errorLcdBufferZeroFrames');
   }
   if (info.headerFrameCount > maxFrames && !force) {
-    throw StateError(
-      'Buffer contains ${info.headerFrameCount} frames, which exceeds the safe limit of $maxFrames. '
-      'Enable force to override (may corrupt keyboard menu graphics).',
-    );
+    throw UserMessage('errorLcdBufferTooManyFrames', {
+      'frameCount': info.headerFrameCount,
+      'maxFrames': maxFrames,
+    });
   }
   if (info.computedFrameCount < info.headerFrameCount) {
-    throw StateError(
-      'Buffer is truncated: header says ${info.headerFrameCount} frames '
-      'but only ${info.computedFrameCount} fit.',
-    );
+    throw UserMessage('errorLcdBufferTruncated', {
+      'headerFrames': info.headerFrameCount,
+      'computedFrames': info.computedFrameCount,
+    });
   }
 
   final maxSafePages =
@@ -121,10 +123,11 @@ LcdBufferInfo validateLcdBuffer(
               KeyboardConstants.pageSize)
           .ceil();
   if (info.pageCount > maxSafePages && !force) {
-    throw StateError(
-      'Buffer is ${info.pageCount} pages, exceeding the safe limit of $maxSafePages pages '
-      '(~$maxFrames frames). Enable force to override.',
-    );
+    throw UserMessage('errorLcdBufferTooManyPages', {
+      'pageCount': info.pageCount,
+      'maxPages': maxSafePages,
+      'maxFrames': maxFrames,
+    });
   }
   return info;
 }
@@ -146,13 +149,13 @@ class GifInspectInfo {
   final int height;
   final int pageCount;
   final bool withinLimit;
-  final List<String> warnings;
+  final List<UserMessage> warnings;
 }
 
 GifInspectInfo inspectGifBytes(Uint8List bytes) {
   final decoded = _decodeGif(bytes);
   if (decoded == null) {
-    throw StateError('GIF contains no frames.');
+    throw const UserMessage('errorGifNoFrames');
   }
 
   final frameCount = decoded.frameCount;
@@ -165,18 +168,21 @@ GifInspectInfo inspectGifBytes(Uint8List bytes) {
       KeyboardConstants.headerSize + KeyboardConstants.frameSize * outputFrameCount;
   final pageCount = (expectedBytes / KeyboardConstants.pageSize).ceil();
 
-  final warnings = <String>[];
+  final warnings = <UserMessage>[];
   if (width != KeyboardConstants.screenWidth ||
       height != KeyboardConstants.screenHeight) {
-    warnings.add(
-      'GIF is ${width}x$height; keyboard expects '
-      '${KeyboardConstants.screenWidth}x${KeyboardConstants.screenHeight}.',
-    );
+    warnings.add(UserMessage('warningGifDimensions', {
+      'width': width,
+      'height': height,
+      'expectedWidth': KeyboardConstants.screenWidth,
+      'expectedHeight': KeyboardConstants.screenHeight,
+    }));
   }
   if (frameCount > KeyboardConstants.maxFrames) {
-    warnings.add(
-      'GIF has $frameCount frames; only the first ${KeyboardConstants.maxFrames} will be used.',
-    );
+    warnings.add(UserMessage('warningGifTooManyFrames', {
+      'frameCount': frameCount,
+      'maxFrames': KeyboardConstants.maxFrames,
+    }));
   }
 
   return GifInspectInfo(
@@ -203,7 +209,7 @@ class GifConversionResult {
   final int frameCount;
   final int width;
   final int height;
-  final List<String> warnings;
+  final List<UserMessage> warnings;
 }
 
 GifConversionResult gifBytesToLcdBuffer(
@@ -213,35 +219,37 @@ GifConversionResult gifBytesToLcdBuffer(
 }) {
   final decoded = _decodeGif(bytes);
   if (decoded == null) {
-    throw StateError('GIF contains no frames.');
+    throw const UserMessage('errorGifNoFrames');
   }
 
   var frameCount = decoded.frameCount;
   final originalFrameCount = frameCount;
-  final warnings = <String>[];
+  final warnings = <UserMessage>[];
 
   if (frameCount > maxFrames && !force) {
-    warnings.add(
-      'GIF has $originalFrameCount frames; only the first $maxFrames will be used.',
-    );
+    warnings.add(UserMessage('warningGifTooManyFrames', {
+      'frameCount': originalFrameCount,
+      'maxFrames': maxFrames,
+    }));
     frameCount = maxFrames;
   }
   if (frameCount > 255) {
     if (originalFrameCount > 255) {
-      warnings.add(
-        'GIF has $originalFrameCount frames; capped at 255 (header limit).',
-      );
+      warnings.add(UserMessage('warningGifCappedAt255', {
+        'frameCount': originalFrameCount,
+      }));
     }
     frameCount = 255;
   }
 
   if (decoded.width != KeyboardConstants.screenWidth ||
       decoded.height != KeyboardConstants.screenHeight) {
-    warnings.add(
-      'GIF is ${decoded.width}x${decoded.height}; keyboard expects '
-      '${KeyboardConstants.screenWidth}x${KeyboardConstants.screenHeight}. '
-      'Frames will be cropped/padded.',
-    );
+    warnings.add(UserMessage('warningGifDimensionsCrop', {
+      'width': decoded.width,
+      'height': decoded.height,
+      'expectedWidth': KeyboardConstants.screenWidth,
+      'expectedHeight': KeyboardConstants.screenHeight,
+    }));
   }
 
   final header = Uint8List(KeyboardConstants.headerSize);
@@ -260,7 +268,7 @@ GifConversionResult gifBytesToLcdBuffer(
     final desc = decoded.info.frames[i];
     final frameImage = decoded.decoder.decodeFrame(i);
     if (frameImage == null) {
-      throw StateError('Failed to decode GIF frame ${i + 1}.');
+      throw UserMessage('errorGifDecodeFrame', {'frame': i + 1});
     }
 
     for (final pixel in frameImage) {

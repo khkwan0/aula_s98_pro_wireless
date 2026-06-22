@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/app_localizations.dart';
+import '../l10n/message_localizer.dart';
 import '../protocol/constants.dart';
 import '../services/keyboard_service.dart';
 
@@ -37,8 +39,9 @@ class _HomeScreenState extends State<HomeScreen> {
       });
     } catch (error) {
       if (!mounted) return;
+      final l10n = AppLocalizations.of(context)!;
       setState(() {
-        _error = error.toString();
+        _error = l10n.localizeError(error);
         _loading = false;
       });
     }
@@ -46,6 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final status = _status;
 
@@ -64,11 +68,6 @@ class _HomeScreenState extends State<HomeScreen> {
               IconButton(onPressed: _refresh, icon: const Icon(Icons.refresh)),
             ],
           ),
-          const SizedBox(height: 8),
-          Text(
-            'Native desktop controller — HID protocol implemented in Dart.',
-            style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.outline),
-          ),
           const SizedBox(height: 24),
           if (_loading) const LinearProgressIndicator(),
           if (_error != null)
@@ -85,23 +84,23 @@ class _HomeScreenState extends State<HomeScreen> {
               runSpacing: 16,
               children: [
                 _InfoCard(
-                  title: 'Keyboard',
-                  value: status?.connected == true ? 'Connected' : 'Not found',
-                  subtitle: status?.controlPath ?? 'USB wired required',
+                  title: l10n.keyboardCardTitle,
+                  value: status?.connected == true ? l10n.connected : l10n.notFound,
+                  subtitle: status?.controlPath ?? l10n.usbWiredRequired,
                   icon: status?.connected == true ? Icons.usb : Icons.usb_off,
                   tone: status?.connected == true ? Colors.green : Colors.orange,
                 ),
                 _InfoCard(
-                  title: 'LCD interface',
-                  value: status?.lcdReady == true ? 'Ready' : 'Missing',
-                  subtitle: 'Required for GIF upload',
+                  title: l10n.lcdInterfaceCardTitle,
+                  value: status?.lcdReady == true ? l10n.ready : l10n.missing,
+                  subtitle: l10n.lcdInterfaceCardSubtitle,
                   icon: Icons.monitor,
                   tone: status?.lcdReady == true ? Colors.green : Colors.orange,
                 ),
                 _InfoCard(
-                  title: 'Frame limit',
-                  value: '${widget.keyboard.maxFrames} frames',
-                  subtitle: '240×135 RGB565',
+                  title: l10n.frameLimitCardTitle,
+                  value: l10n.frameLimitValue(widget.keyboard.maxFrames),
+                  subtitle: l10n.frameLimitSubtitle,
                   icon: Icons.warning_amber,
                   tone: theme.colorScheme.primary,
                 ),
@@ -114,11 +113,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Requirements', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                    Text(
+                      l10n.requirementsTitle,
+                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                    ),
                     const SizedBox(height: 12),
-                    const Text('• Connect the keyboard over USB (not Bluetooth only).'),
-                    const Text('• Close AULA utility software before using this app.'),
-                    Text('• GIFs over ${KeyboardConstants.maxFrames} frames are trimmed automatically.'),
+                    Text(l10n.requirementUsb),
+                    Text(l10n.requirementCloseUtility),
+                    Text(l10n.requirementGifTrim(KeyboardConstants.maxFrames)),
                   ],
                 ),
               ),

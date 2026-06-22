@@ -1,0 +1,354 @@
+{
+  "@@locale": "en",
+
+  "language": "Language",
+  "languageSystem": "System default",
+  "languageEnglish": "English",
+  "languageChineseSimplified": "简体中文",
+  "languageChineseTraditional": "繁體中文",
+
+  "navHome": "Home",
+  "navClock": "Clock",
+  "navRgb": "RGB",
+  "navLcd": "LCD",
+  "deviceInfoTooltip": "Device info",
+  "close": "Close",
+
+  "connected": "Connected",
+  "notConnected": "Not connected",
+  "notFound": "Not found",
+  "ready": "Ready",
+  "missing": "Missing",
+
+  "usbIdentification": "USB identification",
+  "controlHidInterface": "Control HID interface",
+  "lcdHidInterface": "LCD HID interface",
+  "protocol": "Protocol",
+  "model": "Model",
+  "vendorId": "Vendor ID",
+  "productId": "Product ID",
+  "status": "Status",
+  "path": "Path",
+  "usagePage": "Usage page",
+  "usage": "Usage",
+  "interface": "Interface",
+  "hidReportSize": "HID report size",
+  "commandDelay": "Command delay",
+  "lcdResolution": "LCD resolution",
+  "pixelFormat": "Pixel format",
+  "frameSize": "Frame size",
+  "maxFramesLabel": "Max frames",
+  "flashPageSize": "Flash page size",
+  "lcdAckTimeout": "LCD ACK timeout",
+  "allHidInterfaces": "All HID interfaces ({count})",
+  "@allHidInterfaces": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "interfaceSummary": "IF{number}: {usagePage} usage {usage}",
+  "@interfaceSummary": {
+    "placeholders": {
+      "number": { "type": "int" },
+      "usagePage": { "type": "String" },
+      "usage": { "type": "int" }
+    }
+  },
+  "bytesUnit": "{count} bytes",
+  "@bytesUnit": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "millisecondsUnit": "{count} ms",
+  "@millisecondsUnit": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "pixelFormatValue": "RGB565 ({bytesPerPixel} bytes/pixel)",
+  "@pixelFormatValue": {
+    "placeholders": {
+      "bytesPerPixel": { "type": "int" }
+    }
+  },
+  "resolutionValue": "{width}×{height}",
+  "@resolutionValue": {
+    "placeholders": {
+      "width": { "type": "int" },
+      "height": { "type": "int" }
+    }
+  },
+
+  "keyboardCardTitle": "Keyboard",
+  "usbWiredRequired": "USB wired required",
+  "lcdInterfaceCardTitle": "LCD interface",
+  "lcdInterfaceCardSubtitle": "Required for GIF upload",
+  "frameLimitCardTitle": "Frame limit",
+  "frameLimitValue": "{count} frames",
+  "@frameLimitValue": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "frameLimitSubtitle": "240×135 RGB565",
+  "requirementsTitle": "Requirements",
+  "requirementUsb": "• Connect the keyboard over USB (not Bluetooth only).",
+  "requirementCloseUtility": "• Close AULA utility software before using this app.",
+  "requirementGifTrim": "• GIFs over {maxFrames} frames are trimmed automatically.",
+  "@requirementGifTrim": {
+    "placeholders": {
+      "maxFrames": { "type": "int" }
+    }
+  },
+
+  "clockTitle": "LCD Clock",
+  "clockSubtitle": "Sync the keyboard screen clock over USB.",
+  "useCustomDateTime": "Use custom date/time",
+  "useCustomDateTimeSubtitle": "Off = sync to system time now",
+  "date": "Date",
+  "time": "Time",
+  "syncCustomTime": "Sync custom time",
+  "syncSystemTime": "Sync system time",
+  "syncedTo": "Synced to {datetime}",
+  "@syncedTo": {
+    "placeholders": {
+      "datetime": { "type": "String" }
+    }
+  },
+
+  "rgbTitle": "RGB Lighting",
+  "rgbSubtitle": "Set backlight mode, color, brightness, and speed.",
+  "mode": "Mode",
+  "lightingModeEntry": "{index} — {name}",
+  "@lightingModeEntry": {
+    "placeholders": {
+      "index": { "type": "String" },
+      "name": { "type": "String" }
+    }
+  },
+  "rainbowColorful": "Rainbow / colorful",
+  "brightness": "Brightness: {value}",
+  "@brightness": {
+    "placeholders": {
+      "value": { "type": "int" }
+    }
+  },
+  "speed": "Speed: {value}",
+  "@speed": {
+    "placeholders": {
+      "value": { "type": "int" }
+    }
+  },
+  "direction": "Direction: {value}",
+  "@direction": {
+    "placeholders": {
+      "value": { "type": "int" }
+    }
+  },
+  "apply": "Apply",
+  "turnOff": "Turn off",
+  "appliedMode": "Applied {mode}",
+  "@appliedMode": {
+    "placeholders": {
+      "mode": { "type": "String" }
+    }
+  },
+  "backlightTurnedOff": "Backlight turned off",
+
+  "lightingModeOff": "Off",
+  "lightingModeStatic": "Static",
+  "lightingModeSingleOn": "SingleOn",
+  "lightingModeSingleOff": "SingleOff",
+  "lightingModeGlittering": "Glittering",
+  "lightingModeFalling": "Falling",
+  "lightingModeColourful": "Colourful",
+  "lightingModeBreath": "Breath",
+  "lightingModeSpectrum": "Spectrum",
+  "lightingModeOutward": "Outward",
+  "lightingModeScrolling": "Scrolling",
+  "lightingModeRolling": "Rolling",
+  "lightingModeRotating": "Rotating",
+  "lightingModeExplode": "Explode",
+  "lightingModeLaunch": "Launch",
+  "lightingModeRipples": "Ripples",
+  "lightingModeFlowing": "Flowing",
+  "lightingModePulsating": "Pulsating",
+  "lightingModeTilt": "Tilt",
+  "lightingModeShuttle": "Shuttle",
+
+  "lcdTitle": "LCD Animation",
+  "lcdSubtitle": "Upload a 240×135 GIF (up to {maxFrames} frames). Converts to RGB565 in Dart.",
+  "@lcdSubtitle": {
+    "placeholders": {
+      "maxFrames": { "type": "int" }
+    }
+  },
+  "lcdTrimWarning": "GIFs with more than {maxFrames} frames are trimmed to the first {maxFrames} automatically. Enable force upload to send every frame (may overwrite menu graphics in SPI flash).",
+  "@lcdTrimWarning": {
+    "placeholders": {
+      "maxFrames": { "type": "int" }
+    }
+  },
+  "forceUploadTitle": "Force upload (use all frames)",
+  "forceUploadSubtitle": "Dangerous — skips frame trimming",
+  "chooseGifOrBin": "Choose GIF or .bin",
+  "convertToBin": "Convert to .bin",
+  "uploadToKeyboard": "Upload to keyboard",
+  "selectedFile": "Selected: {name}",
+  "@selectedFile": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "uploadDialogTitle": "Upload LCD animation?",
+  "uploadDialogBody": "Uploading images can permanently corrupt the keyboard menu graphics if too many frames are written to SPI flash. This is not recoverable by factory reset.\n\nGIFs over {maxFrames} frames are trimmed automatically unless force upload is enabled.",
+  "@uploadDialogBody": {
+    "placeholders": {
+      "maxFrames": { "type": "int" }
+    }
+  },
+  "cancel": "Cancel",
+  "upload": "Upload",
+  "saveLcdBinary": "Save LCD binary",
+  "uploadingPercent": "Uploading {percent}%",
+  "@uploadingPercent": {
+    "placeholders": {
+      "percent": { "type": "String" }
+    }
+  },
+  "savedTo": "Saved to {path}",
+  "@savedTo": {
+    "placeholders": {
+      "path": { "type": "String" }
+    }
+  },
+  "uploadedFrames": "Uploaded {frameCount} frames ({pageCount} pages)",
+  "@uploadedFrames": {
+    "placeholders": {
+      "frameCount": { "type": "int" },
+      "pageCount": { "type": "int" }
+    }
+  },
+  "inspectFramesExact": "{frameCount} frames • {width}×{height} • {pageCount} pages",
+  "@inspectFramesExact": {
+    "placeholders": {
+      "frameCount": { "type": "int" },
+      "width": { "type": "int" },
+      "height": { "type": "int" },
+      "pageCount": { "type": "int" }
+    }
+  },
+  "inspectFramesTrimmed": "{frameCount} frames → using {outputFrameCount} • {width}×{height} • {pageCount} pages",
+  "@inspectFramesTrimmed": {
+    "placeholders": {
+      "frameCount": { "type": "int" },
+      "outputFrameCount": { "type": "int" },
+      "width": { "type": "int" },
+      "height": { "type": "int" },
+      "pageCount": { "type": "int" }
+    }
+  },
+  "warningPrefix": "⚠ {message}",
+  "@warningPrefix": {
+    "placeholders": {
+      "message": { "type": "String" }
+    }
+  },
+
+  "errorFilePicker": "Could not open file picker: {error}",
+  "@errorFilePicker": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "errorDeviceNotFound": "{device} not found. Connect via USB-C cable.",
+  "@errorDeviceNotFound": {
+    "placeholders": {
+      "device": { "type": "String" }
+    }
+  },
+  "errorLcdInterfaceNotFound": "{device} LCD interface not found. Connect via USB-C cable.",
+  "@errorLcdInterfaceNotFound": {
+    "placeholders": {
+      "device": { "type": "String" }
+    }
+  },
+  "errorFileNotFound": "File not found: {path}",
+  "@errorFileNotFound": {
+    "placeholders": {
+      "path": { "type": "String" }
+    }
+  },
+  "errorSupportedFormats": "Supported formats: .gif or .bin",
+  "errorLcdBufferTooSmall": "LCD buffer is too small to contain a header.",
+  "errorLcdBufferEmpty": "LCD buffer is empty.",
+  "errorLcdBufferSizeMultiple": "LCD buffer size {size} is not a multiple of {pageSize}.",
+  "@errorLcdBufferSizeMultiple": {
+    "placeholders": {
+      "size": { "type": "int" },
+      "pageSize": { "type": "int" }
+    }
+  },
+  "errorLcdBufferZeroFrames": "LCD buffer header reports 0 frames.",
+  "errorLcdBufferTooManyFrames": "Buffer contains {frameCount} frames, which exceeds the safe limit of {maxFrames}. Enable force to override (may corrupt keyboard menu graphics).",
+  "@errorLcdBufferTooManyFrames": {
+    "placeholders": {
+      "frameCount": { "type": "int" },
+      "maxFrames": { "type": "int" }
+    }
+  },
+  "errorLcdBufferTruncated": "Buffer is truncated: header says {headerFrames} frames but only {computedFrames} fit.",
+  "@errorLcdBufferTruncated": {
+    "placeholders": {
+      "headerFrames": { "type": "int" },
+      "computedFrames": { "type": "int" }
+    }
+  },
+  "errorLcdBufferTooManyPages": "Buffer is {pageCount} pages, exceeding the safe limit of {maxPages} pages (~{maxFrames} frames). Enable force to override.",
+  "@errorLcdBufferTooManyPages": {
+    "placeholders": {
+      "pageCount": { "type": "int" },
+      "maxPages": { "type": "int" },
+      "maxFrames": { "type": "int" }
+    }
+  },
+  "errorGifNoFrames": "GIF contains no frames.",
+  "errorGifDecodeFrame": "Failed to decode GIF frame {frame}.",
+  "@errorGifDecodeFrame": {
+    "placeholders": {
+      "frame": { "type": "int" }
+    }
+  },
+  "warningGifDimensions": "GIF is {width}x{height}; keyboard expects {expectedWidth}x{expectedHeight}.",
+  "@warningGifDimensions": {
+    "placeholders": {
+      "width": { "type": "int" },
+      "height": { "type": "int" },
+      "expectedWidth": { "type": "int" },
+      "expectedHeight": { "type": "int" }
+    }
+  },
+  "warningGifDimensionsCrop": "GIF is {width}x{height}; keyboard expects {expectedWidth}x{expectedHeight}. Frames will be cropped/padded.",
+  "@warningGifDimensionsCrop": {
+    "placeholders": {
+      "width": { "type": "int" },
+      "height": { "type": "int" },
+      "expectedWidth": { "type": "int" },
+      "expectedHeight": { "type": "int" }
+    }
+  },
+  "warningGifTooManyFrames": "GIF has {frameCount} frames; only the first {maxFrames} will be used.",
+  "@warningGifTooManyFrames": {
+    "placeholders": {
+      "frameCount": { "type": "int" },
+      "maxFrames": { "type": "int" }
+    }
+  },
+  "warningGifCappedAt255": "GIF has {frameCount} frames; capped at 255 (header limit).",
+  "@warningGifCappedAt255": {
+    "placeholders": {
+      "frameCount": { "type": "int" }
+    }
+  }
+}

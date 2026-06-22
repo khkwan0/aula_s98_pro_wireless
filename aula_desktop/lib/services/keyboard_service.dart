@@ -173,6 +173,5 @@ class KeyboardService {
     return converted;
   }
 
-  List<String> get modeNames => lightingModeNames;
   int get maxFrames => KeyboardConstants.maxFrames;
 }

@@ -1,6 +1,8 @@
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 
+import '../l10n/app_localizations.dart';
+import '../l10n/message_localizer.dart';
 import '../protocol/constants.dart';
 import '../services/keyboard_service.dart';
 
@@ -44,10 +46,12 @@ class _LightingScreenState extends State<LightingScreen> {
         colorful: _colorful,
       );
       if (!mounted) return;
-      setState(() => _message = 'Applied ${result.modeName}');
+      final l10n = AppLocalizations.of(context)!;
+      setState(() => _message = l10n.appliedMode(l10n.lightingModeName(result.modeId)));
     } catch (error) {
       if (!mounted) return;
-      setState(() => _error = error.toString());
+      final l10n = AppLocalizations.of(context)!;
+      setState(() => _error = l10n.localizeError(error));
     } finally {
       if (mounted) setState(() => _busy = false);
     }
@@ -62,13 +66,15 @@ class _LightingScreenState extends State<LightingScreen> {
     try {
       await widget.keyboard.turnOffLighting();
       if (!mounted) return;
+      final l10n = AppLocalizations.of(context)!;
       setState(() {
         _modeId = 0;
-        _message = 'Backlight turned off';
+        _message = l10n.backlightTurnedOff;
       });
     } catch (error) {
       if (!mounted) return;
-      setState(() => _error = error.toString());
+      final l10n = AppLocalizations.of(context)!;
+      setState(() => _error = l10n.localizeError(error));
     } finally {
       if (mounted) setState(() => _busy = false);
     }
@@ -76,6 +82,7 @@ class _LightingScreenState extends State<LightingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final showColor = _modeId != 0 && _modeId != 6 && _modeId != 8;
     final showDirection = _directionModes.contains(_modeId);
 
@@ -84,16 +91,24 @@ class _LightingScreenState extends State<LightingScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('RGB Lighting', style: Theme.of(context).textTheme.headlineMedium),
+          Text(l10n.rgbTitle, style: Theme.of(context).textTheme.headlineMedium),
           const SizedBox(height: 8),
-          const Text('Set backlight mode, color, brightness, and speed.'),
+          Text(l10n.rgbSubtitle),
           const SizedBox(height: 24),
           DropdownButtonFormField<int>(
             value: _modeId,
-            decoration: const InputDecoration(labelText: 'Mode', border: OutlineInputBorder()),
+            decoration: InputDecoration(labelText: l10n.mode, border: const OutlineInputBorder()),
             items: [
               for (var i = 0; i < lightingModeNames.length; i++)
-                DropdownMenuItem(value: i, child: Text('${i.toString().padLeft(2)} — ${lightingModeNames[i]}')),
+                DropdownMenuItem(
+                  value: i,
+                  child: Text(
+                    l10n.lightingModeEntry(
+                      i.toString().padLeft(2),
+                      l10n.lightingModeName(i),
+                    ),
+                  ),
+                ),
             ],
             onChanged: _busy
                 ? null
@@ -105,7 +120,7 @@ class _LightingScreenState extends State<LightingScreen> {
           const SizedBox(height: 16),
           if (_modeId != 0 && _modeId != 6 && _modeId != 8)
             SwitchListTile(
-              title: const Text('Rainbow / colorful'),
+              title: Text(l10n.rainbowColorful),
               value: _colorful,
               onChanged: _busy ? null : (value) => setState(() => _colorful = value),
             ),
@@ -121,7 +136,7 @@ class _LightingScreenState extends State<LightingScreen> {
             ),
           ],
           const SizedBox(height: 16),
-          Text('Brightness: $_brightness'),
+          Text(l10n.brightness(_brightness)),
           Slider(
             min: 0,
             max: 5,
@@ -131,7 +146,7 @@ class _LightingScreenState extends State<LightingScreen> {
             onChanged: _busy ? null : (value) => setState(() => _brightness = value.round()),
           ),
           if (_modeId != 0 && _modeId != 1) ...[
-            Text('Speed: $_speed'),
+            Text(l10n.speed(_speed)),
             Slider(
               min: 0,
               max: 5,
@@ -142,7 +157,7 @@ class _LightingScreenState extends State<LightingScreen> {
             ),
           ],
           if (showDirection) ...[
-            Text('Direction: $_direction'),
+            Text(l10n.direction(_direction)),
             Slider(
               min: 0,
               max: 3,
@@ -159,12 +174,12 @@ class _LightingScreenState extends State<LightingScreen> {
               FilledButton.icon(
                 onPressed: _busy ? null : _apply,
                 icon: const Icon(Icons.check),
-                label: const Text('Apply'),
+                label: Text(l10n.apply),
               ),
               OutlinedButton.icon(
                 onPressed: _busy ? null : _turnOff,
                 icon: const Icon(Icons.power_settings_new),
-                label: const Text('Turn off'),
+                label: Text(l10n.turnOff),
               ),
             ],
           ),

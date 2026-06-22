@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'l10n/app_localizations.dart';
+import 'l10n/locale_config.dart';
 import 'protocol/constants.dart';
 import 'screens/clock_screen.dart';
 import 'screens/home_screen.dart';
@@ -16,11 +18,16 @@ class AulaApp extends StatefulWidget {
 
 class _AulaAppState extends State<AulaApp> {
   final KeyboardService keyboard = KeyboardService();
+  Locale? _localeOverride;
 
   @override
   void initState() {
     super.initState();
     keyboard.getStatus();
+  }
+
+  void _setLocale(Locale? locale) {
+    setState(() => _localeOverride = locale);
   }
 
   @override
@@ -31,6 +38,15 @@ class _AulaAppState extends State<AulaApp> {
         return MaterialApp(
           title: deviceName,
           debugShowCheckedModeBanner: false,
+          locale: _localeOverride,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          localeResolutionCallback: (locale, supportedLocales) {
+            if (_localeOverride != null) {
+              return _localeOverride;
+            }
+            return resolveAppLocale(locale, supportedLocales);
+          },
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(
               seedColor: const Color(0xFF6750A4),
@@ -38,7 +54,11 @@ class _AulaAppState extends State<AulaApp> {
             ),
             useMaterial3: true,
           ),
-          home: MainShell(keyboard: keyboard),
+          home: MainShell(
+            keyboard: keyboard,
+            localeOverride: _localeOverride,
+            onLocaleChanged: _setLocale,
+          ),
         );
       },
     );
@@ -46,9 +66,16 @@ class _AulaAppState extends State<AulaApp> {
 }
 
 class MainShell extends StatefulWidget {
-  const MainShell({super.key, required this.keyboard});
+  const MainShell({
+    super.key,
+    required this.keyboard,
+    required this.localeOverride,
+    required this.onLocaleChanged,
+  });
 
   final KeyboardService keyboard;
+  final Locale? localeOverride;
+  final ValueChanged<Locale?> onLocaleChanged;
 
   @override
   State<MainShell> createState() => _MainShellState();
@@ -67,6 +94,7 @@ class _MainShellState extends State<MainShell> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final pages = [
       HomeScreen(keyboard: widget.keyboard),
       ClockScreen(keyboard: widget.keyboard),
@@ -84,7 +112,7 @@ class _MainShellState extends State<MainShell> {
             leading: Padding(
               padding: const EdgeInsets.only(top: 16, bottom: 8),
               child: IconButton(
-                tooltip: 'Device info',
+                tooltip: l10n.deviceInfoTooltip,
                 onPressed: _showDeviceInfo,
                 style: IconButton.styleFrom(
                   minimumSize: Size.zero,
@@ -98,28 +126,53 @@ class _MainShellState extends State<MainShell> {
                 ),
               ),
             ),
-            destinations: const [
+            destinations: [
               NavigationRailDestination(
-                icon: Icon(Icons.dashboard_outlined),
-                selectedIcon: Icon(Icons.dashboard),
-                label: Text('Home'),
+                icon: const Icon(Icons.dashboard_outlined),
+                selectedIcon: const Icon(Icons.dashboard),
+                label: Text(l10n.navHome),
               ),
               NavigationRailDestination(
-                icon: Icon(Icons.schedule_outlined),
-                selectedIcon: Icon(Icons.schedule),
-                label: Text('Clock'),
+                icon: const Icon(Icons.schedule_outlined),
+                selectedIcon: const Icon(Icons.schedule),
+                label: Text(l10n.navClock),
               ),
               NavigationRailDestination(
-                icon: Icon(Icons.light_mode_outlined),
-                selectedIcon: Icon(Icons.light_mode),
-                label: Text('RGB'),
+                icon: const Icon(Icons.light_mode_outlined),
+                selectedIcon: const Icon(Icons.light_mode),
+                label: Text(l10n.navRgb),
               ),
               NavigationRailDestination(
-                icon: Icon(Icons.gif_box_outlined),
-                selectedIcon: Icon(Icons.gif_box),
-                label: Text('LCD'),
+                icon: const Icon(Icons.gif_box_outlined),
+                selectedIcon: const Icon(Icons.gif_box),
+                label: Text(l10n.navLcd),
               ),
             ],
+            trailing: Padding(
+              padding: const EdgeInsets.only(bottom: 16),
+              child: PopupMenuButton<Locale?>(
+                tooltip: l10n.language,
+                icon: const Icon(Icons.translate),
+                onSelected: widget.onLocaleChanged,
+                itemBuilder: (context) {
+                  final menuL10n = AppLocalizations.of(context)!;
+                  Locale? selected = widget.localeOverride;
+                  return [
+                    CheckedPopupMenuItem<Locale?>(
+                      value: null,
+                      checked: selected == null,
+                      child: Text(menuL10n.languageSystem),
+                    ),
+                    for (final locale in appLocaleOptions)
+                      CheckedPopupMenuItem<Locale?>(
+                        value: locale,
+                        checked: localesMatch(selected, locale),
+                        child: Text(localeLabel(menuL10n, locale)),
+                      ),
+                  ];
+                },
+              ),
+            ),
           ),
           const VerticalDivider(width: 1),
           Expanded(child: pages[_index]),
@@ -136,6 +189,7 @@ class _DeviceInfoDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final control = details.control;
     final lcd = details.lcd;
@@ -148,66 +202,87 @@ class _DeviceInfoDialog extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _sectionTitle(theme, 'USB identification'),
-              _row('Model', details.deviceName),
-              _row('Vendor ID', DeviceDetails.hex(KeyboardConstants.vendorId)),
-              _row('Product ID', DeviceDetails.hex(KeyboardConstants.productId)),
+              _sectionTitle(theme, l10n.usbIdentification),
+              _row(l10n.model, details.deviceName),
+              _row(l10n.vendorId, DeviceDetails.hex(KeyboardConstants.vendorId)),
+              _row(l10n.productId, DeviceDetails.hex(KeyboardConstants.productId)),
               _row(
-                'Status',
-                details.connected ? 'Connected' : 'Not connected',
+                l10n.status,
+                details.connected ? l10n.connected : l10n.notConnected,
               ),
               const SizedBox(height: 16),
-              _sectionTitle(theme, 'Control HID interface'),
+              _sectionTitle(theme, l10n.controlHidInterface),
               if (control != null) ...[
-                _row('Path', control.path),
+                _row(l10n.path, control.path),
                 _row(
-                  'Usage page',
+                  l10n.usagePage,
                   '${DeviceDetails.hex(control.usagePage)} (${control.usagePage})',
                 ),
-                _row('Usage', '${control.usage}'),
-                _row('Interface', '${control.interfaceNumber}'),
+                _row(l10n.usage, '${control.usage}'),
+                _row(l10n.interface, '${control.interfaceNumber}'),
               ] else
-                _row('Interface', 'Not found'),
+                _row(l10n.interface, l10n.notFound),
               const SizedBox(height: 16),
-              _sectionTitle(theme, 'LCD HID interface'),
+              _sectionTitle(theme, l10n.lcdHidInterface),
               if (lcd != null) ...[
-                _row('Path', lcd.path),
+                _row(l10n.path, lcd.path),
                 _row(
-                  'Usage page',
+                  l10n.usagePage,
                   '${DeviceDetails.hex(lcd.usagePage)} (${lcd.usagePage})',
                 ),
-                _row('Usage', '${lcd.usage}'),
-                _row('Interface', '${lcd.interfaceNumber}'),
+                _row(l10n.usage, '${lcd.usage}'),
+                _row(l10n.interface, '${lcd.interfaceNumber}'),
               ] else
-                _row('Interface', 'Not found'),
+                _row(l10n.interface, l10n.notFound),
               const SizedBox(height: 16),
-              _sectionTitle(theme, 'Protocol'),
-              _row('HID report size', '${KeyboardConstants.reportSize} bytes'),
-              _row('Command delay', '${KeyboardConstants.cmdDelayMs} ms'),
+              _sectionTitle(theme, l10n.protocol),
               _row(
-                'LCD resolution',
-                '${KeyboardConstants.screenWidth}×${KeyboardConstants.screenHeight}',
+                l10n.hidReportSize,
+                l10n.bytesUnit(KeyboardConstants.reportSize),
               ),
-              _row('Pixel format', 'RGB565 (${KeyboardConstants.bytesPerPixel} bytes/pixel)'),
               _row(
-                'Frame size',
-                '${KeyboardConstants.frameSize} bytes',
+                l10n.commandDelay,
+                l10n.millisecondsUnit(KeyboardConstants.cmdDelayMs),
               ),
-              _row('Max frames', '${KeyboardConstants.maxFrames}'),
-              _row('Flash page size', '${KeyboardConstants.pageSize} bytes'),
-              _row('LCD ACK timeout', '${KeyboardConstants.lcdAckTimeoutMs} ms'),
+              _row(
+                l10n.lcdResolution,
+                l10n.resolutionValue(
+                  KeyboardConstants.screenWidth,
+                  KeyboardConstants.screenHeight,
+                ),
+              ),
+              _row(
+                l10n.pixelFormat,
+                l10n.pixelFormatValue(KeyboardConstants.bytesPerPixel),
+              ),
+              _row(
+                l10n.frameSize,
+                l10n.bytesUnit(KeyboardConstants.frameSize),
+              ),
+              _row(l10n.maxFramesLabel, '${KeyboardConstants.maxFrames}'),
+              _row(
+                l10n.flashPageSize,
+                l10n.bytesUnit(KeyboardConstants.pageSize),
+              ),
+              _row(
+                l10n.lcdAckTimeout,
+                l10n.millisecondsUnit(KeyboardConstants.lcdAckTimeoutMs),
+              ),
               if (details.interfaces.length > 1) ...[
                 const SizedBox(height: 16),
                 _sectionTitle(
                   theme,
-                  'All HID interfaces (${details.interfaces.length})',
+                  l10n.allHidInterfaces(details.interfaces.length),
                 ),
                 for (final iface in details.interfaces)
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8),
                     child: Text(
-                      'IF${iface.interfaceNumber}: '
-                      '${DeviceDetails.hex(iface.usagePage)} usage ${iface.usage}',
+                      l10n.interfaceSummary(
+                        iface.interfaceNumber,
+                        DeviceDetails.hex(iface.usagePage),
+                        iface.usage,
+                      ),
                       style: theme.textTheme.bodySmall?.copyWith(
                         fontFamily: 'monospace',
                       ),
@@ -221,7 +296,7 @@ class _DeviceInfoDialog extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Close'),
+          child: Text(l10n.close),
         ),
       ],
     );

@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:ffi/ffi.dart';
 
+import '../l10n/user_message.dart';
 import '../protocol/constants.dart';
 import 'hidapi_bindings.dart';
 
@@ -121,9 +122,9 @@ class HidDevice implements AutoCloseable {
   static HidDevice openControl() {
     final descriptor = findControlInterface();
     if (descriptor == null) {
-      throw StateError(
-        '${resolveDeviceName()} not found. Connect via USB-C cable.',
-      );
+      throw UserMessage('errorDeviceNotFound', {
+        'device': resolveDeviceName(),
+      });
     }
     return open(descriptor);
   }
@@ -131,9 +132,9 @@ class HidDevice implements AutoCloseable {
   static HidDevice openLcd() {
     final descriptor = findLcdInterface();
     if (descriptor == null) {
-      throw StateError(
-        '${resolveDeviceName()} LCD interface not found. Connect via USB-C cable.',
-      );
+      throw UserMessage('errorLcdInterfaceNotFound', {
+        'device': resolveDeviceName(),
+      });
     }
     return open(descriptor);
   }

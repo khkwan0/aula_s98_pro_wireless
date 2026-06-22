@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import '../hid/hid_device.dart';
+import '../l10n/user_message.dart';
 import 'constants.dart';
 import 'device_protocol.dart';
 import 'lcd_converter.dart';
@@ -17,7 +18,7 @@ class LcdUploadResult {
   final int frameCount;
   final int pageCount;
   final String source;
-  final List<String> warnings;
+  final List<UserMessage> warnings;
 }
 
 Future<LcdUploadResult> uploadLcdBuffer(
@@ -70,14 +71,14 @@ Future<LcdUploadResult> uploadLcdFile(
 }) async {
   final file = File(path);
   if (!await file.exists()) {
-    throw StateError('File not found: $path');
+    throw UserMessage('errorFileNotFound', {'path': path});
   }
 
   final bytes = await file.readAsBytes();
   final ext = path.split('.').last.toLowerCase();
 
   late Uint8List buffer;
-  final warnings = <String>[];
+  final warnings = <UserMessage>[];
   if (ext == 'gif') {
     final converted = gifBytesToLcdBuffer(bytes, force: force);
     buffer = converted.buffer;
@@ -86,7 +87,7 @@ Future<LcdUploadResult> uploadLcdFile(
     buffer = bytes;
     validateLcdBuffer(buffer, force: force);
   } else {
-    throw StateError('Supported formats: .gif or .bin');
+    throw const UserMessage('errorSupportedFormats');
   }
 
   final result = await uploadLcdBuffer(
