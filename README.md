@@ -1,6 +1,31 @@
 # AULA S98 Pro Wireless Companion
 
 Take total control of your typing experience on macOS. The AULA S98 Pro Wireless Companion is a lightweight, open-source utility built to configure and manage your AULA S98 Pro mechanical keyboard natively on your Mac.
+### App Screenshots
+
+<p align="center">
+  <a href="aula_desktop/macos/ScreenShots/screen_0.png" target="_blank">
+    <img src="aula_desktop/macos/ScreenShots/screen_0.png" width="250" alt="Screen 0" style="margin: 5px; border-radius: 8px;" />
+  </a>
+  <a href="aula_desktop/macos/ScreenShots/screen_1.png" target="_blank">
+    <img src="aula_desktop/macos/ScreenShots/screen_1.png" width="250" alt="Screen 1" style="margin: 5px; border-radius: 8px;" />
+  </a>
+  <a href="aula_desktop/macos/ScreenShots/screen_2.png" target="_blank">
+    <img src="aula_desktop/macos/ScreenShots/screen_2.png" width="250" alt="Screen 2" style="margin: 5px; border-radius: 8px;" />
+  </a>
+</p>
+
+<p align="center">
+  <a href="aula_desktop/macos/ScreenShots/screen_3.png" target="_blank">
+    <img src="aula_desktop/macos/ScreenShots/screen_3.png" width="250" alt="Screen 3" style="margin: 5px; border-radius: 8px;" />
+  </a>
+  <a href="aula_desktop/macos/ScreenShots/screen_4.png" target="_blank">
+    <img src="aula_desktop/macos/ScreenShots/screen_4.png" width="250" alt="Screen 4" style="margin: 5px; border-radius: 8px;" />
+  </a>
+  <a href="aula_desktop/macos/ScreenShots/screen_5.png" target="_blank">
+    <img src="aula_desktop/macos/ScreenShots/screen_5.png" width="250" alt="Screen 5" style="margin: 5px; border-radius: 8px;" />
+  </a>
+</p>
 
 ### Key Features:
 * **Smart Screen Management:** Synchronize your Mac's system clock, date, and battery monitoring with the keyboard's built-in TFT LCD screen seamlessly over wireless connections.
