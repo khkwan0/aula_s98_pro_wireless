@@ -49,7 +49,12 @@ Color snapToMaterialPrimary500(Color color) {
   final sourceHue = sourceHsv.hue;
 
   for (final candidate in materialPrimary500) {
-    final candidateHue = HSVColor.fromColor(candidate).hue;
+    final candidateHsv = HSVColor.fromColor(candidate);
+    // Neutral swatches (grey/brown/black/white) report hue 0 and must not
+    // win hue matching for saturated colors like pure red.
+    if (candidateHsv.saturation < 1 / 255.0) continue;
+
+    final candidateHue = candidateHsv.hue;
     var hueDistance = (sourceHue - candidateHue).abs();
     if (hueDistance > 180) {
       hueDistance = 360 - hueDistance;

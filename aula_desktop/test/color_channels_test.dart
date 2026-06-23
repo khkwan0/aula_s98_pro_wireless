@@ -25,6 +25,11 @@ void main() {
     expect(snapToMaterialPrimary500(wheelOrange), Colors.orange[500]);
   });
 
+  test('snapToMaterialPrimary500 maps pure red to primary red not grey', () {
+    final red = colorFromRgb(255, 0, 0);
+    expect(snapToMaterialPrimary500(red), Colors.red[500]);
+  });
+
   test('normalizeDeviceColor leaves white unchanged', () {
     expect(normalizeDeviceColor(Colors.white), Colors.white);
   });
