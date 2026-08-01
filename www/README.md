@@ -14,6 +14,23 @@ Static, SEO-oriented marketing site for the AULA S98 Pro Wireless Companion, plu
 
 Default public URL: `https://nitroxstudios.com/aula/`
 
+## SEO / Google
+
+| File | URL |
+|------|-----|
+| Sitemap | https://nitroxstudios.com/aula/sitemap.xml |
+| robots.txt | https://nitroxstudios.com/aula/robots.txt |
+
+The sitemap includes `lastmod`, page URLs, and screenshot image entries for Google Image discovery. `robots.txt` points Google at the sitemap.
+
+**Submit to Google Search Console** (required once — Google does not auto-find `/aula/robots.txt` on a path-only site):
+
+1. Add a URL-prefix property for `https://nitroxstudios.com/aula/`
+2. Sitemaps → submit `https://nitroxstudios.com/aula/sitemap.xml`
+3. Optionally request indexing for the home URL after deploy
+
+Bump `<lastmod>` in `public/sitemap.xml` whenever you meaningfully change indexed pages.
+
 ## Local preview
 
 ```bash

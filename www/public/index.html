@@ -6,11 +6,16 @@
   <title>AULA S98 Pro Wireless Companion — Free macOS Keyboard Utility</title>
   <meta name="description" content="Open-source macOS companion for the AULA S98 Pro Wireless mechanical keyboard. Sync the TFT clock, control RGB lighting, upload custom GIFs, remap keys — all locally, no account required.">
   <meta name="keywords" content="AULA S98 Pro, AULA S98 Pro Wireless, macOS keyboard software, mechanical keyboard LCD, RGB keyboard Mac, open source AULA driver">
-  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <meta name="author" content="AULA S98 Pro Wireless Companion">
+  <meta name="theme-color" content="#0f1419">
+  <meta name="color-scheme" content="dark light">
   <link rel="canonical" href="https://nitroxstudios.com/aula/">
+  <link rel="alternate" hreflang="en" href="https://nitroxstudios.com/aula/">
+  <link rel="alternate" hreflang="x-default" href="https://nitroxstudios.com/aula/">
   <link rel="icon" type="image/png" sizes="256x256" href="/aula/assets/img/icon-256.png">
   <link rel="apple-touch-icon" href="/aula/assets/img/icon-512.png">
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="/aula/sitemap.xml">
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="AULA S98 Pro Wireless Companion">
@@ -18,6 +23,10 @@
   <meta property="og:description" content="Native macOS control for your AULA S98 Pro — LCD clock sync, RGB, GIF upload, remaps, and macros. Privacy-first and fully local.">
   <meta property="og:url" content="https://nitroxstudios.com/aula/">
   <meta property="og:image" content="https://nitroxstudios.com/aula/assets/screenshots/screen_0.png">
+  <meta property="og:image:secure_url" content="https://nitroxstudios.com/aula/assets/screenshots/screen_0.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1600">
+  <meta property="og:image:height" content="1000">
   <meta property="og:image:alt" content="AULA S98 Pro Companion home screen showing connected keyboard and LCD status">
   <meta property="og:locale" content="en_US">
 
@@ -25,6 +34,7 @@
   <meta name="twitter:title" content="AULA S98 Pro Wireless Companion for macOS">
   <meta name="twitter:description" content="Open-source Mac utility for the AULA S98 Pro Wireless keyboard. Download the DMG and take control locally.">
   <meta name="twitter:image" content="https://nitroxstudios.com/aula/assets/screenshots/screen_0.png">
+  <meta name="twitter:image:alt" content="AULA S98 Pro Companion home screen showing connected keyboard and LCD status">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,17 +47,21 @@
     "@graph": [
       {
         "@type": "SoftwareApplication",
+        "@id": "https://nitroxstudios.com/aula/#app",
         "name": "AULA S98 Pro Wireless Companion",
+        "alternateName": ["AULA S98 Pro macOS Companion", "AULA S98 Pro Wireless Driver for Mac"],
         "applicationCategory": "UtilitiesApplication",
         "operatingSystem": "macOS",
         "description": "Open-source macOS companion for the AULA S98 Pro Wireless mechanical keyboard. Configure LCD clock, RGB lighting, GIF uploads, key remaps, and macros locally.",
         "url": "https://nitroxstudios.com/aula/",
         "downloadUrl": "https://github.com/khkwan0/aula_s98_pro_wireless/releases/download/v1.0.0/AULA.S98.Pro.dmg",
         "softwareVersion": "1.0.0",
+        "fileSize": "16MB",
         "offers": {
           "@type": "Offer",
           "price": "0",
-          "priceCurrency": "USD"
+          "priceCurrency": "USD",
+          "availability": "https://schema.org/InStock"
         },
         "author": {
           "@type": "Person",
@@ -59,13 +73,40 @@
           "https://nitroxstudios.com/aula/assets/screenshots/screen_0.png",
           "https://nitroxstudios.com/aula/assets/screenshots/screen_2.png",
           "https://nitroxstudios.com/aula/assets/screenshots/screen_4.png"
-        ]
+        ],
+        "featureList": [
+          "TFT LCD clock and battery sync",
+          "RGB lighting modes and color wheel",
+          "Custom GIF and image uploads",
+          "Local key remaps and macros",
+          "No accounts or telemetry"
+        ],
+        "isAccessibleForFree": true,
+        "license": "https://github.com/khkwan0/aula_s98_pro_wireless"
       },
       {
         "@type": "WebSite",
+        "@id": "https://nitroxstudios.com/aula/#website",
         "name": "AULA S98 Pro Wireless Companion",
         "url": "https://nitroxstudios.com/aula/",
-        "description": "Official marketing site for the open-source AULA S98 Pro Wireless Companion."
+        "description": "Official marketing site for the open-source AULA S98 Pro Wireless Companion.",
+        "inLanguage": "en",
+        "publisher": {
+          "@type": "Person",
+          "name": "khkwan0",
+          "url": "https://github.com/khkwan0"
+        }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://nitroxstudios.com/aula/#webpage",
+        "url": "https://nitroxstudios.com/aula/",
+        "name": "AULA S98 Pro Wireless Companion — Free macOS Keyboard Utility",
+        "isPartOf": { "@id": "https://nitroxstudios.com/aula/#website" },
+        "about": { "@id": "https://nitroxstudios.com/aula/#app" },
+        "description": "Open-source macOS companion for the AULA S98 Pro Wireless mechanical keyboard.",
+        "inLanguage": "en",
+        "dateModified": "2026-08-01"
       },
       {
         "@type": "BreadcrumbList",
@@ -75,6 +116,43 @@
             "position": 1,
             "name": "Home",
             "item": "https://nitroxstudios.com/aula/"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Does the AULA S98 Pro Wireless Companion work on macOS?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. It is a native Flutter macOS desktop app that talks to the AULA S98 Pro over USB. Download the free DMG from GitHub Releases."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do I need a Windows VM or vendor account?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. The companion runs entirely on your Mac with no Windows VM, vendor account, telemetry, or cloud sync."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why does macOS ask for Input Monitoring permission?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Input Monitoring is required so the driver can recognize hardware key events. The app never records, logs, or transmits keystrokes — processing stays in memory on your machine."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I install the AULA S98 Pro Companion?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Download AULA.S98.Pro.dmg, open the disk image, drag the app to Applications, connect the keyboard over USB, and enable Input Monitoring in System Settings."
+            }
           }
         ]
       }

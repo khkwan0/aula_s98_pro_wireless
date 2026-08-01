@@ -30,9 +30,24 @@ for needle in \
 done
 
 echo "==> lint: robots + sitemap consistency"
-if grep -q 'Sitemap:' "$PUBLIC/robots.txt"; then ok "robots.txt declares Sitemap"; else bad "robots.txt missing Sitemap"; fi
+if grep -q 'Sitemap: https://nitroxstudios.com/aula/sitemap.xml' "$PUBLIC/robots.txt"; then
+  ok "robots.txt declares absolute Sitemap URL"
+else
+  bad "robots.txt missing absolute Sitemap URL"
+fi
 if grep -q '<urlset' "$PUBLIC/sitemap.xml"; then ok "sitemap.xml has urlset"; else bad "sitemap.xml invalid"; fi
+if grep -q '<lastmod>' "$PUBLIC/sitemap.xml"; then ok "sitemap has lastmod"; else bad "sitemap missing lastmod"; fi
+if grep -q 'xmlns:image=' "$PUBLIC/sitemap.xml"; then ok "sitemap has image namespace"; else bad "sitemap missing image namespace"; fi
 if grep -q 'privacy.html' "$PUBLIC/sitemap.xml"; then ok "sitemap lists privacy"; else bad "sitemap missing privacy"; fi
+if grep -q 'screen_0.png' "$PUBLIC/sitemap.xml"; then ok "sitemap lists hero screenshot"; else bad "sitemap missing screenshot images"; fi
+BASE='https://nitroxstudios.com/aula'
+for path in '/' '/privacy.html'; do
+  if grep -q "<loc>${BASE}${path}</loc>" "$PUBLIC/sitemap.xml"; then
+    ok "sitemap loc ${path}"
+  else
+    bad "sitemap missing loc ${path}"
+  fi
+done
 
 echo "==> lint: no accidental secrets"
 if grep -RInE '(api[_-]?key|secret|password)\s*[:=]' "$PUBLIC" --include='*.html' --include='*.js' --include='*.css' >/dev/null 2>&1; then

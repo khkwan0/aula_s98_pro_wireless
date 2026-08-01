@@ -1,13 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://nitroxstudios.com/aula/</loc>
+    <lastmod>2026-08-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nitroxstudios.com/aula/" />
+    <image:image>
+      <image:loc>https://nitroxstudios.com/aula/assets/screenshots/screen_0.png</image:loc>
+      <image:title>AULA S98 Pro Wireless Companion home dashboard</image:title>
+      <image:caption>Home screen showing keyboard connection status and LCD readiness</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://nitroxstudios.com/aula/assets/screenshots/screen_1.png</image:loc>
+      <image:title>LCD clock sync for AULA S98 Pro</image:title>
+      <image:caption>Sync Mac system time to the keyboard TFT display</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://nitroxstudios.com/aula/assets/screenshots/screen_2.png</image:loc>
+      <image:title>RGB lighting control for AULA S98 Pro on macOS</image:title>
+      <image:caption>Color wheel and lighting modes in the companion app</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://nitroxstudios.com/aula/assets/screenshots/screen_3.png</image:loc>
+      <image:title>Key remapping on AULA S98 Pro Wireless</image:title>
+      <image:caption>Local key layout remaps without cloud accounts</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://nitroxstudios.com/aula/assets/screenshots/screen_4.png</image:loc>
+      <image:title>Macro editor for AULA S98 Pro Companion</image:title>
+      <image:caption>Build and assign macros locally on macOS</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://nitroxstudios.com/aula/assets/screenshots/screen_5.png</image:loc>
+      <image:title>Custom GIF upload to AULA S98 Pro LCD</image:title>
+      <image:caption>Convert and upload animations to the 240×135 keyboard screen</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://nitroxstudios.com/aula/privacy.html</loc>
+    <lastmod>2026-06-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.4</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nitroxstudios.com/aula/privacy.html" />
   </url>
 </urlset>

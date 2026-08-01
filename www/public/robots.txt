@@ -1,4 +1,11 @@
+# https://nitroxstudios.com/aula/
 User-agent: *
+Allow: /aula/
 Allow: /
 
+# Do not index error pages if crawled directly
+Disallow: /aula/404.html
+
+# Google Search Console: submit this sitemap under URL-prefix property
+# https://nitroxstudios.com/aula/
 Sitemap: https://nitroxstudios.com/aula/sitemap.xml
