@@ -13,6 +13,6 @@ docker compose up -d --remove-orphans web
 
 echo "==> deploy: verify"
 sleep 1
-curl -fsS "http://127.0.0.1:${WWW_PORT}/" | grep -q 'AULA S98 Pro'
-curl -fsS -o /dev/null -w "home %{http_code}\n" "http://127.0.0.1:${WWW_PORT}/"
-echo "deploy complete → http://127.0.0.1:${WWW_PORT}/"
+curl -fsS "http://127.0.0.1:${WWW_PORT}/aula/" | grep -q 'AULA S98 Pro'
+curl -fsS -o /dev/null -w "home %{http_code}\n" "http://127.0.0.1:${WWW_PORT}/aula/"
+echo "deploy complete → http://127.0.0.1:${WWW_PORT}/aula/"

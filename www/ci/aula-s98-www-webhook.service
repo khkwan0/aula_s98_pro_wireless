@@ -1,0 +1,14 @@
+[Unit]
+Description=AULA S98 www GitHub webhook (local CI/CD)
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=%h/dev/aula_s98_pro_wireless/www/ci
+EnvironmentFile=%h/.config/aula-s98-www/webhook.env
+ExecStart=/usr/bin/python3 %h/dev/aula_s98_pro_wireless/www/ci/github-webhook.py
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=default.target

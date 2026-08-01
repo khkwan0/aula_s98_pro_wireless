@@ -22,8 +22,8 @@ if [[ ! -f "$SITE_SRC" ]]; then
 fi
 
 echo "==> ensure Docker site is up on :${WWW_PORT}"
-if ! curl -fsS "http://127.0.0.1:${WWW_PORT}/" >/dev/null; then
-  echo "Container not responding on :${WWW_PORT}. Start it first:"
+if ! curl -fsS "http://127.0.0.1:${WWW_PORT}/aula/" >/dev/null; then
+  echo "Container not responding on :${WWW_PORT}/aula/. Start it first:"
   echo "  bash $REPO_WWW/ci/deploy.sh"
   exit 1
 fi

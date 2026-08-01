@@ -21,7 +21,7 @@ docker run -d --name "$NAME" -p 18098:80 "$IMAGE" >/dev/null
 
 echo "==> test: wait for healthy HTTP"
 for i in $(seq 1 30); do
-  if curl -fsS "http://127.0.0.1:18098/" >/dev/null 2>&1; then
+  if curl -fsS "http://127.0.0.1:18098/aula/" >/dev/null 2>&1; then
     break
   fi
   sleep 0.5
@@ -33,7 +33,7 @@ for i in $(seq 1 30); do
 done
 
 echo "==> test: HTTP status checks"
-for path in / /privacy.html /robots.txt /sitemap.xml /assets/css/site.css; do
+for path in /aula/ /aula/privacy.html /aula/robots.txt /aula/sitemap.xml /aula/assets/css/site.css; do
   code="$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:18098$path")"
   if [[ "$code" != "200" ]]; then
     echo " FAIL $path -> $code"
@@ -42,7 +42,7 @@ for path in / /privacy.html /robots.txt /sitemap.xml /assets/css/site.css; do
   echo "  OK  $path -> $code"
 done
 
-BODY="$(curl -fsS http://127.0.0.1:18098/)"
+BODY="$(curl -fsS http://127.0.0.1:18098/aula/)"
 echo "$BODY" | grep -q 'AULA S98 Pro' || { echo "FAIL home missing brand"; exit 1; }
 echo "$BODY" | grep -q 'AULA.S98.Pro.dmg' || { echo "FAIL home missing download link"; exit 1; }
 echo "  OK  home content assertions"
