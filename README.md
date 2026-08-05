@@ -1,4 +1,4 @@
-# AULA S98 Pro Wireless Companion
+# AULA S98 Pro Wireless Companion & Driver
 
 Take total control of your typing experience on macOS. The AULA S98 Pro Wireless Companion is a lightweight, open-source utility built to configure and manage your AULA S98 Pro mechanical keyboard natively on your Mac.
 
